@@ -22,11 +22,13 @@ public class testAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> titulos;
+    private List<Integer> layouts;
     private List<Fragment> fragments;
 
-    public testAdapter(Context context, List<String> titulos, List<Fragment> fragments) {
+    public testAdapter(Context context, List<String> titulos, List<Integer> layouts, List<Fragment> fragments) {
         this.context = context;
         this.titulos = titulos;
+        this.layouts = layouts;
         this.fragments = fragments;
     }
 
@@ -48,7 +50,7 @@ public class testAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return fragments.get(groupPosition);
+        return layouts.get(groupPosition);
     }
 
     @Override
@@ -85,17 +87,25 @@ public class testAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        Fragment fragment = (Fragment) getChild(groupPosition, childPosition);
-
         if (convertView == null){
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.test_fragment_item, null);
+            convertView = inflater.inflate(layouts.get(groupPosition), null);
         }
 
         FragmentManager fragmentManager = ((AppCompatActivity)this.context).getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.replace(R.id.idDestino, fragment);
+        if (convertView.findViewById(R.id.idDestino) != null){
+            fragmentTransaction.replace(R.id.idDestino, fragments.get(0));
+        }
+
+        if (convertView.findViewById(R.id.idDestino2) != null){
+            fragmentTransaction.replace(R.id.idDestino2, fragments.get(1));
+        }
+
+        if (convertView.findViewById(R.id.idDestino3) != null){
+            fragmentTransaction.replace(R.id.idDestino3, fragments.get(2));
+        }
 
         fragmentTransaction.commit();
 

@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
+import android.view.View;
 import android.widget.ExpandableListView;
 
 
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private ExpandableListAdapter adapter;
     private testAdapter adapterTest;
     private List<String> listDataHeaders;
+    private List<Integer> layouts;
     private List<Fragment> fragments;
     private Map<String, List<String>> listHashmap;
 
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         //adapter = new ExpandableListAdapter(this, listDataHeaders, listHashmap);
         //listView.setAdapter(adapter);
 
-        adapterTest = new testAdapter(this, listDataHeaders, fragments);
+        adapterTest = new testAdapter(this, listDataHeaders, layouts, fragments);
         listView.setAdapter(adapterTest);
 
     }
@@ -71,5 +73,11 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(new BlankFragment());
         fragments.add(new BlankFragment2());
         fragments.add(new BlankFragment2());
+
+        layouts = new ArrayList<>();
+        layouts.add(R.layout.test_fragment_item);
+        layouts.add(R.layout.test_fragment_item_2);
+        layouts.add(R.layout.test_fragment_item_3);
+
     }
 }
