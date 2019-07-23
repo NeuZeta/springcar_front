@@ -6,22 +6,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 
-import com.nzsoft.springcar.fragments.CarSelectionFragment;
 import com.nzsoft.springcar.fragments.DatesSelectionFragment;
 
-public class MainActivity extends AppCompatActivity {
-
+public class CarSelectionActivity extends AppCompatActivity {
     private Button btn1;
-    private Button btn2;
+    private ListView carListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_car_selection);
 
         btn1 = (Button) findViewById(R.id.idOpcion1Btn);
-        btn2 = (Button) findViewById(R.id.idOpcion2Btn);
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,22 +38,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ConstraintLayout opcion2Panel = (ConstraintLayout) findViewById(R.id.idOpcion2Panel);
 
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.idOpcion2Panel, new CarSelectionFragment());
-                fragmentTransaction.commit();
+        carListView = (ListView) findViewById(R.id.idCarsList);
 
-                if (opcion2Panel.getVisibility() == View.VISIBLE) {
-                    opcion2Panel.setVisibility(View.GONE);
-                } else {
-                    opcion2Panel.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+
+
 
     }
 }

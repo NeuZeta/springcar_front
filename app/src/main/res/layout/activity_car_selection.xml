@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
-
+    tools:context=".CarSelectionActivity">
     <Button
         android:id="@+id/idOpcion1Btn"
         android:layout_width="match_parent"
@@ -24,21 +23,9 @@
         android:visibility="gone">
     </android.support.constraint.ConstraintLayout>
 
-    <Button
-        android:id="@+id/idOpcion2Btn"
+    <ListView
+        android:id="@+id/idCarsList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:text="Car Selection" />
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/idOpcion2Panel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone">
-    </android.support.constraint.ConstraintLayout>
-
+        android:layout_height="match_parent" />
 
 </LinearLayout>
