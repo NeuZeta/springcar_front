@@ -62,5 +62,9 @@ public class RetrofitHelper {
 
     }
 
+    public static ApiRest getApiRest(){
+        return API_REST;
+    }
+
 
 }
