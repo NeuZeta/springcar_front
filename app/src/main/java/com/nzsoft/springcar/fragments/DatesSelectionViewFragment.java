@@ -3,17 +3,21 @@ package com.nzsoft.springcar.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.nzsoft.springcar.R;
+import com.nzsoft.springcar.activities.CarSelectionActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DatesSelectionViewFragment extends Fragment {
 
+    private Button editBtn;
 
     public DatesSelectionViewFragment() {
         // Required empty public constructor
@@ -23,8 +27,20 @@ public class DatesSelectionViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_dates_selection, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_view_dates_selection, container, false);
+
+        editBtn = view.findViewById(R.id.idSubmitDatesBtn);
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ((CarSelectionActivity) getActivity()).replaceFragments(DatesSelectionFragment.class, R.id.idOpcion1Panel);
+
+            }
+        });
+
+        return view;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.nzsoft.springcar.activities;
 
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,9 +27,7 @@ public class CarSelectionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ConstraintLayout opcion1Panel = (ConstraintLayout) findViewById(R.id.idOpcion1Panel);
 
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.idOpcion1Panel, new DatesSelectionViewFragment());
-                fragmentTransaction.commit();
+                replaceFragments(DatesSelectionViewFragment.class, R.id.idOpcion1Panel);
 
                 if (opcion1Panel.getVisibility() == View.VISIBLE) {
                     opcion1Panel.setVisibility(View.GONE);
@@ -38,9 +37,23 @@ public class CarSelectionActivity extends AppCompatActivity {
             }
         });
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.idCarListFragment, new CarSelectionFragment());
-        fragmentTransaction.commit();
+        replaceFragments(CarSelectionFragment.class, R.id.idCarListFragment);
 
     }
+
+    public void replaceFragments(Class fragmentClass, int view) {
+        Fragment fragment = null;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Insert the fragment by replacing any existing fragment
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(view, fragment);
+        fragmentTransaction.commit();
+    }
+
+
 }
