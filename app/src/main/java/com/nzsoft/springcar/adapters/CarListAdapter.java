@@ -1,6 +1,7 @@
 package com.nzsoft.springcar.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,10 @@ public class CarListAdapter extends BaseAdapter {
         String imgURL = "https://springcarback.herokuapp.com/cars/image/" + car.getPhoto();
 
         Picasso.get().load(imgURL).into(carImage);
+
+        if (position%2 != 0){
+            view.setBackgroundColor(view.getResources().getColor(R.color.colorPaleGray));
+        }
 
         return view;
     }
