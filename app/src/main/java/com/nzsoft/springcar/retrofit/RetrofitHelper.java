@@ -32,7 +32,7 @@ public class RetrofitHelper {
             public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
                 //long milliseconds = json.getAsJsonPrimitive().getAsLong();
                 String dateStr = json.getAsString();
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:MM:ss");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
                 Date date = null;
 

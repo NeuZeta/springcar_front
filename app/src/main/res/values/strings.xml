@@ -9,4 +9,5 @@
     <string name="select_office_label">Select Office</string>
     <string name="pickup_date_label">Pick Up Date</string>
     <string name="dropoff_date_label">Drop Off Date</string>
+    <string name="pickup_date_hint">dd/MM/yyyy</string>
 </resources>

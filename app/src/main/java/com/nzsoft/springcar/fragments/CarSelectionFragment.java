@@ -38,7 +38,7 @@ public class CarSelectionFragment extends Fragment {
 
         final ListView carListView = (ListView) view.findViewById(R.id.idCarsList);
 
-        Call<List<Car>> call = RetrofitHelper.getApiRest().getAll();
+        Call<List<Car>> call = RetrofitHelper.getApiRest().getAllCars();
 
         call.enqueue(new Callback<List<Car>>() {
             @Override

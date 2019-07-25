@@ -1,6 +1,7 @@
 package com.nzsoft.springcar.retrofit;
 
 import com.nzsoft.springcar.model.Car;
+import com.nzsoft.springcar.model.Office;
 
 import java.util.List;
 
@@ -11,8 +12,11 @@ public interface ApiRest {
 
     // CARS
     @GET ("cars")
-    public Call<List<Car>> getAll();
+    public Call<List<Car>> getAllCars();
 
 
+    // OFFICES
+    @GET ("offices")
+    public Call<List<Office>> getAllOffices();
 
 }

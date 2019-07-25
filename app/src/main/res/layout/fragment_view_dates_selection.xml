@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="@+id/guideline10" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/idPickupDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -59,7 +59,7 @@
             app:layout_constraintGuide_percent="0.50121653" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/idDropoffDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
