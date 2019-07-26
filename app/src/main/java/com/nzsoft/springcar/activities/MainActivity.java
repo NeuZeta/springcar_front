@@ -1,6 +1,7 @@
 package com.nzsoft.springcar.activities;
 
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,54 +10,68 @@ import android.widget.Button;
 
 import com.nzsoft.springcar.R;
 import com.nzsoft.springcar.fragments.CarSelectionFragment;
+import com.nzsoft.springcar.fragments.DatesSelectionFragment;
 import com.nzsoft.springcar.fragments.DatesSelectionViewFragment;
+import com.nzsoft.springcar.model.Office;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button btn1;
     private Button btn2;
 
+    private Office selectedOffice;
+    private String initDate;
+    private String finalDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn1 = (Button) findViewById(R.id.idOpcion1Btn);
-        btn2 = (Button) findViewById(R.id.idOpcion2Btn);
+        if (savedInstanceState == null){
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.idContentFragment, new DatesSelectionFragment());
+            fragmentTransaction.commit();
+        }
 
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ConstraintLayout opcion1Panel = (ConstraintLayout) findViewById(R.id.idOpcion1Panel);
+    }
 
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.idOpcion1Panel, new DatesSelectionViewFragment());
-                fragmentTransaction.commit();
 
-                if (opcion1Panel.getVisibility() == View.VISIBLE) {
-                    opcion1Panel.setVisibility(View.GONE);
-                } else {
-                    opcion1Panel.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+    public void replaceFragments(Class fragmentClass, int view) {
+        Fragment fragment = null;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ConstraintLayout opcion2Panel = (ConstraintLayout) findViewById(R.id.idOpcion2Panel);
+        // Insert the fragment by replacing any existing fragment
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(view, fragment);
+        fragmentTransaction.commit();
+    }
 
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.idOpcion2Panel, new CarSelectionFragment());
-                fragmentTransaction.commit();
+    public Office getSelectedOffice() {
+        return selectedOffice;
+    }
 
-                if (opcion2Panel.getVisibility() == View.VISIBLE) {
-                    opcion2Panel.setVisibility(View.GONE);
-                } else {
-                    opcion2Panel.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+    public void setSelectedOffice(Office selectedOffice) {
+        this.selectedOffice = selectedOffice;
+    }
 
+    public String getInitDate() {
+        return initDate;
+    }
+
+    public void setInitDate(String initDate) {
+        this.initDate = initDate;
+    }
+
+    public String getFinalDate() {
+        return finalDate;
+    }
+
+    public void setFinalDate(String finalDate) {
+        this.finalDate = finalDate;
     }
 }

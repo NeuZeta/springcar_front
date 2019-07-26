@@ -7,38 +7,17 @@
     android:orientation="vertical"
     tools:context=".activities.MainActivity">
 
-    <Button
-        android:id="@+id/idOpcion1Btn"
+    <fragment
+        android:id="@+id/fragment3"
+        android:name="com.nzsoft.springcar.fragments.BreadcrumbFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:layout_marginBottom="2dp"
-        android:text="Dates Selection" />
+        tools:layout="@layout/fragment_breadcrumb" />
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/idOpcion1Panel"
+        android:id="@+id/idContentFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone">
+        android:layout_height="match_parent">
+
     </android.support.constraint.ConstraintLayout>
-
-    <Button
-        android:id="@+id/idOpcion2Btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:text="Car Selection" />
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/idOpcion2Panel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone">
-    </android.support.constraint.ConstraintLayout>
-
-
 </LinearLayout>

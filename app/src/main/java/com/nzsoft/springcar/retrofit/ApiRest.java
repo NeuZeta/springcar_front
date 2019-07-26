@@ -7,12 +7,16 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface ApiRest {
 
     // CARS
     @GET ("cars")
     public Call<List<Car>> getAllCars();
+
+    @GET ("cars/nodisponibles")
+    public Call<List<Car>> getNotAvailableCars(@Query("fin") String fechaFin, @Query("inicio") String fechaInicio, @Query("officeId") Long officeId);
 
 
     // OFFICES

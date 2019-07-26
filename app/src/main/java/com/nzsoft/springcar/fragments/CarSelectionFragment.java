@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.nzsoft.springcar.R;
+import com.nzsoft.springcar.activities.MainActivity;
 import com.nzsoft.springcar.adapters.CarListAdapter;
 import com.nzsoft.springcar.model.Car;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
@@ -38,9 +39,14 @@ public class CarSelectionFragment extends Fragment {
 
         final ListView carListView = (ListView) view.findViewById(R.id.idCarsList);
 
+        String fechaFin = ((MainActivity)getActivity()).getFinalDate();
+        String fechaInicio = ((MainActivity)getActivity()).getInitDate();
+        Long officeId = ((MainActivity)getActivity()).getSelectedOffice().getId();
+        Call<List<Car>> notAvailableCarsCall = RetrofitHelper.getApiRest().getNotAvailableCars(fechaFin, fechaInicio, officeId);
+
         Call<List<Car>> call = RetrofitHelper.getApiRest().getAllCars();
 
-        call.enqueue(new Callback<List<Car>>() {
+        notAvailableCarsCall.enqueue(new Callback<List<Car>>() {
             @Override
             public void onResponse(Call<List<Car>> call, Response<List<Car>> response) {
                 if (!response.isSuccessful()){

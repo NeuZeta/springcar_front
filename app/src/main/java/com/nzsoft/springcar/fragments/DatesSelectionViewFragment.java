@@ -3,14 +3,13 @@ package com.nzsoft.springcar.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.nzsoft.springcar.R;
-import com.nzsoft.springcar.activities.CarSelectionActivity;
+import com.nzsoft.springcar.activities.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,7 +34,7 @@ public class DatesSelectionViewFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                ((CarSelectionActivity) getActivity()).replaceFragments(DatesSelectionFragment.class, R.id.idOpcion1Panel);
+                ((MainActivity) getActivity()).replaceFragments(DatesSelectionFragment.class, R.id.idOpcion1Panel);
 
             }
         });

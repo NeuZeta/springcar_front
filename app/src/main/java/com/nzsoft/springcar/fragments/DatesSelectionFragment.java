@@ -2,7 +2,6 @@ package com.nzsoft.springcar.fragments;
 
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,10 +15,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.nzsoft.springcar.R;
-import com.nzsoft.springcar.activities.CarSelectionActivity;
+import com.nzsoft.springcar.activities.MainActivity;
 import com.nzsoft.springcar.model.Office;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -39,6 +39,8 @@ public class DatesSelectionFragment extends Fragment {
     private Button submitBtn;
     private Calendar calendar;
     private DatePickerDialog datePickerDialog;
+
+    private List<Office> offices;
 
 
     public DatesSelectionFragment() {
@@ -69,7 +71,7 @@ public class DatesSelectionFragment extends Fragment {
                     Log.d("****", "Response error: " + response.message());
                     return;
                 }
-                List<Office> offices = response.body();
+                offices = response.body();
 
                 List<String> officesNameList = new ArrayList<>();
 
@@ -109,7 +111,7 @@ public class DatesSelectionFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
                         String month = ("00" + (mMonth+1)).substring(1);
-                        pickupDate.setText(mDay + "/" + month + "/" + mYear);
+                        pickupDate.setText(mDay + "-" + month + "-" + mYear);
                     }
                 }, year, month, day);
                 datePickerDialog.show();
@@ -129,7 +131,7 @@ public class DatesSelectionFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
                         String month = ("00" + (mMonth+1)).substring(1);
-                        dropoffDate.setText(mDay + "/" + month + "/" + mYear);
+                        dropoffDate.setText(mDay + "-" + month + "-" + mYear);
                     }
                 }, year, month, day);
                 datePickerDialog.show();
@@ -147,8 +149,20 @@ public class DatesSelectionFragment extends Fragment {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), CarSelectionActivity.class);
-                startActivity(intent);
+
+                //Recoger el valor del spinner de oficinas para recuperar la officina seleccionada
+                Office office = offices.get(officeSpinner.getSelectedItemPosition());
+
+                //Recoger el string de las fechas
+                String fechaInicio = pickupDate.getText().toString();
+                String fechaFin = dropoffDate.getText().toString();
+
+                ((MainActivity) getActivity()).setSelectedOffice(office);
+                ((MainActivity) getActivity()).setInitDate(fechaInicio);
+                ((MainActivity) getActivity()).setFinalDate(fechaFin);
+
+                //mostrar listado de coches
+                ((MainActivity) getActivity()).replaceFragments(CarSelectionFragment.class, R.id.idContentFragment);
             }
         });
 
