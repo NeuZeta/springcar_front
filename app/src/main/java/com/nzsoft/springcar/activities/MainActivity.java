@@ -13,12 +13,14 @@ import com.nzsoft.springcar.fragments.CarSelectionFragment;
 import com.nzsoft.springcar.fragments.DatesSelectionFragment;
 import com.nzsoft.springcar.fragments.DatesSelectionViewFragment;
 import com.nzsoft.springcar.model.Office;
+import com.nzsoft.springcar.model.Reservation;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button btn1;
     private Button btn2;
 
+    private Reservation reservation;
     private Office selectedOffice;
     private String initDate;
     private String finalDate;
@@ -49,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(view, fragment);
         fragmentTransaction.commit();
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
 
     public Office getSelectedOffice() {

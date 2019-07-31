@@ -17,11 +17,14 @@ import android.widget.TextView;
 import com.nzsoft.springcar.R;
 import com.nzsoft.springcar.activities.MainActivity;
 import com.nzsoft.springcar.model.Office;
+import com.nzsoft.springcar.model.Reservation;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -34,8 +37,8 @@ import retrofit2.Response;
 public class DatesSelectionFragment extends Fragment {
 
     private Spinner officeSpinner;
-    private TextView pickupDate;
-    private TextView dropoffDate;
+    private TextView pickupDateTextView;
+    private TextView dropoffDateTextView;
     private Button submitBtn;
     private Calendar calendar;
     private DatePickerDialog datePickerDialog;
@@ -95,10 +98,10 @@ public class DatesSelectionFragment extends Fragment {
          *
          * */
 
-        pickupDate = (TextView) view.findViewById(R.id.idPickupDate);
-        dropoffDate = (TextView) view.findViewById(R.id.idDropoffDate);
+        pickupDateTextView = (TextView) view.findViewById(R.id.idPickupDate);
+        dropoffDateTextView = (TextView) view.findViewById(R.id.idDropoffDate);
 
-        pickupDate.setOnClickListener(new View.OnClickListener() {
+        pickupDateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calendar = Calendar.getInstance();
@@ -111,14 +114,14 @@ public class DatesSelectionFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
                         String month = ("00" + (mMonth+1)).substring(1);
-                        pickupDate.setText(mDay + "-" + month + "-" + mYear);
+                        pickupDateTextView.setText(mDay + "-" + month + "-" + mYear);
                     }
                 }, year, month, day);
                 datePickerDialog.show();
             }
         });
 
-        dropoffDate.setOnClickListener(new View.OnClickListener() {
+        dropoffDateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calendar = Calendar.getInstance();
@@ -131,7 +134,7 @@ public class DatesSelectionFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
                         String month = ("00" + (mMonth+1)).substring(1);
-                        dropoffDate.setText(mDay + "-" + month + "-" + mYear);
+                        dropoffDateTextView.setText(mDay + "-" + month + "-" + mYear);
                     }
                 }, year, month, day);
                 datePickerDialog.show();
@@ -153,13 +156,26 @@ public class DatesSelectionFragment extends Fragment {
                 //Recoger el valor del spinner de oficinas para recuperar la officina seleccionada
                 Office office = offices.get(officeSpinner.getSelectedItemPosition());
 
-                //Recoger el string de las fechas
-                String fechaInicio = pickupDate.getText().toString();
-                String fechaFin = dropoffDate.getText().toString();
+                //Convertir el string en fecha
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                Date pickUpDate = null;
+                Date dropOffDate = null;
 
+                try {
+                    pickUpDate = sdf.parse(pickupDateTextView.getText().toString());
+                    dropOffDate = sdf.parse(dropoffDateTextView.getText().toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                //Inicializamos la reserva que iremos completando en las siguientes pantallas
+                //Seteamos en esa reserva las fechas de inicio y fin
+                //Guardamos la oficina ya que se usa sólo para filtrar los coches
+
+                ((MainActivity) getActivity()).setReservation(new Reservation());
                 ((MainActivity) getActivity()).setSelectedOffice(office);
-                ((MainActivity) getActivity()).setInitDate(fechaInicio);
-                ((MainActivity) getActivity()).setFinalDate(fechaFin);
+                ((MainActivity) getActivity()).getReservation().setPickUpDate(pickUpDate);
+                ((MainActivity) getActivity()).getReservation().setDropOffDate(dropOffDate);
 
                 //mostrar listado de coches
                 ((MainActivity) getActivity()).replaceFragments(CarSelectionFragment.class, R.id.idContentFragment);

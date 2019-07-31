@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.nzsoft.springcar.R;
@@ -42,21 +43,33 @@ public class CarSelectionFragment extends Fragment {
         String fechaFin = ((MainActivity)getActivity()).getFinalDate();
         String fechaInicio = ((MainActivity)getActivity()).getInitDate();
         Long officeId = ((MainActivity)getActivity()).getSelectedOffice().getId();
+
         Call<List<Car>> notAvailableCarsCall = RetrofitHelper.getApiRest().getNotAvailableCars(fechaFin, fechaInicio, officeId);
 
         Call<List<Car>> call = RetrofitHelper.getApiRest().getAllCars();
 
-        notAvailableCarsCall.enqueue(new Callback<List<Car>>() {
+        call.enqueue(new Callback<List<Car>>() {
             @Override
             public void onResponse(Call<List<Car>> call, Response<List<Car>> response) {
                 if (!response.isSuccessful()){
                     Log.d("****", "Response error: " + response.message());
                     return;
                 }
-                List<Car> cars = response.body();
+                final List<Car> cars = response.body();
+
+                //Por el momento trabajaré mostrando TODOS los coches, ya que no existe el endpoint para
+                //mostrar sólo los DISPONIBLES
 
                 CarListAdapter carListAdapter = new CarListAdapter(getActivity(), cars);
                 carListView.setAdapter(carListAdapter);
+
+                carListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        ((MainActivity) getActivity()).getReservation().setCar(cars.get(position));
+                        ((MainActivity) getActivity()).replaceFragments(ExtrasSelectionFragment.class, R.id.idContentFragment);
+                    }
+                });
 
             }
 
