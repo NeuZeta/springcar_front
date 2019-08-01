@@ -48,7 +48,7 @@ public class BreadcrumbFragment extends Fragment {
                             break;
                         case 1: fragment = new CarSelectionFragment();
                             break;
-                        case 2: fragment = new CarSelectionFragment();
+                        case 2: fragment = new ExtrasSelectionFragment();
                             break;
                     }
 

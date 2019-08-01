@@ -119,7 +119,7 @@ public class Reservation {
     * INNER ENUM InsuranceType
     *
     * */
-    enum InsuranceType{
+    public enum InsuranceType{
         BASE, TOP;
     }
 }

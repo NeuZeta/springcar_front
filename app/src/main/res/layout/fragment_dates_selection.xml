@@ -106,7 +106,7 @@
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/colorPrimary"
             android:text="@string/continue_btn"
-            android:textColor="#FFFFFF"
+            android:textColor="@android:color/white"
             android:textSize="16dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/guideline4"

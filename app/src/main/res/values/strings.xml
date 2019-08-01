@@ -10,4 +10,22 @@
     <string name="pickup_date_label">Pick Up Date</string>
     <string name="dropoff_date_label">Drop Off Date</string>
     <string name="pickup_date_hint">dd/MM/yyyy</string>
+
+    <!-- Strings de las opciones de seguros -->
+    <string name="base_insurance_text">Basic third party insurance</string>
+    <string name="top_insurance_text">All risk covering insurance</string>
+    <string name="tire_glass_text">Tire and glass protection</string>
+
+    <!-- Strings de las opciones de extras comunes -->
+    <string name="extra_0">Baby seat (0 - 13kg)</string>
+    <string name="extra_0_price">11.99 €</string>
+    <string name="extra_1">Child seat (9 - 36kg)</string>
+    <string name="extra_1_price">11.99 €</string>
+    <string name="extra_2">Booster seat (15 - 36kg)</string>
+    <string name="extra_2_price">9.99 €</string>
+    <string name="extra_3">Snow chains</string>
+    <string name="extra_3_price">18.33 €</string>
+    <string name="extra_4">Sky &amp; Snowboard rack</string>
+    <string name="extra_4_price">18.33 €</string>
+
 </resources>
