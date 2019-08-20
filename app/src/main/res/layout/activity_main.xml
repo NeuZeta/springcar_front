@@ -11,13 +11,17 @@
         android:id="@+id/fragment3"
         android:name="com.nzsoft.springcar.fragments.BreadcrumbFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
         tools:layout="@layout/fragment_breadcrumb" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/idContentFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteY="48dp"
+        android:layout_weight="1">
 
     </android.support.constraint.ConstraintLayout>
+
+
 </LinearLayout>

@@ -49,8 +49,8 @@ public class ExtrasSelectionFragment extends Fragment {
         baseInsurancePriceText.setText(carCategory.getBaseInsurancePrice() + " €");
         tireAndGlassPriceText.setText(carCategory.getTireAndGlassProtectionPrice() + " €");
 
-        Button submitBtn = (Button) view.findViewById(R.id.idSubmitExtrasBtn);
-        submitBtn.setOnClickListener(new View.OnClickListener() {
+        Button nextBtn = (Button) view.findViewById(R.id.idNextButton_Extras);
+        nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -101,6 +101,15 @@ public class ExtrasSelectionFragment extends Fragment {
 
                 ((MainActivity)getActivity()).getReservation().setCommonExtras(commonExtras);
 
+            }
+        });
+
+        Button backBtn = (Button) view.findViewById(R.id.idBackButton_Extras);
+        backBtn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).replaceFragments(CarSelectionFragment.class, R.id.idContentFragment);
             }
         });
 

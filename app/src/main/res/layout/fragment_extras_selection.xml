@@ -5,261 +5,284 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ExtrasSelectionFragment">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/InsuranceTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:text="INSURANCE"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <RadioGroup
+                        android:id="@+id/idInsuranceType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3">
+
+                        <RadioButton
+                            android:id="@+id/idBasicInsurance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:checked="true"
+                            android:padding="20dp"
+                            android:text="@string/base_insurance_text" />
+
+                        <RadioButton
+                            android:id="@+id/idTopInsurance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:padding="20dp"
+                            android:text="@string/top_insurance_text" />
+
+                    </RadioGroup>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/idBasicInsurancePrice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:padding="20dp"
+                            android:text="90.5 €" />
+
+                        <TextView
+                            android:id="@+id/idTopInsurancePrice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:padding="20dp"
+                            android:text="355.5 €" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tireAndGlass"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/idTireAndGlass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="3"
+                        android:padding="20dp"
+                        android:text="@string/tire_glass_text" />
+
+                    <TextView
+                        android:id="@+id/idTireAndGlassPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:padding="20dp"
+                        android:text="TextView"
+                        android:textFontWeight="1" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/ExtrasTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:text="EXTRAS"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/extra_0"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/idExtra_BabyChair"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="3"
+                        android:padding="20dp"
+                        android:text="@string/extra_0" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:padding="20dp"
+                        android:text="@string/extra_0_price" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/extra_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/idExtra_ChildChair"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="3"
+                        android:padding="20dp"
+                        android:text="@string/extra_1" />
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:padding="20dp"
+                        android:text="@string/extra_1_price" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/extra_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/idExtra_BoosterChair"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="3"
+                        android:padding="20dp"
+                        android:text="@string/extra_2" />
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:padding="20dp"
+                        android:text="@string/extra_2_price" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/extra_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/idExtra_SnowChains"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="3"
+                        android:padding="20dp"
+                        android:text="@string/extra_3" />
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:padding="20dp"
+                        android:text="@string/extra_3_price" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/extra_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/idExtra_SkyRack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="3"
+                        android:padding="20dp"
+                        android:text="@string/extra_4" />
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:padding="20dp"
+                        android:text="@string/extra_4_price" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/InsuranceTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:text="INSURANCE"
-                android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <RadioGroup
-                    android:id="@+id/idInsuranceType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3">
-
-                    <RadioButton
-                        android:id="@+id/idBasicInsurance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:checked="true"
-                        android:padding="20dp"
-                        android:text="@string/base_insurance_text" />
-
-                    <RadioButton
-                        android:id="@+id/idTopInsurance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:padding="20dp"
-                        android:text="@string/top_insurance_text" />
-
-                </RadioGroup>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/idBasicInsurancePrice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:padding="20dp"
-                        android:text="90.5 €" />
-
-                    <TextView
-                        android:id="@+id/idTopInsurancePrice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:padding="20dp"
-                        android:text="355.5 €" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/tireAndGlass"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="horizontal">
-
-                <CheckBox
-                    android:id="@+id/idTireAndGlass"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="3"
-                    android:padding="20dp"
-                    android:text="@string/tire_glass_text" />
-
-                <TextView
-                    android:id="@+id/idTireAndGlassPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:padding="20dp"
-                    android:text="TextView"
-                    android:textFontWeight="1" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/ExtrasTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:text="EXTRAS"
-                android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:id="@+id/extra_0"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="horizontal">
-
-                <CheckBox
-                    android:id="@+id/idExtra_BabyChair"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="3"
-                    android:padding="20dp"
-                    android:text="@string/extra_0" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:padding="20dp"
-                    android:text="@string/extra_0_price" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/extra_1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="horizontal">
-
-                <CheckBox
-                    android:id="@+id/idExtra_ChildChair"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="3"
-                    android:padding="20dp"
-                    android:text="@string/extra_1" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:padding="20dp"
-                    android:text="@string/extra_1_price" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/extra_2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="horizontal">
-
-                <CheckBox
-                    android:id="@+id/idExtra_BoosterChair"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="3"
-                    android:padding="20dp"
-                    android:text="@string/extra_2" />
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:padding="20dp"
-                    android:text="@string/extra_2_price" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/extra_3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="horizontal">
-
-                <CheckBox
-                    android:id="@+id/idExtra_SnowChains"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="3"
-                    android:padding="20dp"
-                    android:text="@string/extra_3" />
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:padding="20dp"
-                    android:text="@string/extra_3_price" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/extra_4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="horizontal">
-
-                <CheckBox
-                    android:id="@+id/idExtra_SkyRack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="3"
-                    android:padding="20dp"
-                    android:text="@string/extra_4" />
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:padding="20dp"
-                    android:text="@string/extra_4_price" />
-            </LinearLayout>
+            android:orientation="horizontal">
 
             <Button
-                android:id="@+id/idSubmitExtrasBtn"
-                android:layout_width="match_parent"
+                android:id="@+id/idBackButton_Extras"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:padding="25dp"
-                android:text="@string/continue_btn"
-                android:textColor="@android:color/background_light"
+                android:layout_weight="1"
+                android:padding="20dp"
                 android:backgroundTint="@color/colorPrimary"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:visibility="visible"
+                android:textColor="@android:color/white"
+                android:text="Back" />
+
+            <Button
+                android:id="@+id/idNextButton_Extras"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="20dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:text="Next" />
 
         </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
 </FrameLayout>

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.nzsoft.springcar.R;
@@ -26,6 +27,10 @@ import retrofit2.Response;
  * A simple {@link Fragment} subclass.
  */
 public class CarSelectionFragment extends Fragment {
+
+    public static int selectedCar = -1;
+    private Button nextBtn;
+    private Button prevBtn;
 
 
     public CarSelectionFragment() {
@@ -60,14 +65,16 @@ public class CarSelectionFragment extends Fragment {
                 //Por el momento trabajaré mostrando TODOS los coches, ya que no existe el endpoint para
                 //mostrar sólo los DISPONIBLES
 
-                CarListAdapter carListAdapter = new CarListAdapter(getActivity(), cars);
+                final CarListAdapter carListAdapter = new CarListAdapter(getActivity(), cars);
                 carListView.setAdapter(carListAdapter);
 
                 carListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        selectedCar = position;
+                        carListAdapter.notifyDataSetChanged();
                         ((MainActivity) getActivity()).getReservation().setCar(cars.get(position));
-                        ((MainActivity) getActivity()).replaceFragments(ExtrasSelectionFragment.class, R.id.idContentFragment);
                     }
                 });
 
@@ -78,6 +85,26 @@ public class CarSelectionFragment extends Fragment {
                 Log.d("***", "Error: " + t.getCause().toString());
             }
 
+        });
+
+        nextBtn = (Button) view.findViewById(R.id.idNextButton_CarSelection);
+
+        nextBtn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).replaceFragments(ExtrasSelectionFragment.class, R.id.idContentFragment);
+            }
+        });
+
+        prevBtn = (Button) view.findViewById(R.id.idBackButton_CarSelection);
+
+        prevBtn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).replaceFragments(DatesSelectionFragment.class, R.id.idContentFragment);
+            }
         });
 
         return view;

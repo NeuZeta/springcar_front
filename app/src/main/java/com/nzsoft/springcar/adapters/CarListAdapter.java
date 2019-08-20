@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nzsoft.springcar.R;
+import com.nzsoft.springcar.fragments.CarSelectionFragment;
 import com.nzsoft.springcar.model.Car;
 import com.squareup.picasso.Picasso;
 
@@ -20,6 +21,7 @@ public class CarListAdapter extends BaseAdapter {
     private LayoutInflater inflater = null;
     private List<Car> cars;
     private Context contexto;
+
 
     public CarListAdapter(Context contexto, List<Car> cars){
         this.contexto = contexto;
@@ -60,6 +62,10 @@ public class CarListAdapter extends BaseAdapter {
 
         if (position%2 != 0){
             view.setBackgroundColor(view.getResources().getColor(R.color.colorPaleGray));
+        }
+
+        if (position == CarSelectionFragment.selectedCar){
+            view.setBackgroundColor(view.getResources().getColor(R.color.colorPrimaryLight));
         }
 
         return view;

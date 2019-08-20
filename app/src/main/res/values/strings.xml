@@ -9,7 +9,7 @@
     <string name="select_office_label">Select Office</string>
     <string name="pickup_date_label">Pick Up Date</string>
     <string name="dropoff_date_label">Drop Off Date</string>
-    <string name="pickup_date_hint">dd/MM/yyyy</string>
+    <string name="pickup_date_hint">dd-MM-yyyy</string>
 
     <!-- Strings de las opciones de seguros -->
     <string name="base_insurance_text">Basic third party insurance</string>
@@ -27,5 +27,9 @@
     <string name="extra_3_price">18.33 €</string>
     <string name="extra_4">Sky &amp; Snowboard rack</string>
     <string name="extra_4_price">18.33 €</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 </resources>

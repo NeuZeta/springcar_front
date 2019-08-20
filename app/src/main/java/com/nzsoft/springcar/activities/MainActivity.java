@@ -1,17 +1,13 @@
 package com.nzsoft.springcar.activities;
 
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import com.nzsoft.springcar.R;
-import com.nzsoft.springcar.fragments.CarSelectionFragment;
 import com.nzsoft.springcar.fragments.DatesSelectionFragment;
-import com.nzsoft.springcar.fragments.DatesSelectionViewFragment;
 import com.nzsoft.springcar.model.Office;
 import com.nzsoft.springcar.model.Reservation;
 
@@ -37,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
 
     public void replaceFragments(Class fragmentClass, int view) {
         Fragment fragment = null;

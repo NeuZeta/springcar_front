@@ -44,6 +44,7 @@ public class DatesSelectionFragment extends Fragment {
     private DatePickerDialog datePickerDialog;
 
     private List<Office> offices;
+    private SimpleDateFormat simpleDateFormat;
 
 
     public DatesSelectionFragment() {
@@ -56,6 +57,8 @@ public class DatesSelectionFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_dates_selection, container, false);
+
+        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
        /*
        *
@@ -84,6 +87,17 @@ public class DatesSelectionFragment extends Fragment {
 
                 ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, officesNameList);
                 officeSpinner.setAdapter(adapter);
+
+                //If the reservation already has an Office selected:
+                Office selectedOffice = ((MainActivity) getActivity()).getSelectedOffice();
+                if ( selectedOffice != null){
+                    for (int i = 0; i < offices.size(); i++){
+                        if (offices.get(i).getId() == selectedOffice.getId()){
+                            officeSpinner.setSelection(i);
+                            return;
+                        }
+                    }
+                }
             }
 
             @Override
@@ -101,6 +115,32 @@ public class DatesSelectionFragment extends Fragment {
         pickupDateTextView = (TextView) view.findViewById(R.id.idPickupDate);
         dropoffDateTextView = (TextView) view.findViewById(R.id.idDropoffDate);
 
+        Reservation reservation = ((MainActivity)getActivity()).getReservation();
+
+        calendar = Calendar.getInstance();
+
+        if (reservation != null && reservation.getPickUpDate() != null && reservation.getDropOffDate() != null){
+
+            String pickUpDateString = simpleDateFormat.format(reservation.getPickUpDate());
+            String dropOffDateString = simpleDateFormat.format(reservation.getDropOffDate());
+
+            pickupDateTextView.setText(pickUpDateString);
+            dropoffDateTextView.setText(dropOffDateString);
+
+        } else {
+
+            pickupDateTextView.setText(simpleDateFormat.format(new Date()));
+
+            Date tomorrowDate = new Date();
+            Calendar c = Calendar.getInstance();
+            c.setTime(tomorrowDate);
+            c.add(Calendar.DATE, 1);
+            tomorrowDate = c.getTime();
+
+            dropoffDateTextView.setText(simpleDateFormat.format(tomorrowDate));
+
+        }
+
         pickupDateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,7 +153,8 @@ public class DatesSelectionFragment extends Fragment {
                 datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
-                        String month = ("00" + (mMonth+1)).substring(1);
+                        String longMonth = ("00" + (mMonth+1));
+                        String month = longMonth.substring(longMonth.length()-2);
                         pickupDateTextView.setText(mDay + "-" + month + "-" + mYear);
                     }
                 }, year, month, day);
@@ -141,13 +182,15 @@ public class DatesSelectionFragment extends Fragment {
             }
         });
 
+
         /*
          *
          *  BOTON SUBMIT
          *
          * */
 
-        submitBtn = (Button) view.findViewById(R.id.idSubmitDatesBtn);
+
+        submitBtn = (Button) view.findViewById(R.id.idNextButton_Extras);
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,13 +200,12 @@ public class DatesSelectionFragment extends Fragment {
                 Office office = offices.get(officeSpinner.getSelectedItemPosition());
 
                 //Convertir el string en fecha
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                 Date pickUpDate = null;
                 Date dropOffDate = null;
 
                 try {
-                    pickUpDate = sdf.parse(pickupDateTextView.getText().toString());
-                    dropOffDate = sdf.parse(dropoffDateTextView.getText().toString());
+                    pickUpDate = simpleDateFormat.parse(pickupDateTextView.getText().toString());
+                    dropOffDate = simpleDateFormat.parse(dropoffDateTextView.getText().toString());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
