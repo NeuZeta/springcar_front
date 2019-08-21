@@ -7,9 +7,13 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.nzsoft.springcar.R;
+import com.nzsoft.springcar.fragments.BreadcrumbFragment;
 import com.nzsoft.springcar.fragments.DatesSelectionFragment;
+import com.nzsoft.springcar.fragments.LocationSelectionFragment;
 import com.nzsoft.springcar.model.Office;
 import com.nzsoft.springcar.model.Reservation;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,14 +25,20 @@ public class MainActivity extends AppCompatActivity {
     private String initDate;
     private String finalDate;
 
+    private CurrentStep currentStep;
+    private BreadcrumbFragment breadcrumbFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        breadcrumbFragment = (BreadcrumbFragment) getSupportFragmentManager().findFragmentById(R.id.idBreadCrumbFragment);
+
         if (savedInstanceState == null){
+            setCurrentStep(CurrentStep.LOCATION);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.idContentFragment, new DatesSelectionFragment());
+            fragmentTransaction.add(R.id.idContentFragment, new LocationSelectionFragment());
             fragmentTransaction.commit();
         }
 
@@ -46,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(view, fragment);
         fragmentTransaction.commit();
+
+        //Update Breadcrumb fragment
+        breadcrumbFragment.changeStep(currentStep);
+
     }
 
     public Reservation getReservation() {
@@ -79,4 +93,17 @@ public class MainActivity extends AppCompatActivity {
     public void setFinalDate(String finalDate) {
         this.finalDate = finalDate;
     }
+
+    public CurrentStep getCurrentStep() {
+        return currentStep;
+    }
+
+    public void setCurrentStep(CurrentStep currentStep) {
+        this.currentStep = currentStep;
+    }
+
+    public enum CurrentStep {
+        LOCATION, DATES, CAR, EXTRAS, CONFIRMATION;
+    }
+
 }

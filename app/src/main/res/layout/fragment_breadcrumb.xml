@@ -1,40 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.BreadcrumbFragment">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/idDatesSelectionBC_btn"
+        <ImageView
+            android:id="@+id/idBCConection01"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/breadcrumb_connection_inactive"
+            app:layout_constraintBottom_toBottomOf="@+id/idBCStep01"
+            app:layout_constraintEnd_toStartOf="@+id/guideline30percent"
+            app:layout_constraintStart_toStartOf="@+id/guideline10percert"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/breadcrumb_connection_inactive" />
+
+        <ImageView
+            android:id="@+id/idBCConection02"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/breadcrumb_connection_inactive"
+            app:layout_constraintBottom_toBottomOf="@+id/idBCStep02"
+            app:layout_constraintEnd_toStartOf="@+id/guideline50percernt"
+            app:layout_constraintStart_toStartOf="@+id/guideline30percent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/idBCConection03"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/breadcrumb_connection_inactive"
+            app:layout_constraintBottom_toBottomOf="@+id/idBCStep03"
+            app:layout_constraintEnd_toStartOf="@+id/guideline70percent"
+            app:layout_constraintStart_toStartOf="@+id/guideline50percernt"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/idBCConection04"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/breadcrumb_connection_inactive"
+            app:layout_constraintBottom_toBottomOf="@+id/idBCStep04"
+            app:layout_constraintEnd_toStartOf="@+id/guideline90percent"
+            app:layout_constraintStart_toStartOf="@+id/guideline70percent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline20percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:text="Dates"
-            android:textColor="@android:color/background_light" />
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".2" />
 
-        <Button
-            android:id="@+id/idCarSelectionBC_btn"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/idBCStep01"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:text="Car"
-            android:textColor="@android:color/background_light" />
+            android:paddingHorizontal="10dp"
+            android:src="@drawable/location_active"
+            app:layout_constraintEnd_toStartOf="@+id/guideline20percent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/idExtrasSelectionBC_btn"
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline40percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".4" />
+
+        <ImageView
+            android:id="@+id/idBCStep02"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:text="Extras"
-            android:textColor="@android:color/background_light" />
-    </LinearLayout>
+            android:paddingHorizontal="10dp"
+            android:src="@drawable/inactive"
+            app:layout_constraintEnd_toStartOf="@+id/guideline40percent"
+            app:layout_constraintStart_toStartOf="@+id/guideline20percent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline60percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".6" />
+
+        <ImageView
+            android:id="@+id/idBCStep03"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingHorizontal="10dp"
+            android:src="@drawable/inactive"
+            app:layout_constraintEnd_toStartOf="@+id/guideline60percent"
+            app:layout_constraintStart_toStartOf="@+id/guideline40percent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline80percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".8" />
+
+        <ImageView
+            android:id="@+id/idBCStep04"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingHorizontal="10dp"
+            android:src="@drawable/inactive"
+            app:layout_constraintEnd_toStartOf="@+id/guideline80percent"
+            app:layout_constraintStart_toStartOf="@+id/guideline60percent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/idBCStep05"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingHorizontal="10dp"
+            android:src="@drawable/inactive"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline80percent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline10percert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".1" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline30percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".3" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline50percernt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".5" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline70percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".7" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline90percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".9" />
+
+    </android.support.constraint.ConstraintLayout>
+
 </FrameLayout>

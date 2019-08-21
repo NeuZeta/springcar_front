@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#89c745</color>
+    <color name="colorAccent">#89c745</color>
     <color name="colorPrimaryLight">#DBEBC0</color>
     <color name="colorPrimaryDark">#00574B</color>
 
 
 
     <!-- Error colors -->
-    <color name="colorAccent">#E63462</color>
+    <color name="colorError">#E63462</color>
 
     <!-- Base Colors -->
     <color name="colorPaleGray">#ECECEC</color>

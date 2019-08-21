@@ -7,32 +7,19 @@
     tools:context=".fragments.DatesSelectionFragment">
 
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2">
-
-            <Spinner
-                android:id="@+id/idOfficeSelection"
-                style="@android:style/Widget.Material.Light.Spinner.Underlined"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
-                android:dropDownWidth="match_parent"
-                android:spinnerMode="dropdown"
-                app:layout_constraintBottom_toTopOf="@+id/guideline"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/guideline10" />
+            android:id="@+id/constraintLayout2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline16"
+            app:layout_constraintBottom_toTopOf="@+id/guideline16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <EditText
                 android:id="@+id/idPickupDate"
@@ -58,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="99dp" />
+                app:layout_constraintGuide_begin="33dp" />
 
             <android.support.constraint.Guideline
                 android:id="@+id/guideline2"
@@ -91,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="211dp" />
+                app:layout_constraintGuide_begin="151dp" />
 
             <android.support.constraint.Guideline
                 android:id="@+id/guideline4"
@@ -99,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintGuide_begin="295dp" />
-<!--
+            <!--
             <Button
                 android:id="@+id/idSubmitDatesBtn"
                 android:layout_width="0dp"
@@ -128,28 +115,11 @@
                 app:layout_constraintGuide_percent="0.70" />
 
             <android.support.constraint.Guideline
-                android:id="@+id/guideline10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_begin="35dp" />
-
-            <TextView
-                android:id="@+id/idSelectOfficeLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:text="@string/select_office_label"
-                app:layout_constraintBottom_toTopOf="@+id/guideline10"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <android.support.constraint.Guideline
                 android:id="@+id/guideline11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="130dp" />
+                app:layout_constraintGuide_begin="64dp" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -175,31 +145,40 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline16">
 
             <Button
-                android:id="@+id/idBackButton_Extras"
+                android:id="@+id/idBackButton_Dates"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="20dp"
                 android:backgroundTint="@color/colorPrimary"
-                android:visibility="invisible"
+                android:padding="20dp"
+                android:text="Back"
                 android:textColor="@android:color/white"
-                android:text="Back" />
+                android:visibility="visible" />
 
             <Button
-                android:id="@+id/idNextButton_Extras"
+                android:id="@+id/idNextButton_Dates"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="20dp"
                 android:backgroundTint="@color/colorPrimary"
-                android:textColor="@android:color/white"
-                android:text="Next" />
+                android:padding="20dp"
+                android:text="Next"
+                android:textColor="@android:color/white" />
 
         </LinearLayout>
 
-    </LinearLayout>
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".88" />
+
+    </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

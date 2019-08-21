@@ -3,21 +3,30 @@ package com.nzsoft.springcar.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 
 import com.nzsoft.springcar.R;
+import com.nzsoft.springcar.activities.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class BreadcrumbFragment extends Fragment {
 
-    private final int[] BOTONES_MAIN_MENU = {R.id.idDatesSelectionBC_btn, R.id.idCarSelectionBC_btn, R.id.idExtrasSelectionBC_btn};
+    private ImageView step01;
+    private ImageView step02;
+    private ImageView step03;
+    private ImageView step04;
+    private ImageView step05;
+
+    private ImageView connection01;
+    private ImageView connection02;
+    private ImageView connection03;
+    private ImageView connection04;
+
 
     public BreadcrumbFragment() {
         // Required empty public constructor
@@ -29,41 +38,53 @@ public class BreadcrumbFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_breadcrumb, container, false);
 
-        Button menuBtn;
+        step01 = (ImageView) view.findViewById(R.id.idBCStep01);
+        step02 = (ImageView) view.findViewById(R.id.idBCStep02);
+        step03 = (ImageView) view.findViewById(R.id.idBCStep03);
+        step04 = (ImageView) view.findViewById(R.id.idBCStep04);
+        step05 = (ImageView) view.findViewById(R.id.idBCStep05);
 
-        for (int i = 0; i < BOTONES_MAIN_MENU.length; i++){
-
-            menuBtn = (Button) view.findViewById(BOTONES_MAIN_MENU[i]);
-
-            final int BUTTON = i;
-
-            menuBtn.setOnClickListener(new View.OnClickListener(){
-
-                @Override
-                public void onClick(View v) {
-                    Fragment fragment = null;
-
-                    switch (BUTTON){
-                        case 0: fragment = new DatesSelectionFragment();
-                            break;
-                        case 1: fragment = new CarSelectionFragment();
-                            break;
-                        case 2: fragment = new ExtrasSelectionFragment();
-                            break;
-                    }
-
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-                    fragmentTransaction.replace(R.id.idContentFragment, fragment);
-                    fragmentTransaction.commit();
-                }
-            });
-        }
-
-
+        connection01 = (ImageView) view.findViewById(R.id.idBCConection01);
+        connection02 = (ImageView) view.findViewById(R.id.idBCConection02);
+        connection03 = (ImageView) view.findViewById(R.id.idBCConection03);
+        connection04 = (ImageView) view.findViewById(R.id.idBCConection04);
 
         return view;
+    }
+
+
+    public void changeStep (MainActivity.CurrentStep currentStep){
+
+        if (currentStep == MainActivity.CurrentStep.LOCATION){
+            step01.setImageDrawable(getResources().getDrawable(R.drawable.location_active));
+            step02.setImageDrawable(getResources().getDrawable(R.drawable.inactive));
+            connection01.setColorFilter(getResources().getColor(R.color.colorPaleGray));
+        }
+
+        if (currentStep == MainActivity.CurrentStep.DATES){
+            step01.setImageDrawable(getResources().getDrawable(R.drawable.location_saved));
+            step02.setImageDrawable(getResources().getDrawable(R.drawable.calendar_active));
+            step03.setImageDrawable(getResources().getDrawable(R.drawable.inactive));
+            connection01.setColorFilter(getResources().getColor(R.color.colorPrimary));
+            connection02.setColorFilter(getResources().getColor(R.color.colorPaleGray));
+        }
+
+        if (currentStep == MainActivity.CurrentStep.CAR){
+            step02.setImageDrawable(getResources().getDrawable(R.drawable.calendar_saved));
+            step03.setImageDrawable(getResources().getDrawable(R.drawable.car_active));
+            step04.setImageDrawable(getResources().getDrawable(R.drawable.inactive));
+            connection02.setColorFilter(getResources().getColor(R.color.colorPrimary));
+            connection03.setColorFilter(getResources().getColor(R.color.colorPaleGray));
+        }
+
+        if (currentStep == MainActivity.CurrentStep.EXTRAS){
+            step03.setImageDrawable(getResources().getDrawable(R.drawable.car_saved));
+            step04.setImageDrawable(getResources().getDrawable(R.drawable.extras_active));
+            step05.setImageDrawable(getResources().getDrawable(R.drawable.inactive));
+            connection03.setColorFilter(getResources().getColor(R.color.colorPrimary));
+            connection04.setColorFilter(getResources().getColor(R.color.colorPaleGray));
+        }
+
     }
 
 }

@@ -3,7 +3,6 @@ package com.nzsoft.springcar.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +48,7 @@ public class ExtrasSelectionFragment extends Fragment {
         baseInsurancePriceText.setText(carCategory.getBaseInsurancePrice() + " €");
         tireAndGlassPriceText.setText(carCategory.getTireAndGlassProtectionPrice() + " €");
 
-        Button nextBtn = (Button) view.findViewById(R.id.idNextButton_Extras);
+        Button nextBtn = (Button) view.findViewById(R.id.idNextButton_Dates);
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,11 +103,12 @@ public class ExtrasSelectionFragment extends Fragment {
             }
         });
 
-        Button backBtn = (Button) view.findViewById(R.id.idBackButton_Extras);
+        Button backBtn = (Button) view.findViewById(R.id.idBackButton_Dates);
         backBtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
+                ((MainActivity)getActivity()).setCurrentStep(MainActivity.CurrentStep.CAR);
                 ((MainActivity) getActivity()).replaceFragments(CarSelectionFragment.class, R.id.idContentFragment);
             }
         });

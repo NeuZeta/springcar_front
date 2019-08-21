@@ -93,6 +93,7 @@ public class CarSelectionFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
+                ((MainActivity)getActivity()).setCurrentStep(MainActivity.CurrentStep.EXTRAS);
                 ((MainActivity) getActivity()).replaceFragments(ExtrasSelectionFragment.class, R.id.idContentFragment);
             }
         });
@@ -103,6 +104,8 @@ public class CarSelectionFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
+                //mostrar listado de coches
+                ((MainActivity)getActivity()).setCurrentStep(MainActivity.CurrentStep.DATES);
                 ((MainActivity) getActivity()).replaceFragments(DatesSelectionFragment.class, R.id.idContentFragment);
             }
         });
