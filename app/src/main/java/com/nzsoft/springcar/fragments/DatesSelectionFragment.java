@@ -48,11 +48,12 @@ public class DatesSelectionFragment extends Fragment {
 
         simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
+
         /*
-         *
-         *  SELECCIÓN DE FECHAS
-         *
-         * */
+        *
+        * SETEAMOS FECHAS INICIALES
+        *
+        * */
 
         pickupDateTextView = (TextView) view.findViewById(R.id.idPickupDate);
         dropoffDateTextView = (TextView) view.findViewById(R.id.idDropoffDate);
@@ -61,35 +62,44 @@ public class DatesSelectionFragment extends Fragment {
 
         calendar = Calendar.getInstance();
 
-        if (reservation != null && reservation.getPickUpDate() != null && reservation.getDropOffDate() != null){
+        if (reservation != null){
+            if (reservation.getPickUpDate() == null && reservation.getDropOffDate() == null){
 
-            String pickUpDateString = simpleDateFormat.format(reservation.getPickUpDate());
-            String dropOffDateString = simpleDateFormat.format(reservation.getDropOffDate());
+                //Si no hay fechas asignadas en la reserva asignamos la fecha de hoy y mañana
 
-            pickupDateTextView.setText(pickUpDateString);
-            dropoffDateTextView.setText(dropOffDateString);
+                Date todayDate = new Date();
+                calendar.setTime(todayDate);
+                calendar.add(Calendar.DATE, 1);
+                Date tomorrowDate = calendar.getTime();
 
-        } else {
+                pickupDateTextView.setText(simpleDateFormat.format(todayDate));
+                dropoffDateTextView.setText(simpleDateFormat.format(tomorrowDate));
 
-            Date todayDate = new Date();
-            pickupDateTextView.setText(simpleDateFormat.format(todayDate));
+                reservation.setPickUpDate(todayDate);
+                reservation.setDropOffDate(tomorrowDate);
 
-            Date tomorrowDate = new Date();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(tomorrowDate);
-            calendar.add(Calendar.DATE, 1);
-            tomorrowDate = calendar.getTime();
+            } else {
 
-            dropoffDateTextView.setText(simpleDateFormat.format(tomorrowDate));
+                //Si la reserva ya tiene fechas las mostramos en el calendario
 
-            reservation.setPickUpDate(todayDate);
-            reservation.setDropOffDate(tomorrowDate);
+                String pickUpDateString = simpleDateFormat.format(reservation.getPickUpDate());
+                String dropOffDateString = simpleDateFormat.format(reservation.getDropOffDate());
 
+                pickupDateTextView.setText(pickUpDateString);
+                dropoffDateTextView.setText(dropOffDateString);
+            }
         }
+
+        /*
+         *
+         *  SELECCIÓN DE FECHAS
+         *
+         * */
 
         pickupDateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 calendar = Calendar.getInstance();
                 calendar.setTime(reservation.getPickUpDate());
 
@@ -100,11 +110,25 @@ public class DatesSelectionFragment extends Fragment {
                 datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
+
                         String longMonth = ("00" + (mMonth+1));
                         String month = longMonth.substring(longMonth.length()-2);
+
                         pickupDateTextView.setText(mDay + "-" + month + "-" + mYear);
+
+                        //Seteamos la fecha en la reserva
+
+                        Date pickUpDate = null;
+                         try {
+                             pickUpDate = simpleDateFormat.parse(pickupDateTextView.getText().toString());
+                         } catch (ParseException e){
+                             e.printStackTrace();
+                         }
+                        ((MainActivity) getActivity()).getReservation().setPickUpDate(pickUpDate);
+
                     }
                 }, year, month, day);
+
                 datePickerDialog.show();
             }
         });
@@ -120,10 +144,24 @@ public class DatesSelectionFragment extends Fragment {
                 int year = calendar.get(Calendar.YEAR);
 
                 datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
                         String month = ("00" + (mMonth+1)).substring(1);
+
                         dropoffDateTextView.setText(mDay + "-" + month + "-" + mYear);
+
+                        //Seteamos la fecha en la reserva
+
+                        Date dropOffDate = null;
+
+                        try {
+                            dropOffDate = simpleDateFormat.parse(dropoffDateTextView.getText().toString());
+                        } catch (ParseException e){
+                            e.printStackTrace();
+                        }
+
+                        ((MainActivity) getActivity()).getReservation().setDropOffDate(dropOffDate);
                     }
                 }, year, month, day);
                 datePickerDialog.show();
@@ -144,24 +182,6 @@ public class DatesSelectionFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //Convertir el string en fecha
-                Date pickUpDate = null;
-                Date dropOffDate = null;
-
-                try {
-                    pickUpDate = simpleDateFormat.parse(pickupDateTextView.getText().toString());
-                    dropOffDate = simpleDateFormat.parse(dropoffDateTextView.getText().toString());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                //Inicializamos la reserva que iremos completando en las siguientes pantallas
-                //Seteamos en esa reserva las fechas de inicio y fin
-                //Guardamos la oficina ya que se usa sólo para filtrar los coches
-
-                ((MainActivity) getActivity()).getReservation().setPickUpDate(pickUpDate);
-                ((MainActivity) getActivity()).getReservation().setDropOffDate(dropOffDate);
-
                 //mostrar listado de coches
                 ((MainActivity)getActivity()).setCurrentStep(MainActivity.CurrentStep.CAR);
                 ((MainActivity) getActivity()).replaceFragments(CarSelectionFragment.class, R.id.idContentFragment);
@@ -169,6 +189,7 @@ public class DatesSelectionFragment extends Fragment {
         });
 
         backBtn = (Button) view.findViewById(R.id.idBackButton_Dates);
+
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

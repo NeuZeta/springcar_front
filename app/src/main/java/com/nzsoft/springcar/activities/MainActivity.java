@@ -13,12 +13,9 @@ import com.nzsoft.springcar.fragments.LocationSelectionFragment;
 import com.nzsoft.springcar.model.Office;
 import com.nzsoft.springcar.model.Reservation;
 
-import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
-
-    private Button btn1;
-    private Button btn2;
 
     private Reservation reservation;
     private Office selectedOffice;

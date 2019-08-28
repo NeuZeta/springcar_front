@@ -1,6 +1,7 @@
 package com.nzsoft.springcar.fragments;
 
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -45,6 +46,17 @@ public class CarSelectionFragment extends Fragment {
 
         final ListView carListView = (ListView) view.findViewById(R.id.idCarsList);
 
+        nextBtn = (Button) view.findViewById(R.id.idNextButton_CarSelection);
+        prevBtn = (Button) view.findViewById(R.id.idBackButton_CarSelection);
+
+        if (((MainActivity)getActivity()).getReservation().getCar() == null){
+            nextBtn.getBackground().setColorFilter(nextBtn.getContext().getResources().getColor(R.color.colorPaleGray), PorterDuff.Mode.SRC);
+            nextBtn.setEnabled(false);
+        } else {
+            nextBtn.getBackground().setColorFilter(nextBtn.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC);
+            nextBtn.setEnabled(true);
+        }
+
         String fechaFin = ((MainActivity)getActivity()).getFinalDate();
         String fechaInicio = ((MainActivity)getActivity()).getInitDate();
         Long officeId = ((MainActivity)getActivity()).getSelectedOffice().getId();
@@ -75,6 +87,9 @@ public class CarSelectionFragment extends Fragment {
                         selectedCar = position;
                         carListAdapter.notifyDataSetChanged();
                         ((MainActivity) getActivity()).getReservation().setCar(cars.get(position));
+
+                        nextBtn.getBackground().setColorFilter(nextBtn.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC);
+                        nextBtn.setEnabled(true);
                     }
                 });
 
@@ -87,7 +102,7 @@ public class CarSelectionFragment extends Fragment {
 
         });
 
-        nextBtn = (Button) view.findViewById(R.id.idNextButton_CarSelection);
+
 
         nextBtn.setOnClickListener(new View.OnClickListener(){
 
@@ -98,13 +113,13 @@ public class CarSelectionFragment extends Fragment {
             }
         });
 
-        prevBtn = (Button) view.findViewById(R.id.idBackButton_CarSelection);
 
         prevBtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                //mostrar listado de coches
+                ((MainActivity)getActivity()).getReservation().setCar(null);
+                selectedCar = -1;
                 ((MainActivity)getActivity()).setCurrentStep(MainActivity.CurrentStep.DATES);
                 ((MainActivity) getActivity()).replaceFragments(DatesSelectionFragment.class, R.id.idContentFragment);
             }

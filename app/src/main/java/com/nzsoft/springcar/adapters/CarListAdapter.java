@@ -20,11 +20,9 @@ public class CarListAdapter extends BaseAdapter {
 
     private LayoutInflater inflater = null;
     private List<Car> cars;
-    private Context contexto;
 
 
     public CarListAdapter(Context contexto, List<Car> cars){
-        this.contexto = contexto;
         this.cars = cars;
         inflater = (LayoutInflater) contexto.getSystemService(contexto.LAYOUT_INFLATER_SERVICE);
     }

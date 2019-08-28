@@ -15,8 +15,7 @@
             android:id="@+id/constraintLayout2"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@id/guideline16"
-            app:layout_constraintBottom_toTopOf="@+id/guideline16"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -143,11 +142,13 @@
         </android.support.constraint.ConstraintLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/linearLayout2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline16">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <Button
                 android:id="@+id/idBackButton_Dates"
@@ -171,13 +172,6 @@
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent=".88" />
 
     </android.support.constraint.ConstraintLayout>
 

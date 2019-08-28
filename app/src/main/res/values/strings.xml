@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">springcar</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="per_day_label">per day</string>
     <string name="continue_btn">Continue</string>
@@ -10,6 +9,7 @@
     <string name="pickup_date_label">Pick Up Date</string>
     <string name="dropoff_date_label">Drop Off Date</string>
     <string name="pickup_date_hint">dd-MM-yyyy</string>
+    <string name="office_selected">Office:</string>
 
     <!-- Strings de las opciones de seguros -->
     <string name="base_insurance_text">Basic third party insurance</string>
