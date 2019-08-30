@@ -6,11 +6,16 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.nzsoft.springcar.R;
@@ -19,6 +24,8 @@ import com.nzsoft.springcar.adapters.CarListAdapter;
 import com.nzsoft.springcar.adapters.ExtrasListAdapter;
 import com.nzsoft.springcar.model.Car;
 import com.nzsoft.springcar.model.CommonExtra;
+import com.nzsoft.springcar.model.Reservation;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -65,19 +72,102 @@ public class ConfirmationFragment extends Fragment {
         selectedPickUpTime.setText(sdf.format(mainActivity.getReservation().getPickUpDate()));
         selectedDropOffTime.setText(sdf.format(mainActivity.getReservation().getDropOffDate()));
 
-        selectedCar = (ListView) view.findViewById(R.id.idCarSelectedList);
-        List<Car> carSelected = new ArrayList<>();
-        carSelected.add(mainActivity.getReservation().getCar());
+        View carView = inflater.inflate(R.layout.row_model_car, container, false);
 
-        CarListAdapter carListAdapter = new CarListAdapter(getActivity(), carSelected);
-        selectedCar.setAdapter(carListAdapter);
+        TextView carModelText = (TextView) carView.findViewById(R.id.idCarInfoModel);
+        ImageView carImage = (ImageView) carView.findViewById(R.id.idCarImage);
 
-        selectedExtras = (ListView) view.findViewById(R.id.idExtrasList);
+        Car car = mainActivity.getReservation().getCar();
+
+        carModelText.setText(car.getModel());
+
+        String imgURL = "https://springcarback.herokuapp.com/cars/image/" + car.getPhoto();
+
+        Picasso.get().load(imgURL).into(carImage);
+
+        TextView carPriceText = (TextView) carView.findViewById(R.id.idCarInfoPriceBase);
+        carPriceText.setText(car.getBasePrice() + "€");
+
+        LinearLayout parentLayout = (LinearLayout) view.findViewById(R.id.idParentLayout);
+        parentLayout.addView(carView);
+
+
+        //Añadir seccion seguros
+
+        Reservation.InsuranceType insuranceType = mainActivity.getReservation().getInsuranceType();
+        switch (insuranceType){
+            case TOP:
+                View topInsuranceView = inflater.inflate(R.layout.row_model_extra, container, false);
+
+                TextView topInsuranceDescription = topInsuranceView.findViewById(R.id.idExtraDescription);
+                topInsuranceDescription.setText(getActivity().getResources().getString(R.string.top_insurance_text));
+
+                TextView topInsurancePrice = topInsuranceView.findViewById(R.id.idExtraPrice);
+                topInsurancePrice.setText(mainActivity.getReservation().getCar().getCategory().getTopInsurancePrice() + "€");
+
+                parentLayout.addView(topInsuranceView);
+                break;
+
+            case BASE:
+                View baseInsuranceView = inflater.inflate(R.layout.row_model_extra, container, false);
+
+                TextView baseInsuranceDescription = baseInsuranceView.findViewById(R.id.idExtraDescription);
+                baseInsuranceDescription.setText(getActivity().getResources().getString(R.string.base_insurance_text));
+
+                TextView baseInsurancePrice = baseInsuranceView.findViewById(R.id.idExtraPrice);
+                baseInsurancePrice.setText(mainActivity.getReservation().getCar().getCategory().getBaseInsurancePrice() + "€");
+
+                parentLayout.addView(baseInsuranceView);
+                break;
+        }
+
+        if (mainActivity.getReservation().isHasTireAndGlassProtection()){
+            View tireAndGlassView = inflater.inflate(R.layout.row_model_extra, container, false);
+
+            TextView tireAndGlassDescription = tireAndGlassView.findViewById(R.id.idExtraDescription);
+            tireAndGlassDescription.setText(getActivity().getResources().getString(R.string.tire_glass_text));
+
+            TextView tireAndGlassPrice = tireAndGlassView.findViewById(R.id.idExtraPrice);
+            tireAndGlassPrice.setText(mainActivity.getReservation().getCar().getCategory().getTireAndGlassProtectionPrice() + "€");
+
+            parentLayout.addView(tireAndGlassView);
+        }
+
         List<CommonExtra> extras = mainActivity.getReservation().getCommonExtras();
-        Log.d("****", extras.toString());
 
-        ExtrasListAdapter extrasListAdapter = new ExtrasListAdapter(getActivity(), extras);
-        selectedExtras.setAdapter(extrasListAdapter);
+        for (CommonExtra extra : extras){
+
+            View extraView = inflater.inflate(R.layout.row_model_extra, container, false);
+
+            TextView extraDescription = extraView.findViewById(R.id.idExtraDescription);
+            extraDescription.setText(extra.getName());
+
+            TextView extraPrice = extraView.findViewById(R.id.idExtraPrice);
+            extraPrice.setText(extra.getPrice() + "€");
+
+            parentLayout.addView(extraView);
+
+        }
+
+        TextView totalPriceView = (TextView) view.findViewById(R.id.idTotalPrice);
+        totalPriceView.setText("Total Price: " + mainActivity.getReservation().getTotalPrice() + "€");
+
+        Button nextBtn = (Button) view.findViewById(R.id.idNextButton_Confirmation);
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //De momento nada
+            }
+        });
+
+        Button prevBtn = (Button) view.findViewById(R.id.idBackButton_Confirmation);
+        prevBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).setCurrentStep(MainActivity.CurrentStep.EXTRAS);
+                ((MainActivity) getActivity()).replaceFragments(ExtrasSelectionFragment.class, R.id.idContentFragment);
+            }
+        });
 
         return view;
     }

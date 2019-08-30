@@ -12,11 +12,12 @@ public class Car {
     private int numberOfDoors;
     private int suitcasesCapacity;
     private String photo;
+    private double basePrice;
 
     public Car() {
     }
 
-    public Car(String model, Transmission transmission, Office office, boolean hasAirConditioner, int numberOfSeats, int numberOfDoors, int suitcasesCapacity, String photo) {
+    public Car(String model, Transmission transmission, Office office, boolean hasAirConditioner, int numberOfSeats, int numberOfDoors, int suitcasesCapacity, String photo, double basePrice) {
         this.model = model;
         this.transmission = transmission;
         this.office = office;
@@ -25,6 +26,7 @@ public class Car {
         this.numberOfDoors = numberOfDoors;
         this.suitcasesCapacity = suitcasesCapacity;
         this.photo = photo;
+        this.basePrice = basePrice;
     }
 
     public Long getId() {
@@ -105,6 +107,14 @@ public class Car {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public double getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(double basePrice) {
+        this.basePrice = basePrice;
     }
 
     @Override

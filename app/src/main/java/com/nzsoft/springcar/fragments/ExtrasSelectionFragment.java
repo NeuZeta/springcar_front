@@ -99,7 +99,7 @@ public class ExtrasSelectionFragment extends Fragment {
                 }
 
                 ((MainActivity)getActivity()).getReservation().setCommonExtras(commonExtras);
-
+                ((MainActivity)getActivity()).setCurrentStep(MainActivity.CurrentStep.CONFIRMATION);
                 ((MainActivity)getActivity()).replaceFragments(ConfirmationFragment.class, R.id.idContentFragment);
 
             }

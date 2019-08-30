@@ -111,10 +111,14 @@ public class DatesSelectionFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
 
+                        String longDay = ("00" + mDay);
+                        String day = longDay.substring(longDay.length()-2);
+
                         String longMonth = ("00" + (mMonth+1));
                         String month = longMonth.substring(longMonth.length()-2);
 
-                        pickupDateTextView.setText(mDay + "-" + month + "-" + mYear);
+                        pickupDateTextView.setText(day + "-" + month + "-" + mYear);
+
 
                         //Seteamos la fecha en la reserva
 
@@ -124,10 +128,25 @@ public class DatesSelectionFragment extends Fragment {
                          } catch (ParseException e){
                              e.printStackTrace();
                          }
-                        ((MainActivity) getActivity()).getReservation().setPickUpDate(pickUpDate);
+                         ((MainActivity) getActivity()).getReservation().setPickUpDate(pickUpDate);
+
+                         if (pickUpDate.after(reservation.getDropOffDate())){
+                             calendar.setTime(pickUpDate);
+                             calendar.add(Calendar.DATE, 1);
+                             Date date = calendar.getTime();
+                             dropoffDateTextView.setText(simpleDateFormat.format(date));
+                             ((MainActivity) getActivity()).getReservation().setDropOffDate(date);
+                         }
+
 
                     }
                 }, year, month, day);
+
+                //Seteamos que no se puede seleccionar fechas anteriores al día actual
+                Date today = new Date();
+                calendar.setTime(today);
+                Date minDate = calendar.getTime();
+                datePickerDialog.getDatePicker().setMinDate(minDate.getTime());
 
                 datePickerDialog.show();
             }
@@ -147,9 +166,14 @@ public class DatesSelectionFragment extends Fragment {
 
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
-                        String month = ("00" + (mMonth+1)).substring(1);
 
-                        dropoffDateTextView.setText(mDay + "-" + month + "-" + mYear);
+                        String longDay = ("00" + mDay);
+                        String day = longDay.substring(longDay.length()-2);
+
+                        String longMonth = ("00" + (mMonth+1));
+                        String month = longMonth.substring(longMonth.length()-2);
+
+                        dropoffDateTextView.setText(day + "-" + month + "-" + mYear);
 
                         //Seteamos la fecha en la reserva
 
@@ -164,6 +188,13 @@ public class DatesSelectionFragment extends Fragment {
                         ((MainActivity) getActivity()).getReservation().setDropOffDate(dropOffDate);
                     }
                 }, year, month, day);
+
+
+                Date pickUpDate = ((MainActivity)getActivity()).getReservation().getPickUpDate();
+                calendar.setTime(pickUpDate);
+                calendar.add(Calendar.DATE, 1);
+                Date minDate = calendar.getTime();
+                datePickerDialog.getDatePicker().setMinDate(minDate.getTime());
                 datePickerDialog.show();
             }
         });
@@ -206,6 +237,5 @@ public class DatesSelectionFragment extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
-
 
 }

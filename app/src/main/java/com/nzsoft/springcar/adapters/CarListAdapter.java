@@ -58,6 +58,9 @@ public class CarListAdapter extends BaseAdapter {
 
         Picasso.get().load(imgURL).into(carImage);
 
+        TextView carPriceText = (TextView) view.findViewById(R.id.idCarInfoPriceBase);
+        carPriceText.setText(car.getBasePrice() + "€");
+
         if (position%2 != 0){
             view.setBackgroundColor(view.getResources().getColor(R.color.colorPaleGray));
         }

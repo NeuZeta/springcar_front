@@ -32,4 +32,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
+    <!-- Confirmation Text -->
+    <string name="confirmation_text">Please read carefully your order details before confirm your reservation</string>
+
 </resources>

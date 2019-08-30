@@ -85,6 +85,12 @@ public class BreadcrumbFragment extends Fragment {
             connection04.setColorFilter(getResources().getColor(R.color.colorPaleGray));
         }
 
+        if (currentStep == MainActivity.CurrentStep.CONFIRMATION){
+            step04.setImageDrawable(getResources().getDrawable(R.drawable.extras_saved));
+            step05.setImageDrawable(getResources().getDrawable(R.drawable.confirm_active));
+            connection04.setColorFilter(getResources().getColor(R.color.colorPrimary));
+        }
+
     }
 
 }

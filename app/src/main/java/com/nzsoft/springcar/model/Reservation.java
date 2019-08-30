@@ -1,7 +1,14 @@
 package com.nzsoft.springcar.model;
 
+import android.util.Log;
+
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Reservation {
 
@@ -14,7 +21,6 @@ public class Reservation {
     private InsuranceType insuranceType;
     private boolean hasTireAndGlassProtection;
     private List<CommonExtra> commonExtras;
-    private Double totalPrice;
 
     public Reservation() {
     }
@@ -92,11 +98,51 @@ public class Reservation {
     }
 
     public Double getTotalPrice() {
-        return totalPrice;
-    }
 
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
+        double price = 0;
+
+        //Primero calculamos los días de reserva
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String startDate = sdf.format(this.pickUpDate);
+        String endDate = sdf.format(this.dropOffDate);
+
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
+
+        int differenceInDays = Days.daysBetween(start, end).getDays();
+
+        if (this.getCar() != null) {
+            //Multiplicamos los días por el precio base del coche
+            price = differenceInDays * this.getCar().getBasePrice();
+
+            //Le sumamos el precio del seguro por categoria
+
+            switch (insuranceType) {
+                case BASE:
+                    price += this.getCar().getCategory().getBaseInsurancePrice();
+                    break;
+                case TOP:
+                    price += this.getCar().getCategory().getTopInsurancePrice();
+                    break;
+            }
+
+            //Si tiene proteccion de ruedas y cristales le sumamos el precio por categoria
+
+            if (hasTireAndGlassProtection) {
+                price += this.getCar().getCategory().getTireAndGlassProtectionPrice();
+            }
+        }
+
+        //Sumamos el precio de cada extra que se le ha añadido
+
+        if (!commonExtras.isEmpty()) {
+            for (CommonExtra commonExtra : commonExtras) {
+                price += commonExtra.getPrice();
+            }
+        }
+
+        return price;
     }
 
     @Override
@@ -110,7 +156,6 @@ public class Reservation {
                 ", car=" + car +
                 ", insuranceType=" + insuranceType +
                 ", commonExtras=" + commonExtras +
-                ", totalPrice=" + totalPrice +
                 '}';
     }
 
