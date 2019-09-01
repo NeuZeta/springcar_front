@@ -2,33 +2,24 @@ package com.nzsoft.springcar.fragments;
 
 
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.nzsoft.springcar.R;
 import com.nzsoft.springcar.activities.MainActivity;
-import com.nzsoft.springcar.adapters.CarListAdapter;
-import com.nzsoft.springcar.adapters.ExtrasListAdapter;
 import com.nzsoft.springcar.model.Car;
 import com.nzsoft.springcar.model.CommonExtra;
 import com.nzsoft.springcar.model.Reservation;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -88,11 +79,13 @@ public class ConfirmationFragment extends Fragment {
         TextView carPriceText = (TextView) carView.findViewById(R.id.idCarInfoPriceBase);
         carPriceText.setText(car.getBasePrice() + "€");
 
-        LinearLayout parentLayout = (LinearLayout) view.findViewById(R.id.idParentLayout);
-        parentLayout.addView(carView);
+        LinearLayout CarLayout = (LinearLayout) view.findViewById(R.id.idCarInfoLayout);
+        CarLayout.addView(carView);
 
 
-        //Añadir seccion seguros
+        //Añadir seccion seguros&extras
+
+        LinearLayout extrasLayout = (LinearLayout) view.findViewById(R.id.idExtrasInfoLayout);
 
         Reservation.InsuranceType insuranceType = mainActivity.getReservation().getInsuranceType();
         switch (insuranceType){
@@ -105,7 +98,7 @@ public class ConfirmationFragment extends Fragment {
                 TextView topInsurancePrice = topInsuranceView.findViewById(R.id.idExtraPrice);
                 topInsurancePrice.setText(mainActivity.getReservation().getCar().getCategory().getTopInsurancePrice() + "€");
 
-                parentLayout.addView(topInsuranceView);
+                extrasLayout.addView(topInsuranceView);
                 break;
 
             case BASE:
@@ -117,7 +110,7 @@ public class ConfirmationFragment extends Fragment {
                 TextView baseInsurancePrice = baseInsuranceView.findViewById(R.id.idExtraPrice);
                 baseInsurancePrice.setText(mainActivity.getReservation().getCar().getCategory().getBaseInsurancePrice() + "€");
 
-                parentLayout.addView(baseInsuranceView);
+                extrasLayout.addView(baseInsuranceView);
                 break;
         }
 
@@ -130,27 +123,29 @@ public class ConfirmationFragment extends Fragment {
             TextView tireAndGlassPrice = tireAndGlassView.findViewById(R.id.idExtraPrice);
             tireAndGlassPrice.setText(mainActivity.getReservation().getCar().getCategory().getTireAndGlassProtectionPrice() + "€");
 
-            parentLayout.addView(tireAndGlassView);
+            extrasLayout.addView(tireAndGlassView);
         }
 
         List<CommonExtra> extras = mainActivity.getReservation().getCommonExtras();
 
-        for (CommonExtra extra : extras){
 
-            View extraView = inflater.inflate(R.layout.row_model_extra, container, false);
+            for (CommonExtra extra : extras){
 
-            TextView extraDescription = extraView.findViewById(R.id.idExtraDescription);
-            extraDescription.setText(extra.getName());
+                View extraView = inflater.inflate(R.layout.row_model_extra, container, false);
 
-            TextView extraPrice = extraView.findViewById(R.id.idExtraPrice);
-            extraPrice.setText(extra.getPrice() + "€");
+                TextView extraDescription = extraView.findViewById(R.id.idExtraDescription);
+                extraDescription.setText(extra.getName());
 
-            parentLayout.addView(extraView);
+                TextView extraPrice = extraView.findViewById(R.id.idExtraPrice);
+                extraPrice.setText(extra.getPrice() + "€");
 
-        }
+                extrasLayout.addView(extraView);
+
+            }
+
 
         TextView totalPriceView = (TextView) view.findViewById(R.id.idTotalPrice);
-        totalPriceView.setText("Total Price: " + mainActivity.getReservation().getTotalPrice() + "€");
+        totalPriceView.setText(mainActivity.getReservation().getTotalPrice() + "€");
 
         Button nextBtn = (Button) view.findViewById(R.id.idNextButton_Confirmation);
         nextBtn.setOnClickListener(new View.OnClickListener() {
