@@ -7,9 +7,13 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.nzsoft.springcar.R;
+import com.nzsoft.springcar.database.DatabaseHelper;
 import com.nzsoft.springcar.fragments.BreadcrumbFragment;
 import com.nzsoft.springcar.fragments.DatesSelectionFragment;
 import com.nzsoft.springcar.fragments.LocationSelectionFragment;
+import com.nzsoft.springcar.model.Client;
+import com.nzsoft.springcar.model.Contact;
+import com.nzsoft.springcar.model.Location;
 import com.nzsoft.springcar.model.Office;
 import com.nzsoft.springcar.model.Reservation;
 
@@ -25,10 +29,26 @@ public class MainActivity extends AppCompatActivity {
     private CurrentStep currentStep;
     private BreadcrumbFragment breadcrumbFragment;
 
+    private DatabaseHelper myDB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Create Client
+        myDB = new DatabaseHelper(getApplicationContext());
+
+        Client user = myDB.getClient();
+
+        if (user == null){
+            Contact contact = new Contact("677313640", "neuzeta@gmail.com");
+            Location location = new Location("address01", "zipCode01", "city01", "county01");
+            Client client = new Client("Neus", "Baro", "47646238J", location, contact, "NeuZeta", "111");
+            user = myDB.createClient(client);
+        }
+
+        reservation.setClient(user);
 
         breadcrumbFragment = (BreadcrumbFragment) getSupportFragmentManager().findFragmentById(R.id.idBreadCrumbFragment);
 

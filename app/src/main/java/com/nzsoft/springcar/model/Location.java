@@ -2,6 +2,7 @@ package com.nzsoft.springcar.model;
 
 public class Location {
 
+    private Long id;
     private String address;
     private String zipCode;
     private String city;
@@ -47,6 +48,14 @@ public class Location {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
