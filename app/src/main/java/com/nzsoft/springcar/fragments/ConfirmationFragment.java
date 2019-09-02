@@ -140,12 +140,10 @@ public class ConfirmationFragment extends Fragment {
                 extraPrice.setText(extra.getPrice() + "€");
 
                 extrasLayout.addView(extraView);
-
             }
 
-
         TextView totalPriceView = (TextView) view.findViewById(R.id.idTotalPrice);
-        totalPriceView.setText(mainActivity.getReservation().getTotalPrice() + "€");
+        totalPriceView.setText(String.format("%.2f", mainActivity.getReservation().getTotalPrice()) + "€");
 
         Button nextBtn = (Button) view.findViewById(R.id.idNextButton_Confirmation);
         nextBtn.setOnClickListener(new View.OnClickListener() {

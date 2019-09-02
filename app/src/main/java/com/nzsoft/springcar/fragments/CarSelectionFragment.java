@@ -79,6 +79,9 @@ public class CarSelectionFragment extends Fragment {
 
                 final CarListAdapter carListAdapter = new CarListAdapter(getActivity(), cars);
                 carListView.setAdapter(carListAdapter);
+                if (selectedCar != -1){
+                    carListView.setSelection(selectedCar);
+                }
 
                 carListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
