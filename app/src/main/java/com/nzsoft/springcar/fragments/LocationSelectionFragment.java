@@ -101,12 +101,8 @@ public class LocationSelectionFragment extends Fragment {
                 //Recoger el valor del spinner de oficinas para recuperar la officina seleccionada
                 Office office = offices.get(officeSpinner.getSelectedItemPosition());
 
-
-                //Inicializamos la reserva que iremos completando en las siguientes pantallas
-                //Seteamos en esa reserva las fechas de inicio y fin
                 //Guardamos la oficina ya que se usa sólo para filtrar los coches
 
-                ((MainActivity) getActivity()).setReservation(new Reservation());
                 ((MainActivity) getActivity()).setSelectedOffice(office);
 
                 //mostrar listado de coches

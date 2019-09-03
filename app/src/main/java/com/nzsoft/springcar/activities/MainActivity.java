@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import com.nzsoft.springcar.R;
@@ -36,15 +37,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Initialize Reservation
+        reservation = new Reservation();
+
         //Create Client
         myDB = new DatabaseHelper(getApplicationContext());
 
         Client user = myDB.getClient();
 
-        if (user == null){
-            Contact contact = new Contact("677313640", "neuzeta@gmail.com");
-            Location location = new Location("address01", "zipCode01", "city01", "county01");
+        if (user.getId() == null){
+            Contact contact = myDB.createContact(new Contact("677313640", "neuzeta@gmail.com"));
+            Location location = myDB.createLocation(new Location("address01", "zipCode01", "city01", "county01"));
             Client client = new Client("Neus", "Baro", "47646238J", location, contact, "NeuZeta", "111");
+
             user = myDB.createClient(client);
         }
 

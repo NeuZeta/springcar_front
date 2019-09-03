@@ -3,6 +3,7 @@ package com.nzsoft.springcar.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,15 @@ import com.nzsoft.springcar.activities.MainActivity;
 import com.nzsoft.springcar.model.Car;
 import com.nzsoft.springcar.model.CommonExtra;
 import com.nzsoft.springcar.model.Reservation;
+import com.nzsoft.springcar.retrofit.RetrofitHelper;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,7 +53,7 @@ public class ConfirmationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        MainActivity mainActivity = ((MainActivity)getActivity());
+        final MainActivity mainActivity = ((MainActivity)getActivity());
 
         View view = inflater.inflate(R.layout.fragment_confirmation, container, false);
 
@@ -150,6 +156,21 @@ public class ConfirmationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //De momento nada
+                Call<Reservation> call = RetrofitHelper.getApiRest().createReservation(mainActivity.getReservation());
+
+                call.enqueue(new Callback<Reservation>() {
+                    @Override
+                    public void onResponse(Call<Reservation> call, Response<Reservation> response) {
+                        Log.d("___", response.message());
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Reservation> call, Throwable t) {
+
+                    }
+                });
+
             }
         });
 

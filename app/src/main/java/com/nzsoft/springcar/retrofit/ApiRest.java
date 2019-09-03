@@ -2,11 +2,14 @@ package com.nzsoft.springcar.retrofit;
 
 import com.nzsoft.springcar.model.Car;
 import com.nzsoft.springcar.model.Office;
+import com.nzsoft.springcar.model.Reservation;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface ApiRest {
@@ -22,5 +25,9 @@ public interface ApiRest {
     // OFFICES
     @GET ("offices")
     public Call<List<Office>> getAllOffices();
+
+    //RESERVATION
+    @POST ("reservations")
+    public Call<Reservation> createReservation(@Body Reservation reservation);
 
 }

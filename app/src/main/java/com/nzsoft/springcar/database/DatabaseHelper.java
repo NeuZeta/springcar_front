@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.nzsoft.springcar.model.Client;
 import com.nzsoft.springcar.model.Contact;
@@ -43,9 +44,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String[] FIELDS = {USER_COL_1, USER_COL_2, USER_COL_3, USER_COL_4, USER_COL_5, USER_COL_6, USER_COL_7, USER_COL_8};
 
-
-
-
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
@@ -58,7 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         strContactSQL.append("CREATE TABLE ").append(CONTACT_TABLE).append(" (")
                 .append(CON_COL_1).append(" INTEGER PRIMARY KEY AUTOINCREMENT,")
                 .append(CON_COL_2).append(" TEXT NOT NULL,")
-                .append(CON_COL_3).append(" TEXT NOT NULL,");
+                .append(CON_COL_3).append(" TEXT NOT NULL)");
 
 
         StringBuilder strLocationSQL = new StringBuilder();
@@ -112,7 +110,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public Location createContact(Location location){
+    public Location createLocation(Location location){
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -127,6 +125,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         location.setId(resultado);
 
+        Log.d("___", "la Id de la Location es : " + resultado);
         return resultado == -1 ? null : location;
 
     }
@@ -153,7 +152,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Location getLocationById(long id){
-        Location location = null;
+
+        Location location = new Location();
 
         SQLiteDatabase db = getWritableDatabase();
 
@@ -173,7 +173,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Contact getContactById (long id) {
-        Contact contact = null;
+        Contact contact = new Contact();
 
         SQLiteDatabase db = getWritableDatabase();
 
