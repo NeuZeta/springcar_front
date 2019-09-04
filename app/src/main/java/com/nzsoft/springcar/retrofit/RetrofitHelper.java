@@ -23,6 +23,7 @@ public class RetrofitHelper {
     private static final ApiRest API_REST;
     private static final String URL = "https://springcarback.herokuapp.com/";
     //private static final String URL = "http://localhost:8081/";
+    //private static final String URL = "http://10.0.2.2:8081/";
 
     static {
         GsonBuilder builder = new GsonBuilder();
@@ -33,7 +34,7 @@ public class RetrofitHelper {
             public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
                 //long milliseconds = json.getAsJsonPrimitive().getAsLong();
                 String dateStr = json.getAsString();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
                 Date date = null;
 
@@ -48,7 +49,8 @@ public class RetrofitHelper {
 
         builder.registerTypeAdapter(Date.class, new JsonSerializer<Date>() {
             public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
                 String dateStr = sdf.format(src);
                 long l = src.getTime();
                 return new JsonPrimitive(dateStr);

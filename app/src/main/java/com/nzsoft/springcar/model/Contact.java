@@ -2,7 +2,6 @@ package com.nzsoft.springcar.model;
 
 public class Contact {
 
-    private Long id;
     private String phoneNumber;
     private String email;
 
@@ -30,13 +29,6 @@ public class Contact {
         this.email = email;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Override
     public String toString() {

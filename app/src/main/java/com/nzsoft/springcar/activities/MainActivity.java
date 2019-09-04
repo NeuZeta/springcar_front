@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
         Client user = myDB.getClient();
 
         if (user.getId() == null){
-            Contact contact = myDB.createContact(new Contact("677313640", "neuzeta@gmail.com"));
-            Location location = myDB.createLocation(new Location("address01", "zipCode01", "city01", "county01"));
+            Contact contact = new Contact("677313640", "neuzeta@gmail.com");
+            Location location = new Location("address01", "zipCode01", "city01", "county01");
             Client client = new Client("Neus", "Baro", "47646238J", location, contact, "NeuZeta", "111");
 
             user = myDB.createClient(client);
