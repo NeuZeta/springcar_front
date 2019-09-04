@@ -22,6 +22,7 @@ public class RetrofitHelper {
 
     private static final ApiRest API_REST;
     private static final String URL = "https://springcarback.herokuapp.com/";
+    //private static final String URL = "http://localhost:8081/";
 
     static {
         GsonBuilder builder = new GsonBuilder();
@@ -47,7 +48,7 @@ public class RetrofitHelper {
 
         builder.registerTypeAdapter(Date.class, new JsonSerializer<Date>() {
             public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:MM:ss");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
                 String dateStr = sdf.format(src);
                 long l = src.getTime();
                 return new JsonPrimitive(dateStr);

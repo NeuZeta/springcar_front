@@ -1,26 +1,26 @@
 package com.nzsoft.springcar.model;
 
-import android.util.Log;
-
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class Reservation {
 
     private Long id;
+
     private Date reservationDate;
-    private Date pickUpDate;
+    private Date pickupDate;
     private Date dropOffDate;
+
     private Client client;
     private Car car;
     private InsuranceType insuranceType;
     private boolean hasTireAndGlassProtection;
     private List<CommonExtra> commonExtras;
+    private Double price;
 
     public Reservation() {
     }
@@ -42,11 +42,11 @@ public class Reservation {
     }
 
     public Date getPickUpDate() {
-        return pickUpDate;
+        return pickupDate;
     }
 
     public void setPickUpDate(Date pickUpDate) {
-        this.pickUpDate = pickUpDate;
+        this.pickupDate = pickUpDate;
     }
 
     public Date getDropOffDate() {
@@ -97,14 +97,22 @@ public class Reservation {
         this.commonExtras = commonExtras;
     }
 
-    public Double getTotalPrice() {
+    public Double getPrice () {
+        return this.price;
+    }
+
+    public void setPrice (){
+        this.price = getTotalPrice();
+    }
+
+    private Double getTotalPrice() {
 
         double price = 0;
 
         //Primero calculamos los días de reserva
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String startDate = sdf.format(this.pickUpDate);
+        String startDate = sdf.format(this.pickupDate);
         String endDate = sdf.format(this.dropOffDate);
 
         LocalDate start = LocalDate.parse(startDate);
@@ -150,7 +158,7 @@ public class Reservation {
         return "Reservation{" +
                 "id=" + id +
                 ", reservationDate=" + reservationDate +
-                ", pickUpDate=" + pickUpDate +
+                ", pickupDate=" + pickupDate +
                 ", dropOffDate=" + dropOffDate +
                 ", client=" + client +
                 ", car=" + car +

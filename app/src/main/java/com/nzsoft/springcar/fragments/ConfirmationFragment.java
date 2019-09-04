@@ -22,6 +22,7 @@ import com.nzsoft.springcar.retrofit.RetrofitHelper;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -149,25 +150,30 @@ public class ConfirmationFragment extends Fragment {
             }
 
         TextView totalPriceView = (TextView) view.findViewById(R.id.idTotalPrice);
-        totalPriceView.setText(String.format("%.2f", mainActivity.getReservation().getTotalPrice()) + "€");
+
+        mainActivity.getReservation().setPrice();
+        totalPriceView.setText(String.format("%.2f", mainActivity.getReservation().getPrice()) + "€");
 
         Button nextBtn = (Button) view.findViewById(R.id.idNextButton_Confirmation);
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //De momento nada
-                Call<Reservation> call = RetrofitHelper.getApiRest().createReservation(mainActivity.getReservation());
+                //Seteamos la fecha actual en la reserva
+                Reservation reservation = mainActivity.getReservation();
+                reservation.setReservationDate(new Date());
+
+                Call<Reservation> call = RetrofitHelper.getApiRest().createReservation(reservation);
 
                 call.enqueue(new Callback<Reservation>() {
                     @Override
                     public void onResponse(Call<Reservation> call, Response<Reservation> response) {
-                        Log.d("___", response.message());
+                        Log.d("***", "Response: " + response.toString());
 
                     }
 
                     @Override
                     public void onFailure(Call<Reservation> call, Throwable t) {
-
+                        Log.d("***", "Error: " + t.getCause().toString());
                     }
                 });
 

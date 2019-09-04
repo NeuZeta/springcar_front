@@ -26,7 +26,7 @@ public interface ApiRest {
     @GET ("offices")
     public Call<List<Office>> getAllOffices();
 
-    //RESERVATION
+    // RESERVATION
     @POST ("reservations")
     public Call<Reservation> createReservation(@Body Reservation reservation);
 
