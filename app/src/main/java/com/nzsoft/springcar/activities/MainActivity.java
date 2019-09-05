@@ -11,6 +11,7 @@ import com.nzsoft.springcar.R;
 import com.nzsoft.springcar.database.DatabaseHelper;
 import com.nzsoft.springcar.fragments.BreadcrumbFragment;
 import com.nzsoft.springcar.fragments.LocationSelectionFragment;
+import com.nzsoft.springcar.fragments.MapFragment;
 import com.nzsoft.springcar.model.Client;
 import com.nzsoft.springcar.model.Office;
 import com.nzsoft.springcar.model.Reservation;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null){
             setCurrentStep(CurrentStep.LOCATION);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.idContentFragment, new LocationSelectionFragment());
+            fragmentTransaction.add(R.id.idContentFragment, new MapFragment());
             fragmentTransaction.commit();
         }
 
