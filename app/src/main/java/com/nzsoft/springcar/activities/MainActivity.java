@@ -1,23 +1,19 @@
 package com.nzsoft.springcar.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
 
 import com.nzsoft.springcar.R;
 import com.nzsoft.springcar.database.DatabaseHelper;
 import com.nzsoft.springcar.fragments.BreadcrumbFragment;
-import com.nzsoft.springcar.fragments.DatesSelectionFragment;
 import com.nzsoft.springcar.fragments.LocationSelectionFragment;
 import com.nzsoft.springcar.model.Client;
-import com.nzsoft.springcar.model.Contact;
-import com.nzsoft.springcar.model.Location;
 import com.nzsoft.springcar.model.Office;
 import com.nzsoft.springcar.model.Reservation;
-
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,20 +36,14 @@ public class MainActivity extends AppCompatActivity {
         //Initialize Reservation
         reservation = new Reservation();
 
+        //Get userId from Shared Preferences
+        Long userId = loadPreferences();
+
         //Create Client
-        myDB = new DatabaseHelper(getApplicationContext());
+        Client client = new Client();
+        client.setId(userId);
 
-        Client user = myDB.getClient();
-
-        if (user.getId() == null){
-            Contact contact = new Contact("677313640", "neuzeta@gmail.com");
-            Location location = new Location("address01", "zipCode01", "city01", "county01");
-            Client client = new Client("Neus", "Baro", "47646238J", location, contact, "NeuZeta", "111");
-
-            user = myDB.createClient(client);
-        }
-
-        reservation.setClient(user);
+        reservation.setClient(client);
 
         breadcrumbFragment = (BreadcrumbFragment) getSupportFragmentManager().findFragmentById(R.id.idBreadCrumbFragment);
 
@@ -127,5 +117,27 @@ public class MainActivity extends AppCompatActivity {
     public enum CurrentStep {
         LOCATION, DATES, CAR, EXTRAS, CONFIRMATION;
     }
+
+    // METODOS PRIVADOS
+
+    private void savePreferences(){
+
+        SharedPreferences preferences = getSharedPreferences("credentials", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong("userId", 20L);
+        editor.commit();
+    }
+
+
+    private Long loadPreferences () {
+
+        SharedPreferences preferences = getSharedPreferences("credentials", Context.MODE_PRIVATE);
+
+        Long userId = preferences.getLong("userId", 20);
+
+        return userId;
+    }
+
 
 }

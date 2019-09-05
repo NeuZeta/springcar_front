@@ -45,10 +45,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+
+
         StringBuilder strSQL = new StringBuilder();
 
         strSQL.append("CREATE TABLE ").append(USER_TABLE).append(" (")
-                .append(COL_1).append(" INTEGER PRIMARY KEY AUTOINCREMENT,")
+                .append(COL_1).append(" REAL NOT NULL,")
                 .append(COL_2).append(" TEXT NOT NULL,")
                 .append(COL_3).append(" TEXT NOT NULL,")
                 .append(COL_4).append(" TEXT NOT NULL,")
@@ -77,7 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-
+        contentValues.put(COL_1, 999);
         contentValues.put(COL_2, client.getFirstName());
         contentValues.put(COL_3, client.getLastName());
         contentValues.put(COL_4, client.getIdNumber());
@@ -101,6 +103,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Client getClient(){
 
         SQLiteDatabase db = getWritableDatabase();
+
+        //Para vaciar la tabla de los tests previos
+        //db.execSQL("DELETE FROM " + USER_TABLE);
 
         Cursor cursor = db.query(USER_TABLE, FIELDS, null, null, null, null, COL_1 + " DESC");
 

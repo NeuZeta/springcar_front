@@ -75,27 +75,27 @@ public class ExtrasSelectionFragment extends Fragment {
 
                 CheckBox extraBabyChair = (CheckBox) view.findViewById(R.id.idExtra_BabyChair);
                 if (extraBabyChair.isChecked()) {
-                    commonExtras.add(new CommonExtra("Baby Chair", 11.99));
+                    commonExtras.add(new CommonExtra(1L, "Baby Chair", 11.99));
                 }
 
                 CheckBox extraChildChair = (CheckBox) view.findViewById(R.id.idExtra_ChildChair);
                 if (extraChildChair.isChecked()) {
-                    commonExtras.add(new CommonExtra("Child Chair", 11.99));
+                    commonExtras.add(new CommonExtra(2L, "Child Chair", 11.99));
                 }
 
                 CheckBox extraBoosterChair = (CheckBox) view.findViewById(R.id.idExtra_BoosterChair);
                 if (extraBoosterChair.isChecked()) {
-                    commonExtras.add(new CommonExtra("Booster Chair", 9.99));
+                    commonExtras.add(new CommonExtra(3L, "Booster Chair", 9.99));
                 }
 
                 CheckBox extraSnowChains = (CheckBox) view.findViewById(R.id.idExtra_SnowChains);
                 if (extraSnowChains.isChecked()) {
-                    commonExtras.add(new CommonExtra("Snow Chains", 18.33));
+                    commonExtras.add(new CommonExtra(4L, "Snow Chains", 18.33));
                 }
 
                 CheckBox extraSkyRack = (CheckBox) view.findViewById(R.id.idExtra_SkyRack);
                 if (extraSkyRack.isChecked()) {
-                    commonExtras.add(new CommonExtra("Sky Rack", 18.33));
+                    commonExtras.add(new CommonExtra(5L, "Sky Rack", 18.33));
                 }
 
                 ((MainActivity)getActivity()).getReservation().setCommonExtras(commonExtras);

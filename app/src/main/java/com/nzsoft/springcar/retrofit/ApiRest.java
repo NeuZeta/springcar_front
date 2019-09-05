@@ -1,6 +1,7 @@
 package com.nzsoft.springcar.retrofit;
 
 import com.nzsoft.springcar.model.Car;
+import com.nzsoft.springcar.model.Client;
 import com.nzsoft.springcar.model.Office;
 import com.nzsoft.springcar.model.Reservation;
 
@@ -13,6 +14,10 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface ApiRest {
+
+    // CLIENTS
+    @GET ("clients")
+    public Call<Client> getClientById (@Query("id") Long id);
 
     // CARS
     @GET ("cars")

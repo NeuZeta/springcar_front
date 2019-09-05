@@ -1,6 +1,7 @@
 package com.nzsoft.springcar.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,14 +14,24 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.nzsoft.springcar.R;
 import com.nzsoft.springcar.activities.MainActivity;
+import com.nzsoft.springcar.activities.SuccessActivity;
 import com.nzsoft.springcar.model.Car;
 import com.nzsoft.springcar.model.CommonExtra;
 import com.nzsoft.springcar.model.Reservation;
+import com.nzsoft.springcar.retrofit.ApiRest;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Type;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -162,6 +173,22 @@ public class ConfirmationFragment extends Fragment {
                 Reservation reservation = mainActivity.getReservation();
                 reservation.setReservationDate(new Date());
 
+                GsonBuilder builder = new GsonBuilder();
+                builder.registerTypeAdapter(Date.class, new JsonSerializer<Date>() {
+                    public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
+
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+                        String dateStr = sdf.format(src);
+                        return new JsonPrimitive(dateStr);
+                    }
+                });
+
+                /*
+                Gson gson = builder.create();
+                gson.toJson(reservation);
+                Log.d("***", gson.toJson(reservation));
+                */
+
                 Call<Reservation> call = RetrofitHelper.getApiRest().createReservation(reservation);
 
                 call.enqueue(new Callback<Reservation>() {
@@ -169,6 +196,9 @@ public class ConfirmationFragment extends Fragment {
                     public void onResponse(Call<Reservation> call, Response<Reservation> response) {
                         Log.d("***", "Response: " + response.toString());
 
+                        Intent intentSuccess = new Intent(getContext(), SuccessActivity.class);
+                        intentSuccess.putExtra("ReservationID", response.body().getId());
+                        startActivity(intentSuccess);
                     }
 
                     @Override
