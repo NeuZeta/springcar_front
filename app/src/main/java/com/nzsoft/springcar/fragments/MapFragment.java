@@ -49,23 +49,33 @@ public class MapFragment extends Fragment {
                 googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
                 CameraPosition googlePlex = CameraPosition.builder()
-                        .target(new LatLng(41.398079,2.172809))
+                        .target(new LatLng(41.360930,2.125621))
                         .zoom(11)
                         .bearing(0)
-                        .tilt(30)
+                        .tilt(0)
                         .build();
 
                 googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(googlePlex));
 
                 googleMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(41.398079, 2.172809))
-                        .title("Spider Man"));
+                        .position(new LatLng(41.381649, 2.151232))
+                        .title("Eixample")
+                        .icon(bitmapDescriptorFromVector(getActivity(),R.drawable.maps_icon)));
 
-                /*googleMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(37.4219999, -122.0862462))
-                        .title("Spider Man")
-                        .icon(bitmapDescriptorFromVector(getActivity(),R.drawable.spider)));*/
+                googleMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(41.392387, 2.162353))
+                        .title("Rambla de Catalunya")
+                        .icon(bitmapDescriptorFromVector(getActivity(),R.drawable.maps_icon)));
 
+                googleMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(41.374428, 2.173086))
+                        .title("Paral.lel / Port")
+                        .icon(bitmapDescriptorFromVector(getActivity(),R.drawable.maps_icon)));
+
+                googleMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(41.289402, 2.074430))
+                        .title("Airport")
+                        .icon(bitmapDescriptorFromVector(getActivity(),R.drawable.maps_icon)));
 
             }
         });

@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null){
             setCurrentStep(CurrentStep.LOCATION);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.idContentFragment, new MapFragment());
+            fragmentTransaction.add(R.id.idContentFragment, new LocationSelectionFragment());
             fragmentTransaction.commit();
         }
 
