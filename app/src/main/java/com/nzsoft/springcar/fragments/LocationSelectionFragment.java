@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -20,10 +21,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nzsoft.springcar.R;
 import com.nzsoft.springcar.activities.MainActivity;
@@ -48,17 +51,20 @@ public class LocationSelectionFragment extends Fragment {
     private Button nextBtn;
     private Spinner officeSpinner;
     private List<Office> offices;
+    private Office selectedOffice;
+    private List<Marker> markers;
+    private GoogleMap googleMap;
 
     public LocationSelectionFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_location_selection, container, false);
+        markers = new ArrayList<>();
 
         /*
          *
@@ -70,42 +76,74 @@ public class LocationSelectionFragment extends Fragment {
 
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
-            public void onMapReady(GoogleMap googleMap) {
+            public void onMapReady(final GoogleMap googleMap) {
+
+                setGoogleMap(googleMap);
 
                 googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                UiSettings uiSettings = googleMap.getUiSettings();
+                uiSettings.setZoomControlsEnabled(true);
 
                 CameraPosition googlePlex = CameraPosition.builder()
                         .target(new LatLng(41.357436,2.120132))
-                        .zoom(10)
+                        .zoom(11)
                         .bearing(0)
                         .tilt(0)
                         .build();
 
                 googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(googlePlex));
 
-                googleMap.addMarker(new MarkerOptions()
+                Marker eixampleMarker = googleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(41.381649, 2.151232))
                         .title("Eixample")
                         .icon(bitmapDescriptorFromVector(getActivity(),R.drawable.maps_icon)));
+                markers.add(eixampleMarker);
 
-                googleMap.addMarker(new MarkerOptions()
+                Marker ramblaMarker = googleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(41.392387, 2.162353))
                         .title("Rambla de Catalunya")
                         .icon(bitmapDescriptorFromVector(getActivity(),R.drawable.maps_icon)));
+                markers.add(ramblaMarker);
 
-                googleMap.addMarker(new MarkerOptions()
+                Marker portMarker = googleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(41.374428, 2.173086))
                         .title("Paral.lel / Port")
                         .icon(bitmapDescriptorFromVector(getActivity(),R.drawable.maps_icon)));
+                markers.add(portMarker);
 
-                googleMap.addMarker(new MarkerOptions()
+                Marker airportMarker = googleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(41.289402, 2.074430))
                         .title("Airport")
                         .icon(bitmapDescriptorFromVector(getActivity(),R.drawable.maps_icon)));
+                markers.add(airportMarker);
+
+                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener(){
+
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+
+                        //Centrar el mapa en el marcador seleccionado
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+
+                        //Setear Oficina en spinner y en la reserva
+                        Office office = offices.get(markers.indexOf(marker));
+                        officeSpinner.setSelection(markers.indexOf(marker));
+                        selectedOffice = office;
+
+                        //Poner el icono standard a todos los markers
+                        for (Marker markerl : markers){
+                            markerl.setIcon(bitmapDescriptorFromVector(getContext(), R.drawable.maps_icon));
+                        }
+
+                        //Cambiar el tono del marker seleccionado
+                        marker.setIcon(bitmapDescriptorFromVector(getContext(), R.drawable.maps_icon_selected));
+
+                        return false;
+                    }
+                });
 
             }
         });
-
 
         /*
          *
@@ -136,7 +174,7 @@ public class LocationSelectionFragment extends Fragment {
                 officeSpinner.setAdapter(adapter);
 
                 //If the reservation already has an Office selected:
-                Office selectedOffice = ((MainActivity) getActivity()).getSelectedOffice();
+                selectedOffice = ((MainActivity) getActivity()).getSelectedOffice();
                 if ( selectedOffice != null){
                     for (int i = 0; i < offices.size(); i++){
                         if (offices.get(i).getId() == selectedOffice.getId()){
@@ -151,6 +189,30 @@ public class LocationSelectionFragment extends Fragment {
             public void onFailure(Call<List<Office>> call, Throwable t) {
                 Log.d("***", t.getCause().toString());
             }
+        });
+
+        officeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+                //Centrar el mapa en el marcador seleccionado
+                Marker selectedMarker = markers.get(position);
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(selectedMarker.getPosition()));
+
+                //Cambiar el icono del marker seleccionado y resetear el resto
+                for (Marker markerl : markers){
+                    markerl.setIcon(bitmapDescriptorFromVector(getContext(), R.drawable.maps_icon));
+                }
+
+                selectedMarker.setIcon(bitmapDescriptorFromVector(getContext(), R.drawable.maps_icon_selected));
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
         });
 
         nextBtn = (Button) view.findViewById(R.id.idNextButton_Location);
@@ -182,6 +244,14 @@ public class LocationSelectionFragment extends Fragment {
         Canvas canvas = new Canvas(bitmap);
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
+    public GoogleMap getGoogleMap() {
+        return googleMap;
+    }
+
+    public void setGoogleMap(GoogleMap googleMap) {
+        this.googleMap = googleMap;
     }
 
 }

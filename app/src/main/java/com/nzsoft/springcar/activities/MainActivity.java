@@ -8,10 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.nzsoft.springcar.R;
-import com.nzsoft.springcar.database.DatabaseHelper;
 import com.nzsoft.springcar.fragments.BreadcrumbFragment;
 import com.nzsoft.springcar.fragments.LocationSelectionFragment;
-import com.nzsoft.springcar.fragments.MapFragment;
 import com.nzsoft.springcar.model.Client;
 import com.nzsoft.springcar.model.Office;
 import com.nzsoft.springcar.model.Reservation;
@@ -26,8 +24,6 @@ public class MainActivity extends AppCompatActivity {
 
     private CurrentStep currentStep;
     private BreadcrumbFragment breadcrumbFragment;
-
-    private DatabaseHelper myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
