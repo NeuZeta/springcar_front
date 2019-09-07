@@ -122,6 +122,7 @@ public class LocationSelectionFragment extends Fragment {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
 
+                        Log.d("***", "Marker pulsado");
                         //Centrar el mapa en el marcador seleccionado
                         googleMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
 
@@ -141,7 +142,6 @@ public class LocationSelectionFragment extends Fragment {
                         return false;
                     }
                 });
-
             }
         });
 
