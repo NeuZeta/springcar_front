@@ -44,6 +44,8 @@ import retrofit2.Response;
  */
 public class ConfirmationFragment extends Fragment {
 
+    private TextView introText;
+
     private TextView selectedOffice;
     private TextView selectedPickUpTime;
     private TextView selectedDropOffTime;
@@ -67,6 +69,8 @@ public class ConfirmationFragment extends Fragment {
         FrameLayout placeHolder = (FrameLayout) view.findViewById(R.id.idReservationDestinationConfirmation);
         getLayoutInflater().inflate(R.layout.fragment_reservation, placeHolder);
 
+        introText = (TextView) view.findViewById(R.id.idIntroText);
+        introText.setText(R.string.confirmation_text);
 
         selectedOffice = (TextView) view.findViewById(R.id.idOfficeSelected);
         selectedOffice.setText(reservation.getCar().getOffice().getName());

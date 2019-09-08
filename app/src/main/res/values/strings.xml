@@ -34,5 +34,6 @@
 
     <!-- Confirmation Text -->
     <string name="confirmation_text">Please read carefully your order details before confirm your reservation</string>
+    <string name="reservation_intro_text">Reservation number: </string>
 
 </resources>
