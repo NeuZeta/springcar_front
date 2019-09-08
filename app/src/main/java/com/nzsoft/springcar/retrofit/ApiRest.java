@@ -35,4 +35,7 @@ public interface ApiRest {
     @POST ("reservations")
     public Call<Reservation> createReservation(@Body Reservation reservation);
 
+    @GET ("reservations")
+    public Call <Reservation> getReservationById (@Query("id") Long id);
+
 }

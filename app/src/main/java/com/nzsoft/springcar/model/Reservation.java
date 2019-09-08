@@ -3,11 +3,12 @@ package com.nzsoft.springcar.model;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class Reservation {
+public class Reservation implements Serializable {
 
     private Long id;
 

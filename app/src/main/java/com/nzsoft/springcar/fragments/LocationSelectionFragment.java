@@ -29,14 +29,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nzsoft.springcar.R;
-import com.nzsoft.springcar.activities.MainActivity;
+import com.nzsoft.springcar.activities.ReservationActivity;
 import com.nzsoft.springcar.model.Office;
-import com.nzsoft.springcar.model.Reservation;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
 
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -174,7 +171,7 @@ public class LocationSelectionFragment extends Fragment {
                 officeSpinner.setAdapter(adapter);
 
                 //If the reservation already has an Office selected:
-                selectedOffice = ((MainActivity) getActivity()).getSelectedOffice();
+                selectedOffice = ((ReservationActivity) getActivity()).getSelectedOffice();
                 if ( selectedOffice != null){
                     for (int i = 0; i < offices.size(); i++){
                         if (offices.get(i).getId() == selectedOffice.getId()){
@@ -226,11 +223,11 @@ public class LocationSelectionFragment extends Fragment {
 
                 //Guardamos la oficina ya que se usa sólo para filtrar los coches
 
-                ((MainActivity) getActivity()).setSelectedOffice(office);
+                ((ReservationActivity) getActivity()).setSelectedOffice(office);
 
                 //mostrar listado de coches
-                ((MainActivity)getActivity()).setCurrentStep(MainActivity.CurrentStep.DATES);
-                ((MainActivity) getActivity()).replaceFragments(DatesSelectionFragment.class, R.id.idContentFragment);
+                ((ReservationActivity)getActivity()).setCurrentStep(ReservationActivity.CurrentStep.DATES);
+                ((ReservationActivity) getActivity()).replaceFragments(DatesSelectionFragment.class, R.id.idContentFragment);
             }
         });
 

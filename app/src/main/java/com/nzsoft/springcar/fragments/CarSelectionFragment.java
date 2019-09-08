@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.nzsoft.springcar.R;
-import com.nzsoft.springcar.activities.MainActivity;
+import com.nzsoft.springcar.activities.ReservationActivity;
 import com.nzsoft.springcar.adapters.CarListAdapter;
 import com.nzsoft.springcar.model.Car;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
@@ -49,7 +49,7 @@ public class CarSelectionFragment extends Fragment {
         nextBtn = (Button) view.findViewById(R.id.idNextButton_CarSelection);
         prevBtn = (Button) view.findViewById(R.id.idBackButton_CarSelection);
 
-        if (((MainActivity)getActivity()).getReservation().getCar() == null){
+        if (((ReservationActivity)getActivity()).getReservation().getCar() == null){
             nextBtn.getBackground().setColorFilter(nextBtn.getContext().getResources().getColor(R.color.colorPaleGray), PorterDuff.Mode.SRC);
             nextBtn.setEnabled(false);
         } else {
@@ -57,9 +57,9 @@ public class CarSelectionFragment extends Fragment {
             nextBtn.setEnabled(true);
         }
 
-        String fechaFin = ((MainActivity)getActivity()).getFinalDate();
-        String fechaInicio = ((MainActivity)getActivity()).getInitDate();
-        Long officeId = ((MainActivity)getActivity()).getSelectedOffice().getId();
+        String fechaFin = ((ReservationActivity)getActivity()).getFinalDate();
+        String fechaInicio = ((ReservationActivity)getActivity()).getInitDate();
+        Long officeId = ((ReservationActivity)getActivity()).getSelectedOffice().getId();
 
         Call<List<Car>> notAvailableCarsCall = RetrofitHelper.getApiRest().getNotAvailableCars(fechaFin, fechaInicio, officeId);
 
@@ -89,7 +89,7 @@ public class CarSelectionFragment extends Fragment {
 
                         selectedCar = position;
                         carListAdapter.notifyDataSetChanged();
-                        ((MainActivity) getActivity()).getReservation().setCar(cars.get(position));
+                        ((ReservationActivity) getActivity()).getReservation().setCar(cars.get(position));
 
                         nextBtn.getBackground().setColorFilter(nextBtn.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC);
                         nextBtn.setEnabled(true);
@@ -111,8 +111,8 @@ public class CarSelectionFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).setCurrentStep(MainActivity.CurrentStep.EXTRAS);
-                ((MainActivity) getActivity()).replaceFragments(ExtrasSelectionFragment.class, R.id.idContentFragment);
+                ((ReservationActivity)getActivity()).setCurrentStep(ReservationActivity.CurrentStep.EXTRAS);
+                ((ReservationActivity) getActivity()).replaceFragments(ExtrasSelectionFragment.class, R.id.idContentFragment);
             }
         });
 
@@ -121,10 +121,10 @@ public class CarSelectionFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).getReservation().setCar(null);
+                ((ReservationActivity)getActivity()).getReservation().setCar(null);
                 selectedCar = -1;
-                ((MainActivity)getActivity()).setCurrentStep(MainActivity.CurrentStep.DATES);
-                ((MainActivity) getActivity()).replaceFragments(DatesSelectionFragment.class, R.id.idContentFragment);
+                ((ReservationActivity)getActivity()).setCurrentStep(ReservationActivity.CurrentStep.DATES);
+                ((ReservationActivity) getActivity()).replaceFragments(DatesSelectionFragment.class, R.id.idContentFragment);
             }
         });
 

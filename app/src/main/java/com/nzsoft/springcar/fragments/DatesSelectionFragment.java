@@ -12,7 +12,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.nzsoft.springcar.R;
-import com.nzsoft.springcar.activities.MainActivity;
+import com.nzsoft.springcar.activities.ReservationActivity;
 import com.nzsoft.springcar.model.Reservation;
 
 import java.text.ParseException;
@@ -58,7 +58,7 @@ public class DatesSelectionFragment extends Fragment {
         pickupDateTextView = (TextView) view.findViewById(R.id.idPickupDate);
         dropoffDateTextView = (TextView) view.findViewById(R.id.idDropoffDate);
 
-        final Reservation reservation = ((MainActivity)getActivity()).getReservation();
+        final Reservation reservation = ((ReservationActivity)getActivity()).getReservation();
 
         calendar = Calendar.getInstance();
 
@@ -128,14 +128,14 @@ public class DatesSelectionFragment extends Fragment {
                          } catch (ParseException e){
                              e.printStackTrace();
                          }
-                         ((MainActivity) getActivity()).getReservation().setPickUpDate(pickUpDate);
+                         ((ReservationActivity) getActivity()).getReservation().setPickUpDate(pickUpDate);
 
                          if (pickUpDate.after(reservation.getDropOffDate())){
                              calendar.setTime(pickUpDate);
                              calendar.add(Calendar.DATE, 1);
                              Date date = calendar.getTime();
                              dropoffDateTextView.setText(simpleDateFormat.format(date));
-                             ((MainActivity) getActivity()).getReservation().setDropOffDate(date);
+                             ((ReservationActivity) getActivity()).getReservation().setDropOffDate(date);
                          }
 
 
@@ -185,12 +185,12 @@ public class DatesSelectionFragment extends Fragment {
                             e.printStackTrace();
                         }
 
-                        ((MainActivity) getActivity()).getReservation().setDropOffDate(dropOffDate);
+                        ((ReservationActivity) getActivity()).getReservation().setDropOffDate(dropOffDate);
                     }
                 }, year, month, day);
 
 
-                Date pickUpDate = ((MainActivity)getActivity()).getReservation().getPickUpDate();
+                Date pickUpDate = ((ReservationActivity)getActivity()).getReservation().getPickUpDate();
                 calendar.setTime(pickUpDate);
                 calendar.add(Calendar.DATE, 1);
                 Date minDate = calendar.getTime();
@@ -214,8 +214,8 @@ public class DatesSelectionFragment extends Fragment {
             public void onClick(View v) {
 
                 //mostrar listado de coches
-                ((MainActivity)getActivity()).setCurrentStep(MainActivity.CurrentStep.CAR);
-                ((MainActivity) getActivity()).replaceFragments(CarSelectionFragment.class, R.id.idContentFragment);
+                ((ReservationActivity)getActivity()).setCurrentStep(ReservationActivity.CurrentStep.CAR);
+                ((ReservationActivity) getActivity()).replaceFragments(CarSelectionFragment.class, R.id.idContentFragment);
             }
         });
 
@@ -225,12 +225,12 @@ public class DatesSelectionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //Reseteamos las fechas
-                ((MainActivity) getActivity()).getReservation().setPickUpDate(null);
-                ((MainActivity) getActivity()).getReservation().setDropOffDate(null);
+                ((ReservationActivity) getActivity()).getReservation().setPickUpDate(null);
+                ((ReservationActivity) getActivity()).getReservation().setDropOffDate(null);
 
                 //Volvemos a la pantalla anterior
-                ((MainActivity)getActivity()).setCurrentStep(MainActivity.CurrentStep.LOCATION);
-                ((MainActivity) getActivity()).replaceFragments(LocationSelectionFragment.class, R.id.idContentFragment);
+                ((ReservationActivity)getActivity()).setCurrentStep(ReservationActivity.CurrentStep.LOCATION);
+                ((ReservationActivity) getActivity()).replaceFragments(LocationSelectionFragment.class, R.id.idContentFragment);
             }
         });
 

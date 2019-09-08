@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">springcar</string>
+    <string name="app_name">SpringCar</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="per_day_label">per day</string>

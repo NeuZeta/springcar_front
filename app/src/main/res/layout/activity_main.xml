@@ -7,23 +7,131 @@
     android:orientation="vertical"
     tools:context=".activities.MainActivity">
 
-    <fragment
-        android:id="@+id/idBreadCrumbFragment"
-        android:name="com.nzsoft.springcar.fragments.BreadcrumbFragment"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/idReservationToolbar"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        tools:layout="@layout/fragment_breadcrumb" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/idContentFragment"
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:src="@drawable/logo_alpha_white"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:textColor="#fff"
+                android:text="@string/app_name"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="20dp"
+                android:gravity="center"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+    </android.support.v7.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/imageView3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteY="48dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        app:srcCompat="@drawable/carplaceholder" />
 
-    </android.support.constraint.ConstraintLayout>
 
+    <LinearLayout
+        android:id="@+id/idNewReservationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="40dp"
+            android:padding="20dp"
+            android:src="@drawable/new_reservation_icon" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="NEW RESERVATION"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/greyLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        app:srcCompat="@color/colorPaleGray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="40dp"
+            android:padding="20dp"
+            android:src="@drawable/my_account" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="MY ACCOUNT"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/greyLine2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        app:srcCompat="@color/colorPaleGray" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="40dp"
+            android:padding="20dp"
+            android:src="@drawable/my_reservations" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="MY RESERVATIONS"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </LinearLayout>

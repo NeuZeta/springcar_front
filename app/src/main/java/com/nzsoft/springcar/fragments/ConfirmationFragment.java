@@ -3,35 +3,34 @@ package com.nzsoft.springcar.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.nzsoft.springcar.R;
-import com.nzsoft.springcar.activities.MainActivity;
+import com.nzsoft.springcar.activities.ReservationActivity;
 import com.nzsoft.springcar.activities.SuccessActivity;
 import com.nzsoft.springcar.model.Car;
 import com.nzsoft.springcar.model.CommonExtra;
 import com.nzsoft.springcar.model.Reservation;
-import com.nzsoft.springcar.retrofit.ApiRest;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -49,11 +48,7 @@ public class ConfirmationFragment extends Fragment {
     private TextView selectedPickUpTime;
     private TextView selectedDropOffTime;
 
-    private ListView selectedCar;
-    private ListView selectedExtras;
-
-    private Button nextBtn;
-    private Button prevBtn;
+    private Reservation reservation;
 
 
     public ConfirmationFragment() {
@@ -65,28 +60,31 @@ public class ConfirmationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final MainActivity mainActivity = ((MainActivity)getActivity());
+        reservation = ((ReservationActivity)getActivity()).getReservation();
 
         View view = inflater.inflate(R.layout.fragment_confirmation, container, false);
 
+        FrameLayout placeHolder = (FrameLayout) view.findViewById(R.id.idReservationDestinationConfirmation);
+        getLayoutInflater().inflate(R.layout.fragment_reservation, placeHolder);
+
+
         selectedOffice = (TextView) view.findViewById(R.id.idOfficeSelected);
-        selectedOffice.setText(mainActivity.getSelectedOffice().getName());
+        selectedOffice.setText(reservation.getCar().getOffice().getName());
 
         selectedPickUpTime = (TextView) view.findViewById(R.id.idPickUpDateSelected);
         selectedDropOffTime = (TextView) view.findViewById(R.id.idDropOffDateSelected);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
-
-        selectedPickUpTime.setText(sdf.format(mainActivity.getReservation().getPickUpDate()));
-        selectedDropOffTime.setText(sdf.format(mainActivity.getReservation().getDropOffDate()));
+        selectedPickUpTime.setText(sdf.format(reservation.getPickUpDate()));
+        selectedDropOffTime.setText(sdf.format(reservation.getDropOffDate()));
 
         View carView = inflater.inflate(R.layout.row_model_car, container, false);
 
         TextView carModelText = (TextView) carView.findViewById(R.id.idCarInfoModel);
         ImageView carImage = (ImageView) carView.findViewById(R.id.idCarImage);
 
-        Car car = mainActivity.getReservation().getCar();
+        Car car = reservation.getCar();
 
         carModelText.setText(car.getModel());
 
@@ -105,7 +103,7 @@ public class ConfirmationFragment extends Fragment {
 
         LinearLayout extrasLayout = (LinearLayout) view.findViewById(R.id.idExtrasInfoLayout);
 
-        Reservation.InsuranceType insuranceType = mainActivity.getReservation().getInsuranceType();
+        Reservation.InsuranceType insuranceType = reservation.getInsuranceType();
         switch (insuranceType){
             case TOP:
                 View topInsuranceView = inflater.inflate(R.layout.row_model_extra, container, false);
@@ -114,7 +112,7 @@ public class ConfirmationFragment extends Fragment {
                 topInsuranceDescription.setText(getActivity().getResources().getString(R.string.top_insurance_text));
 
                 TextView topInsurancePrice = topInsuranceView.findViewById(R.id.idExtraPrice);
-                topInsurancePrice.setText(mainActivity.getReservation().getCar().getCategory().getTopInsurancePrice() + "€");
+                topInsurancePrice.setText(reservation.getCar().getCategory().getTopInsurancePrice() + "€");
 
                 extrasLayout.addView(topInsuranceView);
                 break;
@@ -126,25 +124,25 @@ public class ConfirmationFragment extends Fragment {
                 baseInsuranceDescription.setText(getActivity().getResources().getString(R.string.base_insurance_text));
 
                 TextView baseInsurancePrice = baseInsuranceView.findViewById(R.id.idExtraPrice);
-                baseInsurancePrice.setText(mainActivity.getReservation().getCar().getCategory().getBaseInsurancePrice() + "€");
+                baseInsurancePrice.setText(reservation.getCar().getCategory().getBaseInsurancePrice() + "€");
 
                 extrasLayout.addView(baseInsuranceView);
                 break;
         }
 
-        if (mainActivity.getReservation().isHasTireAndGlassProtection()){
+        if (reservation.isHasTireAndGlassProtection()){
             View tireAndGlassView = inflater.inflate(R.layout.row_model_extra, container, false);
 
             TextView tireAndGlassDescription = tireAndGlassView.findViewById(R.id.idExtraDescription);
             tireAndGlassDescription.setText(getActivity().getResources().getString(R.string.tire_glass_text));
 
             TextView tireAndGlassPrice = tireAndGlassView.findViewById(R.id.idExtraPrice);
-            tireAndGlassPrice.setText(mainActivity.getReservation().getCar().getCategory().getTireAndGlassProtectionPrice() + "€");
+            tireAndGlassPrice.setText(reservation.getCar().getCategory().getTireAndGlassProtectionPrice() + "€");
 
             extrasLayout.addView(tireAndGlassView);
         }
 
-        List<CommonExtra> extras = mainActivity.getReservation().getCommonExtras();
+        List<CommonExtra> extras = reservation.getCommonExtras();
 
 
             for (CommonExtra extra : extras){
@@ -162,15 +160,14 @@ public class ConfirmationFragment extends Fragment {
 
         TextView totalPriceView = (TextView) view.findViewById(R.id.idTotalPrice);
 
-        mainActivity.getReservation().setPrice();
-        totalPriceView.setText(String.format("%.2f", mainActivity.getReservation().getPrice()) + "€");
+        reservation.setPrice();
+        totalPriceView.setText(String.format("%.2f", reservation.getPrice()) + "€");
 
         Button nextBtn = (Button) view.findViewById(R.id.idNextButton_Confirmation);
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Seteamos la fecha actual en la reserva
-                Reservation reservation = mainActivity.getReservation();
                 reservation.setReservationDate(new Date());
 
                 GsonBuilder builder = new GsonBuilder();
@@ -214,8 +211,8 @@ public class ConfirmationFragment extends Fragment {
         prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).setCurrentStep(MainActivity.CurrentStep.EXTRAS);
-                ((MainActivity) getActivity()).replaceFragments(ExtrasSelectionFragment.class, R.id.idContentFragment);
+                ((ReservationActivity)getActivity()).setCurrentStep(ReservationActivity.CurrentStep.EXTRAS);
+                ((ReservationActivity) getActivity()).replaceFragments(ExtrasSelectionFragment.class, R.id.idContentFragment);
             }
         });
 

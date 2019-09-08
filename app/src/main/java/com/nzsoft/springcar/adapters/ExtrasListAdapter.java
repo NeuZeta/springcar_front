@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.nzsoft.springcar.R;
-import com.nzsoft.springcar.activities.MainActivity;
 import com.nzsoft.springcar.model.CommonExtra;
 
 import java.util.List;
