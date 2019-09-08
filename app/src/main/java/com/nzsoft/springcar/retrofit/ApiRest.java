@@ -11,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiRest {
@@ -35,7 +36,7 @@ public interface ApiRest {
     @POST ("reservations")
     public Call<Reservation> createReservation(@Body Reservation reservation);
 
-    @GET ("reservations")
-    public Call <Reservation> getReservationById (@Query("id") Long id);
+    @GET ("reservations/{id}")
+    public Call <Reservation> getReservationById (@Path("id") Long id);
 
 }

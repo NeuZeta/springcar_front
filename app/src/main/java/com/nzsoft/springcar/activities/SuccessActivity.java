@@ -47,7 +47,7 @@ public class SuccessActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Reservation> call, Response<Reservation> response) {
                 if (!response.isSuccessful()){
-                    Log.d("___", "Response error: " + response.message());
+                    Log.d("___", "Response error: " + response.toString());
                     return;
                 }
 
@@ -57,7 +57,7 @@ public class SuccessActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Reservation> call, Throwable t) {
-                Log.d("___", "Response error: " + t.getCause().toString());
+                Log.d("___", "Throwable error: " + t.getCause().toString());
             }
         });
 
