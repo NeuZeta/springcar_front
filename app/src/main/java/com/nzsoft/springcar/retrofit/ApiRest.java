@@ -33,8 +33,12 @@ public interface ApiRest {
     public Call<List<Office>> getAllOffices();
 
     // RESERVATION
+    @GET ("reservations")
+    public Call<List<Reservation>> getAllReservations();
+
     @POST ("reservations")
     public Call<Reservation> createReservation(@Body Reservation reservation);
+
 
     @GET ("reservations/{id}")
     public Call <Reservation> getReservationById (@Path("id") Long id);

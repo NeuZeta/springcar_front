@@ -28,6 +28,7 @@ import retrofit2.Response;
 public class SuccessActivity extends AppCompatActivity {
 
     private TextView introText;
+    private TextView reservationNumberText;
 
     private TextView selectedOffice;
     private TextView selectedPickUpTime;
@@ -58,7 +59,9 @@ public class SuccessActivity extends AppCompatActivity {
         Long reservationIdLong = bundle.getLong("ReservationID");
 
         introText = (TextView) findViewById(R.id.idIntroText);
-        introText.setText(getResources().getString(R.string.reservation_intro_text) + reservationIdLong.toString());
+        introText.setVisibility(View.GONE);
+        reservationNumberText = (TextView) findViewById(R.id.idReservationNumber);
+        reservationNumberText.setVisibility(View.VISIBLE);
 
         //Recuperamos la reserva del servidor
 
