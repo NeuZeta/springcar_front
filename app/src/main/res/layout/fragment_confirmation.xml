@@ -14,7 +14,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/idReservationDestinationConfirmation"
+            android:id="@+id/idReservationDestination"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
             app:layout_constraintTop_toTopOf="parent"></FrameLayout>
 

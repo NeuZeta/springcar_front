@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myReservationToolbar = (Toolbar) findViewById(R.id.idReservationToolbar);
         setSupportActionBar(myReservationToolbar);
 
+        //Coger la referencia al layout que hace de botón y ponerle el listener
+        //Botón AÑADIR RESERVA
         LinearLayout newReservationBtn = (LinearLayout) findViewById(R.id.idNewReservationLayout);
 
         newReservationBtn.setOnClickListener(new View.OnClickListener() {
@@ -30,6 +32,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intentNewReservation);
             }
         });
+
+        //Botón MY ACCOUNT
+
+        //Botón MY RESERVATIONS
+        LinearLayout myReservationsBtn = (LinearLayout) findViewById(R.id.idMyReservationsLayout);
+
+        myReservationsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentMyReservations = new Intent(v.getContext(), MyReservationsActivity.class);
+                startActivity(intentMyReservations);
+            }
+        });
+
 
     }
 }

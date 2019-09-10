@@ -41,7 +41,7 @@ public class ReservationsListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View view = inflater.inflate(R.layout.row_model_car, null);
+        View view = inflater.inflate(R.layout.row_model_reservation, null);
 
         TextView reservationNoText = (TextView) view.findViewById(R.id.idReservationNo);
         TextView pickUpDateText = (TextView) view.findViewById(R.id.idReservationInitialDate);

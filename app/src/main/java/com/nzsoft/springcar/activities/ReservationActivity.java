@@ -20,8 +20,6 @@ public class ReservationActivity extends AppCompatActivity {
 
     private Reservation reservation;
     private Office selectedOffice;
-    private String initDate;
-    private String finalDate;
 
     private CurrentStep currentStep;
     private BreadcrumbFragment breadcrumbFragment;
@@ -90,22 +88,6 @@ public class ReservationActivity extends AppCompatActivity {
 
     public void setSelectedOffice(Office selectedOffice) {
         this.selectedOffice = selectedOffice;
-    }
-
-    public String getInitDate() {
-        return initDate;
-    }
-
-    public void setInitDate(String initDate) {
-        this.initDate = initDate;
-    }
-
-    public String getFinalDate() {
-        return finalDate;
-    }
-
-    public void setFinalDate(String finalDate) {
-        this.finalDate = finalDate;
     }
 
     public CurrentStep getCurrentStep() {

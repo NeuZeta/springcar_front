@@ -16,8 +16,10 @@ import com.nzsoft.springcar.R;
 import com.nzsoft.springcar.activities.ReservationActivity;
 import com.nzsoft.springcar.adapters.CarListAdapter;
 import com.nzsoft.springcar.model.Car;
+import com.nzsoft.springcar.model.Reservation;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import retrofit2.Call;
@@ -57,19 +59,23 @@ public class CarSelectionFragment extends Fragment {
             nextBtn.setEnabled(true);
         }
 
-        String fechaFin = ((ReservationActivity)getActivity()).getFinalDate();
-        String fechaInicio = ((ReservationActivity)getActivity()).getInitDate();
+        Reservation reservation = ((ReservationActivity)getActivity()).getReservation();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String fechaFin = sdf.format(reservation.getDropOffDate());
+        String fechaInicio = sdf.format(reservation.getPickUpDate());
+
         Long officeId = ((ReservationActivity)getActivity()).getSelectedOffice().getId();
 
         Call<List<Car>> notAvailableCarsCall = RetrofitHelper.getApiRest().getNotAvailableCars(fechaFin, fechaInicio, officeId);
 
         Call<List<Car>> call = RetrofitHelper.getApiRest().getAllCars();
 
-        call.enqueue(new Callback<List<Car>>() {
+        notAvailableCarsCall.enqueue(new Callback<List<Car>>() {
             @Override
             public void onResponse(Call<List<Car>> call, Response<List<Car>> response) {
                 if (!response.isSuccessful()){
-                    Log.d("****", "Response error: " + response.message());
+                    Log.d("****", "Response error: " + response.toString());
                     return;
                 }
                 final List<Car> cars = response.body();
@@ -100,7 +106,7 @@ public class CarSelectionFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Car>> call, Throwable t) {
-                Log.d("***", "Error: " + t.getCause().toString());
+                Log.d("***", "Error: " + t.getMessage());
             }
 
         });
