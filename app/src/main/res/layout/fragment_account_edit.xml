@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.AccountEditFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -34,7 +33,7 @@
                     android:tint="@android:color/background_light" />
 
                 <TextView
-                    android:id="@+id/RegistrationTitle"
+                    android:id="@+id/idRegistrationTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

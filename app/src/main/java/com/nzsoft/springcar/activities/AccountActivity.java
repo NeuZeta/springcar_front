@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.nzsoft.springcar.R;
 import com.nzsoft.springcar.fragments.AccountEditFragment;
+import com.nzsoft.springcar.fragments.AccountViewFragment;
 import com.nzsoft.springcar.model.Client;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
 import com.nzsoft.springcar.utils.Utils;
@@ -32,45 +33,85 @@ public class AccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
 
-        if (savedInstanceState == null){
+        Long userId = Utils.loadPreferences(this);
+
+        if (userId == 0) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.add(R.id.idAccountDestino, new AccountEditFragment());
             accountStatus = AccountStatus.CREATE;
             fragmentTransaction.commit();
+
+        } else {
+
+            accountStatus = AccountStatus.VIEW;
+
+            //El endpoint entrega un array de clientes...
+
+            Call<Client> call = RetrofitHelper.getApiRest().getClientById(userId);
+            call.enqueue(new Callback<Client>() {
+                @Override
+                public void onResponse(Call<Client> call, Response<Client> response) {
+                    Log.d("***", "Client received, response: " + response.toString());
+
+                    client = response.body();
+
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.add(R.id.idAccountDestino, new AccountViewFragment());
+                    fragmentTransaction.commit();
+
+                }
+
+                @Override
+                public void onFailure(Call<Client> call, Throwable t) {
+                    Log.d("___", t.toString());
+                }
+            });
         }
 
         backBtn = findViewById(R.id.idBackBtn_Account);
         actionBtn = findViewById(R.id.idActionBtn_Account);
 
         switch (accountStatus){
-            case CREATE:
-                actionBtn.setVisibility(View.INVISIBLE);
-                backBtn.setVisibility(View.INVISIBLE);
-                break;
-            case VIEW:
-                actionBtn.setVisibility(View.VISIBLE);
-                break;
-            case UPDATE:
-                actionBtn.setVisibility(View.INVISIBLE);
-                break;
+
+            case CREATE:        actionBtn.setVisibility(View.INVISIBLE);
+                                backBtn.setVisibility(View.INVISIBLE);
+                                break;
+
+            case VIEW:          actionBtn.setText("EDIT");
+                                actionBtn.setVisibility(View.VISIBLE);
+                                break;
+
+            case UPDATE:        actionBtn.setVisibility(View.INVISIBLE);
+                                break;
         }
 
     }
 
     public void GoBack (){
+        Intent intent;
+
         switch (accountStatus) {
-            case CREATE:        Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(homeIntent);
+
+            case CREATE:        intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
                                 break;
-            case VIEW:
-                break;
-            case UPDATE:
-                break;
+
+            case VIEW:          intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                                break;
+
+            case UPDATE:        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                                fragmentTransaction.replace(R.id.idAccountDestino, new AccountViewFragment());
+                                accountStatus = AccountStatus.VIEW;
+                                fragmentTransaction.commit();
+                                break;
         }
     }
 
     public void PerformAction (){
+
         switch (accountStatus) {
+
             case CREATE:        createClient ();
                                 Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(homeIntent);
@@ -129,5 +170,4 @@ public class AccountActivity extends AppCompatActivity {
             });
         }
     }
-
 }
