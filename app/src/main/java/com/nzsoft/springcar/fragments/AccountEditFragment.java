@@ -13,6 +13,9 @@ import android.widget.EditText;
 
 import com.nzsoft.springcar.R;
 import com.nzsoft.springcar.activities.AccountActivity;
+import com.nzsoft.springcar.model.Client;
+import com.nzsoft.springcar.model.Contact;
+import com.nzsoft.springcar.model.Location;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +27,7 @@ public class AccountEditFragment extends Fragment {
 
     private EditText firstNameText;
     private EditText lastNameText;
-    private EditText numberText;
+    private EditText idNumberText;
     private EditText addressText;
     private EditText zipCodeText;
     private EditText cityText;
@@ -52,7 +55,7 @@ public class AccountEditFragment extends Fragment {
         //Get UI references
         firstNameText = (EditText) view.findViewById(R.id.idNameText);
         lastNameText = (EditText) view.findViewById(R.id.idLastNameText);
-        numberText = (EditText) view.findViewById(R.id.idIDNumberText);
+        idNumberText = (EditText) view.findViewById(R.id.idIDNumberText);
         addressText = (EditText) view.findViewById(R.id.idAddressText);
         zipCodeText = (EditText) view.findViewById(R.id.idZipCodeText);
         cityText = (EditText) view.findViewById(R.id.idCityText);
@@ -69,7 +72,7 @@ public class AccountEditFragment extends Fragment {
 
         textFields.add(firstNameText);
         textFields.add(lastNameText);
-        textFields.add(numberText);
+        textFields.add(idNumberText);
         textFields.add(addressText);
         textFields.add(zipCodeText);
         textFields.add(cityText);
@@ -91,6 +94,7 @@ public class AccountEditFragment extends Fragment {
                 @Override
                 public void afterTextChanged(Editable s) {
                     if (allDataFilledUp()){
+                        ((AccountActivity)getActivity()).setClient(createClientFromData());
                         ((AccountActivity)getActivity()).enableActionBtn();
                     } else {
                         ((AccountActivity)getActivity()).disableActionBtn();
@@ -98,6 +102,7 @@ public class AccountEditFragment extends Fragment {
                 }
             });
         }
+
         return view;
     }
 
@@ -109,6 +114,33 @@ public class AccountEditFragment extends Fragment {
             }
         }
         return true;
+    }
+
+    public Client createClientFromData (){
+
+        Client client = new Client();
+
+        client.setFirstName(firstNameText.getText().toString());
+        client.setLastName(lastNameText.getText().toString());
+        client.setIdNumber(idNumberText.getText().toString());
+
+        Location location = new Location();
+        location.setAddress(addressText.getText().toString());
+        location.setZipCode(zipCodeText.getText().toString());
+        location.setCity(cityText.getText().toString());
+        location.setCountry(countryText.getText().toString());
+        client.setLocation(location);
+
+        Contact contact = new Contact();
+        contact.setPhoneNumber(phoneText.getText().toString());
+        contact.setEmail(emailText.getText().toString());
+        client.setContact(contact);
+
+        client.setUserName(userNameText.getText().toString());
+        client.setPassword(passwordText.getText().toString());
+
+        return client;
+
     }
 
 }

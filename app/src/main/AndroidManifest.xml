@@ -29,7 +29,7 @@
             android:value="API key" />
 
         <activity android:name=".activities.SuccessActivity" />
-        <activity android:name=".activities.ReservationActivity"/>
+        <activity android:name=".activities.NewReservationActivity"/>
         <activity android:name=".activities.MyReservationsActivity"/>
         <activity android:name=".activities.AccountActivity"/>
     </application>

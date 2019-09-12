@@ -16,7 +16,7 @@ import com.nzsoft.springcar.model.Office;
 import com.nzsoft.springcar.model.Reservation;
 
 
-public class ReservationActivity extends AppCompatActivity {
+public class NewReservationActivity extends AppCompatActivity {
 
     private Reservation reservation;
     private Office selectedOffice;
@@ -35,6 +35,8 @@ public class ReservationActivity extends AppCompatActivity {
 
         //Initialize Reservation
         reservation = new Reservation();
+
+        savePreferences();
 
         //Get userId from Shared Preferences
         Long userId = loadPreferences();
@@ -104,7 +106,7 @@ public class ReservationActivity extends AppCompatActivity {
 
     // METODOS PRIVADOS
 
-    private void savePreferences(){
+    private void savePreferences() {
 
         SharedPreferences preferences = getSharedPreferences("credentials", Context.MODE_PRIVATE);
 
@@ -118,7 +120,7 @@ public class ReservationActivity extends AppCompatActivity {
 
         SharedPreferences preferences = getSharedPreferences("credentials", Context.MODE_PRIVATE);
 
-        Long userId = preferences.getLong("userId", 20);
+        Long userId = preferences.getLong("userId", 0);
 
         return userId;
     }

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.nzsoft.springcar.R;
-import com.nzsoft.springcar.activities.ReservationActivity;
+import com.nzsoft.springcar.activities.NewReservationActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,15 +53,15 @@ public class BreadcrumbFragment extends Fragment {
     }
 
 
-    public void changeStep (ReservationActivity.CurrentStep currentStep){
+    public void changeStep (NewReservationActivity.CurrentStep currentStep){
 
-        if (currentStep == ReservationActivity.CurrentStep.LOCATION){
+        if (currentStep == NewReservationActivity.CurrentStep.LOCATION){
             step01.setImageDrawable(getResources().getDrawable(R.drawable.location_active));
             step02.setImageDrawable(getResources().getDrawable(R.drawable.inactive));
             connection01.setColorFilter(getResources().getColor(R.color.colorPaleGray));
         }
 
-        if (currentStep == ReservationActivity.CurrentStep.DATES){
+        if (currentStep == NewReservationActivity.CurrentStep.DATES){
             step01.setImageDrawable(getResources().getDrawable(R.drawable.location_saved));
             step02.setImageDrawable(getResources().getDrawable(R.drawable.calendar_active));
             step03.setImageDrawable(getResources().getDrawable(R.drawable.inactive));
@@ -69,7 +69,7 @@ public class BreadcrumbFragment extends Fragment {
             connection02.setColorFilter(getResources().getColor(R.color.colorPaleGray));
         }
 
-        if (currentStep == ReservationActivity.CurrentStep.CAR){
+        if (currentStep == NewReservationActivity.CurrentStep.CAR){
             step02.setImageDrawable(getResources().getDrawable(R.drawable.calendar_saved));
             step03.setImageDrawable(getResources().getDrawable(R.drawable.car_active));
             step04.setImageDrawable(getResources().getDrawable(R.drawable.inactive));
@@ -77,7 +77,7 @@ public class BreadcrumbFragment extends Fragment {
             connection03.setColorFilter(getResources().getColor(R.color.colorPaleGray));
         }
 
-        if (currentStep == ReservationActivity.CurrentStep.EXTRAS){
+        if (currentStep == NewReservationActivity.CurrentStep.EXTRAS){
             step03.setImageDrawable(getResources().getDrawable(R.drawable.car_saved));
             step04.setImageDrawable(getResources().getDrawable(R.drawable.extras_active));
             step05.setImageDrawable(getResources().getDrawable(R.drawable.inactive));
@@ -85,7 +85,7 @@ public class BreadcrumbFragment extends Fragment {
             connection04.setColorFilter(getResources().getColor(R.color.colorPaleGray));
         }
 
-        if (currentStep == ReservationActivity.CurrentStep.CONFIRMATION){
+        if (currentStep == NewReservationActivity.CurrentStep.CONFIRMATION){
             step04.setImageDrawable(getResources().getDrawable(R.drawable.extras_saved));
             step05.setImageDrawable(getResources().getDrawable(R.drawable.confirm_active));
             connection04.setColorFilter(getResources().getColor(R.color.colorPrimary));

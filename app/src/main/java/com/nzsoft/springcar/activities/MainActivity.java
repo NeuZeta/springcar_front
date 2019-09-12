@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.nzsoft.springcar.R;
+import com.nzsoft.springcar.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +17,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Comprobamos si el usuario está registrado y si no lo está, abrimos la pagina de registro
+        Long userId = Utils.loadPreferences(this);
+
+        if (userId == 0){
+            Intent intentMyAccount = new Intent(getApplicationContext(), AccountActivity.class);
+            startActivity(intentMyAccount);
+        }
 
         //Añadir titulo y logo a la barra principal
         Toolbar myReservationToolbar = (Toolbar) findViewById(R.id.idReservationToolbar);
@@ -29,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         newReservationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentNewReservation = new Intent(v.getContext(), ReservationActivity.class);
+                Intent intentNewReservation = new Intent(v.getContext(), NewReservationActivity.class);
                 startActivity(intentNewReservation);
             }
         });

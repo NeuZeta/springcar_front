@@ -10,9 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.GsonBuilder;
@@ -21,18 +18,14 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.nzsoft.springcar.R;
-import com.nzsoft.springcar.activities.ReservationActivity;
+import com.nzsoft.springcar.activities.NewReservationActivity;
 import com.nzsoft.springcar.activities.SuccessActivity;
-import com.nzsoft.springcar.model.Car;
-import com.nzsoft.springcar.model.CommonExtra;
 import com.nzsoft.springcar.model.Reservation;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
-import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,7 +57,7 @@ public class ConfirmationFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_confirmation, container, false);
 
-        reservation = ((ReservationActivity)getActivity()).getReservation();
+        reservation = ((NewReservationActivity)getActivity()).getReservation();
 
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         ReservationViewFragment reservationViewFragment = new ReservationViewFragment();
@@ -120,8 +113,8 @@ public class ConfirmationFragment extends Fragment {
         prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((ReservationActivity)getActivity()).setCurrentStep(ReservationActivity.CurrentStep.EXTRAS);
-                ((ReservationActivity) getActivity()).replaceFragments(ExtrasSelectionFragment.class, R.id.idContentFragment);
+                ((NewReservationActivity)getActivity()).setCurrentStep(NewReservationActivity.CurrentStep.EXTRAS);
+                ((NewReservationActivity) getActivity()).replaceFragments(ExtrasSelectionFragment.class, R.id.idContentFragment);
             }
         });
 

@@ -12,7 +12,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.nzsoft.springcar.R;
-import com.nzsoft.springcar.activities.ReservationActivity;
+import com.nzsoft.springcar.activities.NewReservationActivity;
 import com.nzsoft.springcar.model.Category;
 import com.nzsoft.springcar.model.CommonExtra;
 import com.nzsoft.springcar.model.Reservation;
@@ -42,7 +42,7 @@ public class ExtrasSelectionFragment extends Fragment {
         TextView baseInsurancePriceText = view.findViewById(R.id.idBasicInsurancePrice);
         TextView tireAndGlassPriceText = view.findViewById(R.id.idTireAndGlassPrice);
 
-        Category carCategory = ((ReservationActivity) getActivity()).getReservation().getCar().getCategory();
+        Category carCategory = ((NewReservationActivity) getActivity()).getReservation().getCar().getCategory();
 
         topInsurancePriceText.setText(carCategory.getTopInsurancePrice() + " €");
         baseInsurancePriceText.setText(carCategory.getBaseInsurancePrice() + " €");
@@ -59,16 +59,16 @@ public class ExtrasSelectionFragment extends Fragment {
 
                 switch (insuranceTypeID){
                     case (R.id.idBasicInsurance):
-                        ((ReservationActivity) getActivity()).getReservation().setInsuranceType(Reservation.InsuranceType.BASE);
+                        ((NewReservationActivity) getActivity()).getReservation().setInsuranceType(Reservation.InsuranceType.BASE);
                         break;
                     case (R.id.idTopInsurance):
-                        ((ReservationActivity) getActivity()).getReservation().setInsuranceType(Reservation.InsuranceType.TOP);
+                        ((NewReservationActivity) getActivity()).getReservation().setInsuranceType(Reservation.InsuranceType.TOP);
                         break;
                 }
 
                 CheckBox tireAndGlassCheckbox = (CheckBox) view.findViewById(R.id.idTireAndGlass);
                 if (tireAndGlassCheckbox.isChecked()){
-                    ((ReservationActivity) getActivity()).getReservation().setHasTireAndGlassProtection(true);
+                    ((NewReservationActivity) getActivity()).getReservation().setHasTireAndGlassProtection(true);
                 }
 
                 List<CommonExtra> commonExtras = new ArrayList<>();
@@ -98,9 +98,9 @@ public class ExtrasSelectionFragment extends Fragment {
                     commonExtras.add(new CommonExtra(5L, "Sky Rack", 18.33));
                 }
 
-                ((ReservationActivity)getActivity()).getReservation().setCommonExtras(commonExtras);
-                ((ReservationActivity)getActivity()).setCurrentStep(ReservationActivity.CurrentStep.CONFIRMATION);
-                ((ReservationActivity)getActivity()).replaceFragments(ConfirmationFragment.class, R.id.idContentFragment);
+                ((NewReservationActivity)getActivity()).getReservation().setCommonExtras(commonExtras);
+                ((NewReservationActivity)getActivity()).setCurrentStep(NewReservationActivity.CurrentStep.CONFIRMATION);
+                ((NewReservationActivity)getActivity()).replaceFragments(ConfirmationFragment.class, R.id.idContentFragment);
 
             }
         });
@@ -110,8 +110,8 @@ public class ExtrasSelectionFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                ((ReservationActivity)getActivity()).setCurrentStep(ReservationActivity.CurrentStep.CAR);
-                ((ReservationActivity) getActivity()).replaceFragments(CarSelectionFragment.class, R.id.idContentFragment);
+                ((NewReservationActivity)getActivity()).setCurrentStep(NewReservationActivity.CurrentStep.CAR);
+                ((NewReservationActivity) getActivity()).replaceFragments(CarSelectionFragment.class, R.id.idContentFragment);
             }
         });
 
