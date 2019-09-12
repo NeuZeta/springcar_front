@@ -1,5 +1,6 @@
 package com.nzsoft.springcar.activities;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,10 +10,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Switch;
 
 import com.nzsoft.springcar.R;
 import com.nzsoft.springcar.adapters.ReservationsListAdapter;
 import com.nzsoft.springcar.fragments.ReservationViewFragment;
+import com.nzsoft.springcar.fragments.ReservationsListFragment;
 import com.nzsoft.springcar.model.Reservation;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
 
@@ -24,8 +27,9 @@ import retrofit2.Response;
 
 public class MyReservationsActivity extends AppCompatActivity {
 
-    private Button backToHomeBtn;
-    private Button backToReservationsBtn;
+    private Step step;
+    private Reservation reservation;
+
     private Button deleteBtn;
 
     @Override
@@ -37,45 +41,59 @@ public class MyReservationsActivity extends AppCompatActivity {
         Toolbar myReservationToolbar = (Toolbar) findViewById(R.id.idReservationToolbar);
         setSupportActionBar(myReservationToolbar);
 
-        Call<List<Reservation>> call = RetrofitHelper.getApiRest().getAllReservations();
+        deleteBtn = (Button) findViewById(R.id.idDeleteBtn_myReservations);
+        HideDeleteBtn();
 
-        call.enqueue(new Callback<List<Reservation>>() {
-            @Override
-            public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {
-
-                if (!response.isSuccessful()){
-                    Log.d("****", "Response error: " + response.message());
-                    return;
-                }
-
-                final List<Reservation> reservations = response.body();
-
-                final ReservationsListAdapter reservationsListAdapter = new ReservationsListAdapter(getApplicationContext(), reservations);
-
-                final ListView reservationList = (ListView) findViewById(R.id.idReservationsList);
-                reservationList.setAdapter(reservationsListAdapter);
-
-                reservationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                        ReservationViewFragment reservationViewFragment = new ReservationViewFragment();
-                        reservationViewFragment.setReservation(reservations.get(position));
-
-                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.idDestino, reservationViewFragment);
-                        fragmentTransaction.commit();
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Reservation>> call, Throwable t) {
-
-            }
-        });
+        if (savedInstanceState == null){
+            step = Step.LIST;
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.idDestino, new ReservationsListFragment());
+            fragmentTransaction.commit();
+        }
 
     }
+
+    public void goBack(){
+
+        switch (step){
+
+            case LIST:      Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(homeIntent);
+                            break;
+
+            case DETAIL:    step = Step.LIST;
+                            HideDeleteBtn ();
+                            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                            fragmentTransaction.replace(R.id.idDestino, new ReservationsListFragment());
+                            fragmentTransaction.commit();
+                            break;
+        }
+
+    }
+
+    public Step getStep() {
+        return step;
+    }
+
+    public void setStep(Step step) {
+        this.step = step;
+    }
+
+    public void ShowDeleteBtn (){
+        deleteBtn.setVisibility(View.VISIBLE);
+    }
+
+    public void HideDeleteBtn (){
+        deleteBtn.setVisibility(View.INVISIBLE);
+    }
+
+    /*
+     * INNER ENUM State
+     *
+     */
+
+    public enum Step {
+        LIST, DETAIL;
+    }
+
 }
