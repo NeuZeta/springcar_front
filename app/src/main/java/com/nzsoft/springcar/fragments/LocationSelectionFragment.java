@@ -2,6 +2,7 @@ package com.nzsoft.springcar.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -29,6 +30,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nzsoft.springcar.R;
+import com.nzsoft.springcar.activities.MainActivity;
 import com.nzsoft.springcar.activities.NewReservationActivity;
 import com.nzsoft.springcar.model.Office;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
@@ -46,6 +48,7 @@ import retrofit2.Response;
 public class LocationSelectionFragment extends Fragment {
 
     private Button nextBtn;
+    private Button backBtn;
     private Spinner officeSpinner;
     private List<Office> offices;
     private Office selectedOffice;
@@ -228,6 +231,16 @@ public class LocationSelectionFragment extends Fragment {
                 //mostrar listado de coches
                 ((NewReservationActivity)getActivity()).setCurrentStep(NewReservationActivity.CurrentStep.DATES);
                 ((NewReservationActivity) getActivity()).replaceFragments(DatesSelectionFragment.class, R.id.idContentFragment);
+            }
+        });
+
+        backBtn = (Button) view.findViewById(R.id.idBackButton_Location);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent homeIntent = new Intent(getContext(), MainActivity.class);
+                startActivity(homeIntent);
             }
         });
 

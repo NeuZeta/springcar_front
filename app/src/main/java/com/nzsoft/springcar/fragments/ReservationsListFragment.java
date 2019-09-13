@@ -17,6 +17,7 @@ import com.nzsoft.springcar.activities.MyReservationsActivity;
 import com.nzsoft.springcar.adapters.ReservationsListAdapter;
 import com.nzsoft.springcar.model.Reservation;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
+import com.nzsoft.springcar.utils.Utils;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class ReservationsListFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_reservations_list, container, false);
 
 
-        Call<List<Reservation>> call = RetrofitHelper.getApiRest().getAllReservations();
+        Call<List<Reservation>> call = RetrofitHelper.getApiRest().getReservationsByClient(Utils.loadPreferences(getContext()));
 
         call.enqueue(new Callback<List<Reservation>>() {
             @Override
@@ -67,16 +68,16 @@ public class ReservationsListFragment extends Fragment {
                         ((MyReservationsActivity)getActivity()).setStep(MyReservationsActivity.Step.DETAIL);
                         ReservationViewFragment reservationViewFragment = new ReservationViewFragment();
                         reservationViewFragment.setReservation(reservations.get(position));
+                        reservationViewFragment.setHasId(true);
 
+                        ((MyReservationsActivity)getActivity()).setReservation(reservations.get(position));
                         ((MyReservationsActivity)getActivity()).ShowDeleteBtn();
 
                         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.idDestino, reservationViewFragment);
                         fragmentTransaction.commit();
-
                     }
                 });
-
             }
 
             @Override

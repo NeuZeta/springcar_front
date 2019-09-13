@@ -23,7 +23,6 @@ public class MyReservationsButtonsFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,6 +36,13 @@ public class MyReservationsButtonsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((MyReservationsActivity)getActivity()).goBack();
+            }
+        });
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MyReservationsActivity)getActivity()).CancelReservation();
             }
         });
 

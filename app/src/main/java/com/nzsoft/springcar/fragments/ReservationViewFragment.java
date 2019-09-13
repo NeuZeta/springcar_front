@@ -31,6 +31,8 @@ public class ReservationViewFragment extends Fragment {
     private TextView selectedPickUpTime;
     private TextView selectedDropOffTime;
 
+    private boolean hasId;
+
     private Reservation reservation;
 
     public ReservationViewFragment() {
@@ -44,9 +46,16 @@ public class ReservationViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_reservation, container, false);
 
         introText = (TextView) view.findViewById(R.id.idIntroText);
-        introText.setVisibility(View.VISIBLE);
         reservationNumberText = (TextView) view.findViewById(R.id.idReservationNumber);
-        reservationNumberText.setVisibility(View.GONE);
+
+        if (!hasId){
+            introText.setVisibility(View.VISIBLE);
+            reservationNumberText.setVisibility(View.GONE);
+        } else {
+            introText.setVisibility(View.GONE);
+            reservationNumberText.setVisibility(View.VISIBLE);
+        }
+
 
         selectedOffice = (TextView) view.findViewById(R.id.idOfficeSelected);
         selectedOffice.setText(reservation.getCar().getOffice().getName());
@@ -151,5 +160,13 @@ public class ReservationViewFragment extends Fragment {
 
     public void setReservation(Reservation reservation) {
         this.reservation = reservation;
+    }
+
+    public boolean isHasId() {
+        return hasId;
+    }
+
+    public void setHasId(boolean hasId) {
+        this.hasId = hasId;
     }
 }

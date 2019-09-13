@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,16 +32,8 @@ public class SuccessActivity extends AppCompatActivity {
 
     private TextView introText;
     private TextView reservationNumberText;
-
-    private TextView selectedOffice;
-    private TextView selectedPickUpTime;
-    private TextView selectedDropOffTime;
-
     private Button homeBtn;
-
     private Reservation reservation;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +75,7 @@ public class SuccessActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 ReservationViewFragment reservationViewFragment = new ReservationViewFragment();
                 reservationViewFragment.setReservation(reservation);
+                reservationViewFragment.setHasId(true);
                 fragmentTransaction.add(R.id.idReservationDestination, reservationViewFragment);
                 fragmentTransaction.commit();
 

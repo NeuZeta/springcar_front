@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.nzsoft.springcar.R;
+import com.nzsoft.springcar.activities.MyReservationsActivity;
 import com.nzsoft.springcar.model.Reservation;
 
 import java.text.SimpleDateFormat;

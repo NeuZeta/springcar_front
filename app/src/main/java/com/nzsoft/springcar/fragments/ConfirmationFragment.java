@@ -62,6 +62,7 @@ public class ConfirmationFragment extends Fragment {
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         ReservationViewFragment reservationViewFragment = new ReservationViewFragment();
         reservationViewFragment.setReservation(reservation);
+        reservationViewFragment.setHasId(false);
         fragmentTransaction.add(R.id.idReservationDestination, reservationViewFragment);
         fragmentTransaction.commit();
 
@@ -82,12 +83,6 @@ public class ConfirmationFragment extends Fragment {
                     }
                 });
 
-                /*
-                Gson gson = builder.create();
-                gson.toJson(reservation);
-                Log.d("***", gson.toJson(reservation));
-                */
-
                 Call<Reservation> call = RetrofitHelper.getApiRest().createReservation(reservation);
 
                 call.enqueue(new Callback<Reservation>() {
@@ -95,6 +90,7 @@ public class ConfirmationFragment extends Fragment {
                     public void onResponse(Call<Reservation> call, Response<Reservation> response) {
                         Log.d("***", "Response: " + response.toString());
 
+                        CarSelectionFragment.selectedCar = -1;
                         Intent intentSuccess = new Intent(getContext(), SuccessActivity.class);
                         intentSuccess.putExtra("ReservationID", response.body().getId());
                         startActivity(intentSuccess);

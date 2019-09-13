@@ -9,6 +9,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -18,8 +19,8 @@ public interface ApiRest {
 
     // CLIENTS
 
-    @GET ("clients")
-    public Call<Client> getClientById (@Query("id") Long id);
+    @GET ("clients/{id}")
+    public Call<Client> getClientById (@Path("id") Long id);
 
     @POST ("clients")
     public Call<Client> createClient (@Body Client client);
@@ -45,11 +46,17 @@ public interface ApiRest {
     @GET ("reservations")
     public Call<List<Reservation>> getAllReservations();
 
+    @GET ("reservations/{id}")
+    public Call <Reservation> getReservationById (@Path("id") Long id);
+
+    @GET ("reservations/client/{id}")
+    public Call <List<Reservation>> getReservationsByClient (@Path ("id") Long id);
+
     @POST ("reservations")
     public Call<Reservation> createReservation(@Body Reservation reservation);
 
+    @DELETE ("reservations/{id}")
+    public Call<Void> deleteReservationById (@Path("id") Long id);
 
-    @GET ("reservations/{id}")
-    public Call <Reservation> getReservationById (@Path("id") Long id);
 
 }

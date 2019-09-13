@@ -1,29 +1,28 @@
 package com.nzsoft.springcar.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Switch;
+import android.widget.Toast;
+
 
 import com.nzsoft.springcar.R;
-import com.nzsoft.springcar.adapters.ReservationsListAdapter;
-import com.nzsoft.springcar.fragments.ReservationViewFragment;
+import com.nzsoft.springcar.fragments.CarSelectionFragment;
 import com.nzsoft.springcar.fragments.ReservationsListFragment;
 import com.nzsoft.springcar.model.Reservation;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 public class MyReservationsActivity extends AppCompatActivity {
 
@@ -50,7 +49,6 @@ public class MyReservationsActivity extends AppCompatActivity {
             fragmentTransaction.add(R.id.idDestino, new ReservationsListFragment());
             fragmentTransaction.commit();
         }
-
     }
 
     public void goBack(){
@@ -71,6 +69,11 @@ public class MyReservationsActivity extends AppCompatActivity {
 
     }
 
+    public void CancelReservation(){
+        //Confirmation dialog
+        ShowAlertDialog ();
+    }
+
     public Step getStep() {
         return step;
     }
@@ -85,6 +88,66 @@ public class MyReservationsActivity extends AppCompatActivity {
 
     public void HideDeleteBtn (){
         deleteBtn.setVisibility(View.INVISIBLE);
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
+    }
+
+    public void ShowAlertDialog (){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete Reservation !");
+        builder.setMessage("You are about to delete this reservation. Do you really want to proceed ?");
+        builder.setCancelable(false);
+
+        builder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "You've choosen to delete selected reservation", Toast.LENGTH_SHORT).show();
+
+                //delete reservation y después volver al listado
+                DeleteReservation();
+
+            }
+        });
+
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "You've changed your mind", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        builder.show();
+    }
+
+    public void DeleteReservation(){
+
+        Call<Void> deleteCall = RetrofitHelper.getApiRest().deleteReservationById(reservation.getId());
+
+        deleteCall.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+                if (!response.isSuccessful()){
+                    Log.d("ddd", "Response error: " + response.message());
+                    return;
+                }
+
+                Log.d("ddd", "Hemos eliminado la reserva");
+                goBack();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("ddd", t.toString());
+            }
+        });
     }
 
     /*
