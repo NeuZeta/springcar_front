@@ -45,10 +45,9 @@ public class AccountActivity extends AppCompatActivity {
 
             accountStatus = AccountStatus.VIEW;
 
-            //El endpoint entrega un array de clientes...
-
             Call<Client> call = RetrofitHelper.getApiRest().getClientById(userId);
             call.enqueue(new Callback<Client>() {
+
                 @Override
                 public void onResponse(Call<Client> call, Response<Client> response) {
                     Log.d("***", "Client received, response: " + response.toString());
@@ -119,6 +118,7 @@ public class AccountActivity extends AppCompatActivity {
 
             case VIEW:
                 break;
+
             case UPDATE:
                 break;
         }
@@ -150,8 +150,10 @@ public class AccountActivity extends AppCompatActivity {
         CREATE, VIEW, UPDATE;
     }
 
-    private void createClient (){
+    private void createClient () {
+
         if (client != null){
+
             Call<Client> call = RetrofitHelper.getApiRest().createClient(client);
 
             call.enqueue(new Callback<Client>() {

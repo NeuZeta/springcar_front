@@ -50,6 +50,7 @@ public class AccountEditFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_account_edit, container, false);
 
         //Get UI references
@@ -66,6 +67,10 @@ public class AccountEditFragment extends Fragment {
         passwordText = (EditText) view.findViewById(R.id.idPasswordText);
         confirmPasswordText = (EditText) view.findViewById(R.id.idConfirmPasswordText);
 
+        Client account = ((AccountActivity)getActivity()).getClient();
+        if (account != null){
+            fillFormWithData (account);
+        }
 
         //Initialize editText list
         textFields = new ArrayList<>();
@@ -106,7 +111,7 @@ public class AccountEditFragment extends Fragment {
         return view;
     }
 
-    private boolean allDataFilledUp(){
+    private boolean allDataFilledUp () {
 
         for (EditText field : textFields){
             if (TextUtils.isEmpty(field.getText())){
@@ -116,7 +121,7 @@ public class AccountEditFragment extends Fragment {
         return true;
     }
 
-    public Client createClientFromData (){
+    private Client createClientFromData (){
 
         Client client = new Client();
 
@@ -141,6 +146,21 @@ public class AccountEditFragment extends Fragment {
 
         return client;
 
+    }
+
+    private void fillFormWithData (Client client){
+        firstNameText.setText(client.getFirstName());
+        lastNameText .setText(client.getLastName());
+        idNumberText.setText(client.getIdNumber());
+        addressText.setText(client.getLocation().getAddress());
+        zipCodeText.setText(client.getLocation().getZipCode());
+        cityText.setText(client.getLocation().getCity());
+        countryText.setText(client.getLocation().getCountry());
+        phoneText.setText(client.getContact().getPhoneNumber());
+        emailText.setText(client.getContact().getEmail());
+        userNameText.setText(client.getUserName());
+        passwordText.setText(client.getPassword());
+        confirmPasswordText.setText(client.getPassword());
     }
 
 }
