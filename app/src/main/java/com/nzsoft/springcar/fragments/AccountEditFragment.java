@@ -70,6 +70,7 @@ public class AccountEditFragment extends Fragment {
         Client account = ((AccountActivity)getActivity()).getClient();
         if (account != null){
             fillFormWithData (account);
+            ((AccountActivity)getActivity()).disableActionBtn();
         }
 
         //Initialize editText list
@@ -99,7 +100,7 @@ public class AccountEditFragment extends Fragment {
                 @Override
                 public void afterTextChanged(Editable s) {
                     if (allDataFilledUp()){
-                        ((AccountActivity)getActivity()).setClient(createClientFromData());
+                        ((AccountActivity)getActivity()).setNewClient(createClientFromData());
                         ((AccountActivity)getActivity()).enableActionBtn();
                     } else {
                         ((AccountActivity)getActivity()).disableActionBtn();
@@ -107,9 +108,10 @@ public class AccountEditFragment extends Fragment {
                 }
             });
         }
-
         return view;
     }
+
+    // Métodos privados
 
     private boolean allDataFilledUp () {
 

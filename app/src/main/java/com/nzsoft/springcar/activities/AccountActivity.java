@@ -27,6 +27,7 @@ public class AccountActivity extends AppCompatActivity {
     private Button backBtn;
     private Button actionBtn;
     private Client client;
+    private Client newClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,15 +110,20 @@ public class AccountActivity extends AppCompatActivity {
 
     public void PerformAction (){
 
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
         switch (accountStatus) {
 
             case CREATE:        createClient ();
-                                Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(homeIntent);
+                                fragmentTransaction.replace(R.id.idAccountDestino, new AccountViewFragment());
+                                accountStatus = AccountStatus.VIEW;
+                                fragmentTransaction.commit();
                                 break;
 
-            case VIEW:
-                break;
+            case VIEW:          fragmentTransaction.replace(R.id.idAccountDestino, new AccountEditFragment());
+                                accountStatus = AccountStatus.UPDATE;
+                                fragmentTransaction.commit();
+                                break;
 
             case UPDATE:
                 break;
@@ -142,8 +148,12 @@ public class AccountActivity extends AppCompatActivity {
         return client;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public Client getNewClient() {
+        return newClient;
+    }
+
+    public void setNewClient(Client newClient) {
+        this.newClient = newClient;
     }
 
     public enum AccountStatus {
@@ -152,15 +162,16 @@ public class AccountActivity extends AppCompatActivity {
 
     private void createClient () {
 
-        if (client != null){
+        if (newClient != null){
 
-            Call<Client> call = RetrofitHelper.getApiRest().createClient(client);
+            Call<Client> call = RetrofitHelper.getApiRest().createClient(newClient);
 
             call.enqueue(new Callback<Client>() {
                 @Override
                 public void onResponse(Call<Client> call, Response<Client> response) {
                     Log.d("***", "Client created, response: " + response.toString());
 
+                    client = response.body();
                     Utils.savePreferences(getApplicationContext(), response.body().getId());
                 }
 
@@ -172,4 +183,26 @@ public class AccountActivity extends AppCompatActivity {
             });
         }
     }
+
+    private void updateClient (){
+        if (newClient != null) {
+
+            Call<Client> call = RetrofitHelper.getApiRest().updateClient(newClient);
+
+            call.enqueue(new Callback<Client>() {
+                @Override
+                public void onResponse(Call<Client> call, Response<Client> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<Client> call, Throwable t) {
+
+                }
+            });
+
+        }
+    }
+
+
 }

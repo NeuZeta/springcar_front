@@ -28,6 +28,8 @@ public class AccountViewFragment extends Fragment {
                              Bundle savedInstanceStat) {
         View view = inflater.inflate(R.layout.fragment_account_view, container, false);
 
+        ((AccountActivity)getActivity()).enableActionBtn();
+
         Client client = ((AccountActivity)getActivity()).getClient();
 
         TextView title = (TextView) view.findViewById(R.id.idRegistrationTitle);
