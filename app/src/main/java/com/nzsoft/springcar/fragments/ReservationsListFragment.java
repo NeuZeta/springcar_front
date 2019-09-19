@@ -47,12 +47,13 @@ public class ReservationsListFragment extends Fragment {
 
         Call<List<Reservation>> call = RetrofitHelper.getApiRest().getReservationsByClient(Utils.loadPreferences(getContext()));
 
+        ((MyReservationsActivity)getActivity()).getLoadingPanel().setVisibility(View.VISIBLE);
+
         call.enqueue(new Callback<List<Reservation>>() {
             @Override
             public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {
 
                 if (!response.isSuccessful()){
-                    Log.d("****", "Response error: " + response.message());
                     return;
                 }
 
@@ -73,13 +74,18 @@ public class ReservationsListFragment extends Fragment {
                         reservationViewFragment.setHasId(true);
 
                         ((MyReservationsActivity)getActivity()).setReservation(reservations.get(position));
+
                         ((MyReservationsActivity)getActivity()).ShowDeleteBtn();
 
                         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.idDestino, reservationViewFragment);
                         fragmentTransaction.commit();
+
+
                     }
                 });
+
+                ((MyReservationsActivity)getActivity()).getLoadingPanel().setVisibility(View.GONE);
             }
 
             @Override

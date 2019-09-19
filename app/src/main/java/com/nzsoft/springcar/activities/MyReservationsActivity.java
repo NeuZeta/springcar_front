@@ -31,8 +31,8 @@ public class MyReservationsActivity extends AppCompatActivity {
 
     private Step step;
     private Reservation reservation;
-
     private Button deleteBtn;
+    private View loadingPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,8 @@ public class MyReservationsActivity extends AppCompatActivity {
         //Añadir titulo y logo a la barra principal
         Toolbar myReservationToolbar = (Toolbar) findViewById(R.id.idReservationToolbar);
         setSupportActionBar(myReservationToolbar);
+
+        loadingPanel = findViewById(R.id.loadingPanel);
 
         deleteBtn = (Button) findViewById(R.id.idDeleteBtn_myReservations);
         HideDeleteBtn();
@@ -101,6 +103,10 @@ public class MyReservationsActivity extends AppCompatActivity {
         this.reservation = reservation;
     }
 
+    public View getLoadingPanel () {
+        return this.loadingPanel;
+    }
+
     public void ShowAlertDialog (){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Delete Reservation !");
@@ -133,7 +139,7 @@ public class MyReservationsActivity extends AppCompatActivity {
 
         Call<Void> deleteCall = RetrofitHelper.getApiRest().deleteReservationById(reservation.getId());
 
-        findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+        loadingPanel.setVisibility(View.VISIBLE);
 
         deleteCall.enqueue(new Callback<Void>() {
             @Override
@@ -143,7 +149,7 @@ public class MyReservationsActivity extends AppCompatActivity {
                     Log.d("ddd", "Response error: " + response.message());
                     return;
                 }
-                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                loadingPanel.setVisibility(View.GONE);
                 goBack();
             }
 
