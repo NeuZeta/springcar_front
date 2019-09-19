@@ -2,6 +2,7 @@ package com.nzsoft.springcar.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 
 public class Utils {
 
@@ -20,7 +21,6 @@ public class Utils {
 
         return userId;
     }
-
 
 
 }

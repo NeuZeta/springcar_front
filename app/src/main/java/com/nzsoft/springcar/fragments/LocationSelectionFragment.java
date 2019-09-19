@@ -35,6 +35,8 @@ import com.nzsoft.springcar.activities.NewReservationActivity;
 import com.nzsoft.springcar.model.Office;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -187,7 +189,18 @@ public class LocationSelectionFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Office>> call, Throwable t) {
-                Log.d("***", t.getCause().toString());
+                if (t instanceof SocketTimeoutException)
+                {
+                    call.clone().enqueue(this);
+                }
+                else if (t instanceof IOException)
+                {
+                    call.clone().enqueue(this);
+                }
+                else
+                {
+                    Log.d("___", t.toString());
+                }
             }
         });
 

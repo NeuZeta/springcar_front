@@ -19,6 +19,8 @@ import com.nzsoft.springcar.model.Reservation;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
 import com.nzsoft.springcar.utils.Utils;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -82,7 +84,18 @@ public class ReservationsListFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Reservation>> call, Throwable t) {
-
+                if (t instanceof SocketTimeoutException)
+                {
+                    call.clone().enqueue(this);
+                }
+                else if (t instanceof IOException)
+                {
+                    call.clone().enqueue(this);
+                }
+                else
+                {
+                    Log.d("___", t.toString());
+                }
             }
         });
 

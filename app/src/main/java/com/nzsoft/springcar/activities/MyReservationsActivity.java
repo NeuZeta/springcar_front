@@ -19,6 +19,9 @@ import com.nzsoft.springcar.fragments.ReservationsListFragment;
 import com.nzsoft.springcar.model.Reservation;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -130,6 +133,8 @@ public class MyReservationsActivity extends AppCompatActivity {
 
         Call<Void> deleteCall = RetrofitHelper.getApiRest().deleteReservationById(reservation.getId());
 
+        findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+
         deleteCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -138,14 +143,25 @@ public class MyReservationsActivity extends AppCompatActivity {
                     Log.d("ddd", "Response error: " + response.message());
                     return;
                 }
-
-                Log.d("ddd", "Hemos eliminado la reserva");
+                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                 goBack();
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Log.d("ddd", t.toString());
+
+                if (t instanceof SocketTimeoutException)
+                {
+                    call.clone().enqueue(this);
+                }
+                else if (t instanceof IOException)
+                {
+                    call.clone().enqueue(this);
+                }
+                else
+                {
+                    Log.d("___", t.toString());
+                }
             }
         });
     }

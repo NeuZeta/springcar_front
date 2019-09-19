@@ -17,6 +17,9 @@ import com.nzsoft.springcar.model.Client;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
 import com.nzsoft.springcar.utils.Utils;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,7 +66,21 @@ public class AccountActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<Client> call, Throwable t) {
-                    Log.d("___", t.toString());
+
+                    if (t instanceof SocketTimeoutException)
+                    {
+                        Log.d("___", "Connection Timeout");
+                        call.clone().enqueue(this);
+                    }
+                    else if (t instanceof IOException)
+                    {
+                        Log.d("___", "Timeout");
+                        call.clone().enqueue(this);
+                    }
+                    else
+                    {
+                        Log.d("___", t.toString());
+                    }
                 }
             });
         }

@@ -23,7 +23,9 @@ import com.nzsoft.springcar.activities.SuccessActivity;
 import com.nzsoft.springcar.model.Reservation;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -98,7 +100,18 @@ public class ConfirmationFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<Reservation> call, Throwable t) {
-                        Log.d("***", "Error: " + t.getCause().toString());
+                        if (t instanceof SocketTimeoutException)
+                        {
+                            call.clone().enqueue(this);
+                        }
+                        else if (t instanceof IOException)
+                        {
+                            call.clone().enqueue(this);
+                        }
+                        else
+                        {
+                            Log.d("___", t.toString());
+                        }
                     }
                 });
 

@@ -19,6 +19,8 @@ import com.nzsoft.springcar.model.Car;
 import com.nzsoft.springcar.model.Reservation;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -106,7 +108,18 @@ public class CarSelectionFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Car>> call, Throwable t) {
-                Log.d("***", "Error: " + t.getMessage());
+                if (t instanceof SocketTimeoutException)
+                {
+                    call.clone().enqueue(this);
+                }
+                else if (t instanceof IOException)
+                {
+                    call.clone().enqueue(this);
+                }
+                else
+                {
+                    Log.d("___", t.toString());
+                }
             }
 
         });
