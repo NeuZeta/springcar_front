@@ -157,13 +157,19 @@ public class LocationSelectionFragment extends Fragment {
 
         Call<List<Office>> call = RetrofitHelper.getApiRest().getAllOffices();
 
+        ((NewReservationActivity)getActivity()).getLoadingPanel().setVisibility(View.VISIBLE);
+
         call.enqueue(new Callback<List<Office>>() {
             @Override
             public void onResponse(Call<List<Office>> call, Response<List<Office>> response) {
+
                 if (!response.isSuccessful()){
                     Log.d("****", "Response error: " + response.message());
                     return;
                 }
+
+                ((NewReservationActivity)getActivity()).getLoadingPanel().setVisibility(View.GONE);
+
                 offices = response.body();
 
                 List<String> officesNameList = new ArrayList<>();
@@ -241,7 +247,7 @@ public class LocationSelectionFragment extends Fragment {
 
                 ((NewReservationActivity) getActivity()).setSelectedOffice(office);
 
-                //mostrar listado de coches
+                //mostrar fragmento de fechas
                 ((NewReservationActivity)getActivity()).setCurrentStep(NewReservationActivity.CurrentStep.DATES);
                 ((NewReservationActivity) getActivity()).replaceFragments(DatesSelectionFragment.class, R.id.idContentFragment);
             }

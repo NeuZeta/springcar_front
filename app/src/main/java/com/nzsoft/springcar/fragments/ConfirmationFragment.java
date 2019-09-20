@@ -59,6 +59,8 @@ public class ConfirmationFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_confirmation, container, false);
 
+        ((NewReservationActivity)getActivity()).getLoadingPanel().setVisibility(View.GONE);
+
         reservation = ((NewReservationActivity)getActivity()).getReservation();
 
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
@@ -87,12 +89,17 @@ public class ConfirmationFragment extends Fragment {
 
                 Call<Reservation> call = RetrofitHelper.getApiRest().createReservation(reservation);
 
+                ((NewReservationActivity)getActivity()).getLoadingPanel().setVisibility(View.VISIBLE);
+
                 call.enqueue(new Callback<Reservation>() {
                     @Override
                     public void onResponse(Call<Reservation> call, Response<Reservation> response) {
                         Log.d("***", "Response: " + response.toString());
 
                         CarSelectionFragment.selectedCar = -1;
+
+                        ((NewReservationActivity)getActivity()).getLoadingPanel().setVisibility(View.GONE);
+
                         Intent intentSuccess = new Intent(getContext(), SuccessActivity.class);
                         intentSuccess.putExtra("ReservationID", response.body().getId());
                         startActivity(intentSuccess);

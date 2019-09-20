@@ -2,11 +2,13 @@ package com.nzsoft.springcar.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.opengl.Visibility;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.nzsoft.springcar.R;
 import com.nzsoft.springcar.fragments.BreadcrumbFragment;
@@ -24,6 +26,8 @@ public class NewReservationActivity extends AppCompatActivity {
     private CurrentStep currentStep;
     private BreadcrumbFragment breadcrumbFragment;
 
+    private View loadingPanel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +36,9 @@ public class NewReservationActivity extends AppCompatActivity {
         //Añadir titulo y logo a la barra principal
         Toolbar myReservationToolbar = (Toolbar) findViewById(R.id.idReservationToolbar);
         setSupportActionBar(myReservationToolbar);
+
+        loadingPanel = findViewById(R.id.loadingPanel_Reservation);
+        loadingPanel.setVisibility(View.GONE);
 
         //Initialize Reservation
         reservation = new Reservation();
@@ -92,9 +99,19 @@ public class NewReservationActivity extends AppCompatActivity {
         this.selectedOffice = selectedOffice;
     }
 
+    public View getLoadingPanel () {
+        return this.loadingPanel;
+    }
+
+    /*
+    public void setLoadingPanel (int visibility){
+        this.loadingPanel.setVisibility(visibility);
+    }
+
     public CurrentStep getCurrentStep() {
         return currentStep;
     }
+    */
 
     public void setCurrentStep(CurrentStep currentStep) {
         this.currentStep = currentStep;

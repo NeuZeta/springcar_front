@@ -46,6 +46,8 @@ public class DatesSelectionFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_dates_selection, container, false);
 
+        ((NewReservationActivity)getActivity()).getLoadingPanel().setVisibility(View.GONE);
+
         simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
 

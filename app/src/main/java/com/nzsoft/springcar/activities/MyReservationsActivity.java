@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 
 import com.nzsoft.springcar.R;
-import com.nzsoft.springcar.fragments.CarSelectionFragment;
 import com.nzsoft.springcar.fragments.ReservationsListFragment;
 import com.nzsoft.springcar.model.Reservation;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
@@ -43,7 +42,7 @@ public class MyReservationsActivity extends AppCompatActivity {
         Toolbar myReservationToolbar = (Toolbar) findViewById(R.id.idReservationToolbar);
         setSupportActionBar(myReservationToolbar);
 
-        loadingPanel = findViewById(R.id.loadingPanel);
+        loadingPanel = findViewById(R.id.loadingPanel_myReservations);
 
         deleteBtn = (Button) findViewById(R.id.idDeleteBtn_myReservations);
         HideDeleteBtn();

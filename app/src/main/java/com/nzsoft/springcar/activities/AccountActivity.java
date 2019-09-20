@@ -31,11 +31,15 @@ public class AccountActivity extends AppCompatActivity {
     private Button actionBtn;
     private Client client;
     private Client newClient;
+    private View loadingPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+
+        loadingPanel = findViewById(R.id.loadingPanel_Account);
+        loadingPanel.setVisibility(View.GONE);
 
         Long userId = Utils.loadPreferences(this);
 
@@ -50,13 +54,16 @@ public class AccountActivity extends AppCompatActivity {
             accountStatus = AccountStatus.VIEW;
 
             Call<Client> call = RetrofitHelper.getApiRest().getClientById(userId);
+
+            loadingPanel.setVisibility(View.VISIBLE);
+
             call.enqueue(new Callback<Client>() {
 
                 @Override
                 public void onResponse(Call<Client> call, Response<Client> response) {
-                    Log.d("***", "Client received, response: " + response.toString());
-
                     client = response.body();
+
+                    loadingPanel.setVisibility(View.GONE);
 
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.add(R.id.idAccountDestino, new AccountViewFragment());

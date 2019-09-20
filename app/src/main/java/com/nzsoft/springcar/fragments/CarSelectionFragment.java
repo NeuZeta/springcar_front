@@ -50,6 +50,8 @@ public class CarSelectionFragment extends Fragment {
 
         final ListView carListView = (ListView) view.findViewById(R.id.idCarsList);
 
+        ((NewReservationActivity)getActivity()).getLoadingPanel().setVisibility(View.GONE);
+
         nextBtn = (Button) view.findViewById(R.id.idNextButton_CarSelection);
         prevBtn = (Button) view.findViewById(R.id.idBackButton_CarSelection);
 
@@ -71,7 +73,7 @@ public class CarSelectionFragment extends Fragment {
 
         Call<List<Car>> notAvailableCarsCall = RetrofitHelper.getApiRest().getNotAvailableCars(fechaFin, fechaInicio, officeId);
 
-        Call<List<Car>> call = RetrofitHelper.getApiRest().getAllCars();
+        ((NewReservationActivity)getActivity()).getLoadingPanel().setVisibility(View.VISIBLE);
 
         notAvailableCarsCall.enqueue(new Callback<List<Car>>() {
             @Override
@@ -80,10 +82,10 @@ public class CarSelectionFragment extends Fragment {
                     Log.d("****", "Response error: " + response.toString());
                     return;
                 }
-                final List<Car> cars = response.body();
 
-                //Por el momento trabajaré mostrando TODOS los coches, ya que no existe el endpoint para
-                //mostrar sólo los DISPONIBLES
+                ((NewReservationActivity)getActivity()).getLoadingPanel().setVisibility(View.GONE);
+
+                final List<Car> cars = response.body();
 
                 final CarListAdapter carListAdapter = new CarListAdapter(getActivity(), cars);
                 carListView.setAdapter(carListAdapter);

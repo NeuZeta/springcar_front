@@ -36,6 +36,8 @@ public class ExtrasSelectionFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_extras_selection, container, false);
 
+        ((NewReservationActivity)getActivity()).getLoadingPanel().setVisibility(View.GONE);
+
         //Setear los precios según la categoría del coche seleccionado:
 
         TextView topInsurancePriceText = view.findViewById(R.id.idTopInsurancePrice);
