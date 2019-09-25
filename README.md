@@ -33,9 +33,9 @@ Every one of these blocks is composed the following way:
 ### Application look and feel
 
 <p align="center">
-  <img src="doc/spc_main-menu.PNG" style="float: left; width: 30%; margin-right: 1%; margin-bottom: 0.5em;" >
-  <img src="doc/spc_main-menu.PNG" style="float: left; width: 30%; margin-right: 1%; margin-bottom: 0.5em;" >
-  <img src="doc/spc_main-menu.PNG" style="float: left; width: 30%; margin-right: 1%; margin-bottom: 0.5em;" >
+  <img src="doc/spc_main-menu.PNG" style="float: left; width: 20%; margin-right: 1%; margin-bottom: 0.5em;" >
+  <img src="doc/spc_main-menu.PNG" style="float: left; width: 20%; margin-right: 1%; margin-bottom: 0.5em;" >
+  <img src="doc/spc_main-menu.PNG" style="float: left; width: 20%; margin-right: 1%; margin-bottom: 0.5em;" >
 
 </p>
 
