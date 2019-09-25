@@ -32,7 +32,7 @@ Every one of these blocks is composed the following way:
 
 ### Application look and feel
 <p>
-  <img src="doc/spc_main-menu.PNG" style="float: left; max-width: 20%; margin-right: 1%; margin-bottom: 0.5em;" >
-  <img src="doc/spc_main-menu.PNG" style="float: left; max-width: 20%; margin-right: 1%; margin-bottom: 0.5em;" >
-  <img src="doc/spc_main-menu.PNG" style="float: left; max-width: 20%; margin-right: 1%; margin-bottom: 0.5em;" >
+  <img src="doc/spc_main-menu.PNG" style="max-width:30%; margin-right:2%"> 
+  <img src="doc/spc_main-menu.PNG" style="max-width:30%; margin-right:2%">  
+  <img src="doc/spc_main-menu.PNG" style="max-width:30%; margin-right:2%">  
 </p>
