@@ -32,6 +32,6 @@ Every one of these blocks is composed the following way:
 
 ### Application look and feel
 <p align="center">
-  <img src="http://www.fillmurray.com/460/300">
+  <img src="doc/spc_main-menu">
 </p>
 
