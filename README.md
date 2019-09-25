@@ -31,6 +31,5 @@ Every one of these blocks is composed the following way:
 - [ ] On the user reservations list, differenciate between the already consumed and the ones to come
 
 ### Application look and feel
-<img align="right" width="100" height="100" src="doc/spc_main-menu.PNG">
+<img align="center" width="100" height="100" src="doc/spc_main-menu.PNG">
 
-![HOME](doc/spc_main-menu.PNG)
