@@ -32,9 +32,30 @@ Every one of these blocks is composed the following way:
 - [ ] On the user reservations list, differenciate between the already consumed and the ones to come
 
 ### Application look&feel
+
+Main menu
 <p>
   <img src="doc/spc_main-menu.PNG" width=30% hspace="10"> 
-  <img src="doc/spc_main-menu.PNG" width=30% hspace="10">  
-  <img src="doc/spc_main-menu.PNG" width=30% hspace="10">  
 </p>
 
+
+New reservation
+<p>
+  <img src="doc/spc_location.PNG" width=30% hspace="10"> 
+  <img src="doc/spc_date.PNG" width=30% hspace="10"> 
+  <img src="doc/spc_car.PNG" width=30% hspace="10"> 
+  <img src="doc/spc_extras.PNG" width=30% hspace="10">
+  <img src="doc/spc_confirmation.PNG" width=30% hspace="10"> 
+</p>
+
+
+User Reservations
+<p>
+  <img src="doc/spc_my-reservations.PNG" width=30% hspace="10"> 
+</p>
+
+
+User Profile
+<p>
+  <img src="doc/spc_user-data.PNG" width=30% hspace="10"> 
+</p>
