@@ -25,14 +25,16 @@ Every one of these blocks is composed the following way:
 
 ### Project Goals
 - [x] To have a complete reservation flow
+- [x] To be able to show a list of all reservations by client
 - [x] Show user profile and allow the user to update the data
-- [x] Validate user data in Registration form
+- [ ] Validate user data in Registration form with regex
 - [ ] User login using Token (JWT)
 - [ ] On the user reservations list, differenciate between the already consumed and the ones to come
 
-### Application look and feel
+### Application look&feel
 <p>
-  <img src="doc/spc_main-menu.PNG" style="max-width:30%; margin-right:2%"> 
-  <img src="doc/spc_main-menu.PNG" style="max-width:30%; margin-right:2%">  
-  <img src="doc/spc_main-menu.PNG" style="max-width:30%; margin-right:2%">  
+  <img src="doc/spc_main-menu.PNG" width=30% hspace="10"> 
+  <img src="doc/spc_main-menu.PNG" width=30% hspace="10">  
+  <img src="doc/spc_main-menu.PNG" width=30% hspace="10">  
 </p>
+
