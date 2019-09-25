@@ -71,7 +71,7 @@
 
     <fragment
         android:id="@+id/fragment2"
-        android:name="com.nzsoft.springcar.fragments.MyReservationsButtonsFragment"
+        android:name="com.nzsoft.springcar.fragments.myreservations.MyReservationsButtonsFragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -2,7 +2,6 @@ package com.nzsoft.springcar.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.opengl.Visibility;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -11,11 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.nzsoft.springcar.R;
-import com.nzsoft.springcar.fragments.BreadcrumbFragment;
-import com.nzsoft.springcar.fragments.LocationSelectionFragment;
+import com.nzsoft.springcar.fragments.newreservation.BreadcrumbFragment;
+import com.nzsoft.springcar.fragments.newreservation.LocationSelectionFragment;
 import com.nzsoft.springcar.model.Client;
 import com.nzsoft.springcar.model.Office;
 import com.nzsoft.springcar.model.Reservation;
+import com.nzsoft.springcar.utils.Utils;
 
 
 public class NewReservationActivity extends AppCompatActivity {
@@ -30,6 +30,7 @@ public class NewReservationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation);
 
@@ -43,10 +44,8 @@ public class NewReservationActivity extends AppCompatActivity {
         //Initialize Reservation
         reservation = new Reservation();
 
-        savePreferences();
-
         //Get userId from Shared Preferences
-        Long userId = loadPreferences();
+        Long userId = Utils.loadPreferences(this);
 
         //Create Client
         Client client = new Client();
@@ -117,30 +116,44 @@ public class NewReservationActivity extends AppCompatActivity {
         this.currentStep = currentStep;
     }
 
+    public void goBack (){
+
+        switch (currentStep) {
+            case LOCATION:
+                break;
+            case DATES:
+                break;
+            case CAR:
+                break;
+            case EXTRAS:
+                break;
+            case CONFIRMATION:
+                break;
+        }
+
+    }
+
+    public void nextStep () {
+        switch (currentStep) {
+            case LOCATION:
+                break;
+            case DATES:
+                break;
+            case CAR:
+                break;
+            case EXTRAS:
+                break;
+            case CONFIRMATION:
+                break;
+        }
+    }
+
     public enum CurrentStep {
         LOCATION, DATES, CAR, EXTRAS, CONFIRMATION;
     }
 
     // METODOS PRIVADOS
 
-    private void savePreferences() {
-
-        SharedPreferences preferences = getSharedPreferences("credentials", Context.MODE_PRIVATE);
-
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putLong("userId", 20L);
-        editor.commit();
-    }
-
-
-    private Long loadPreferences () {
-
-        SharedPreferences preferences = getSharedPreferences("credentials", Context.MODE_PRIVATE);
-
-        Long userId = preferences.getLong("userId", 0);
-
-        return userId;
-    }
 
 
 }

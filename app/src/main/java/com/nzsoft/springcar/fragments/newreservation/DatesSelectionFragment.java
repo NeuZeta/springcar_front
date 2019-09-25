@@ -1,4 +1,4 @@
-package com.nzsoft.springcar.fragments;
+package com.nzsoft.springcar.fragments.newreservation;
 
 
 import android.app.DatePickerDialog;
@@ -215,7 +215,6 @@ public class DatesSelectionFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //mostrar listado de coches
                 ((NewReservationActivity)getActivity()).setCurrentStep(NewReservationActivity.CurrentStep.CAR);
                 ((NewReservationActivity) getActivity()).replaceFragments(CarSelectionFragment.class, R.id.idContentFragment);
             }

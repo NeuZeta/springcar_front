@@ -1,4 +1,4 @@
-package com.nzsoft.springcar.fragments;
+package com.nzsoft.springcar.fragments.newreservation;
 
 
 import android.graphics.PorterDuff;

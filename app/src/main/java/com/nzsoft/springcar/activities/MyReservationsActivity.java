@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 
 import com.nzsoft.springcar.R;
-import com.nzsoft.springcar.fragments.ReservationsListFragment;
+import com.nzsoft.springcar.fragments.myreservations.ReservationsListFragment;
 import com.nzsoft.springcar.model.Reservation;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
 

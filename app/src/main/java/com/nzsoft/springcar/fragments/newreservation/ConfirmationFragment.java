@@ -1,4 +1,4 @@
-package com.nzsoft.springcar.fragments;
+package com.nzsoft.springcar.fragments.newreservation;
 
 
 import android.content.Intent;
@@ -20,6 +20,7 @@ import com.google.gson.JsonSerializer;
 import com.nzsoft.springcar.R;
 import com.nzsoft.springcar.activities.NewReservationActivity;
 import com.nzsoft.springcar.activities.SuccessActivity;
+import com.nzsoft.springcar.fragments.myreservations.ReservationViewFragment;
 import com.nzsoft.springcar.model.Reservation;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
 

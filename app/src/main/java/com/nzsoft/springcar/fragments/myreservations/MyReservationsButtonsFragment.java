@@ -1,4 +1,4 @@
-package com.nzsoft.springcar.fragments;
+package com.nzsoft.springcar.fragments.myreservations;
 
 
 import android.os.Bundle;
@@ -48,5 +48,4 @@ public class MyReservationsButtonsFragment extends Fragment {
 
         return view;
     }
-
 }
