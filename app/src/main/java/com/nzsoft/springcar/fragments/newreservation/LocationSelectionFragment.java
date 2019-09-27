@@ -225,40 +225,14 @@ public class LocationSelectionFragment extends Fragment {
 
                 selectedMarker.setIcon(bitmapDescriptorFromVector(getContext(), R.drawable.maps_icon_selected));
 
+                Office office = offices.get(position);
+                ((NewReservationActivity) getActivity()).setSelectedOffice(office);
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
                 // your code here
-            }
-        });
-
-        nextBtn = (Button) view.findViewById(R.id.idNextButton_Location);
-
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //Recoger el valor del spinner de oficinas para recuperar la officina seleccionada
-                Office office = offices.get(officeSpinner.getSelectedItemPosition());
-
-                //Guardamos la oficina ya que se usa sólo para filtrar los coches
-
-                ((NewReservationActivity) getActivity()).setSelectedOffice(office);
-
-                //mostrar fragmento de fechas
-                ((NewReservationActivity)getActivity()).setCurrentStep(NewReservationActivity.CurrentStep.DATES);
-                ((NewReservationActivity) getActivity()).replaceFragments(DatesSelectionFragment.class, R.id.idContentFragment);
-            }
-        });
-
-        backBtn = (Button) view.findViewById(R.id.idBackButton_Location);
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent homeIntent = new Intent(getContext(), MainActivity.class);
-                startActivity(homeIntent);
             }
         });
 

@@ -25,7 +25,6 @@ import java.util.List;
  */
 public class ExtrasSelectionFragment extends Fragment {
 
-
     public ExtrasSelectionFragment() {
         // Required empty public constructor
     }
@@ -73,34 +72,7 @@ public class ExtrasSelectionFragment extends Fragment {
                     ((NewReservationActivity) getActivity()).getReservation().setHasTireAndGlassProtection(true);
                 }
 
-                List<CommonExtra> commonExtras = new ArrayList<>();
-
-                CheckBox extraBabyChair = (CheckBox) view.findViewById(R.id.idExtra_BabyChair);
-                if (extraBabyChair.isChecked()) {
-                    commonExtras.add(new CommonExtra(1L, "Baby Chair", 11.99));
-                }
-
-                CheckBox extraChildChair = (CheckBox) view.findViewById(R.id.idExtra_ChildChair);
-                if (extraChildChair.isChecked()) {
-                    commonExtras.add(new CommonExtra(2L, "Child Chair", 11.99));
-                }
-
-                CheckBox extraBoosterChair = (CheckBox) view.findViewById(R.id.idExtra_BoosterChair);
-                if (extraBoosterChair.isChecked()) {
-                    commonExtras.add(new CommonExtra(3L, "Booster Chair", 9.99));
-                }
-
-                CheckBox extraSnowChains = (CheckBox) view.findViewById(R.id.idExtra_SnowChains);
-                if (extraSnowChains.isChecked()) {
-                    commonExtras.add(new CommonExtra(4L, "Snow Chains", 18.33));
-                }
-
-                CheckBox extraSkyRack = (CheckBox) view.findViewById(R.id.idExtra_SkyRack);
-                if (extraSkyRack.isChecked()) {
-                    commonExtras.add(new CommonExtra(5L, "Sky Rack", 18.33));
-                }
-
-                ((NewReservationActivity)getActivity()).getReservation().setCommonExtras(commonExtras);
+                ((NewReservationActivity)getActivity()).getReservation().setCommonExtras(getExtrasSelected(view));
                 ((NewReservationActivity)getActivity()).setCurrentStep(NewReservationActivity.CurrentStep.CONFIRMATION);
                 ((NewReservationActivity)getActivity()).replaceFragments(ConfirmationFragment.class, R.id.idContentFragment);
 
@@ -118,6 +90,37 @@ public class ExtrasSelectionFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public List<CommonExtra> getExtrasSelected (View view){
+        List<CommonExtra> commonExtras = new ArrayList<>();
+
+        CheckBox extraBabyChair = (CheckBox) view.findViewById(R.id.idExtra_BabyChair);
+        if (extraBabyChair.isChecked()) {
+            commonExtras.add(new CommonExtra(1L, "Baby Chair", 11.99));
+        }
+
+        CheckBox extraChildChair = (CheckBox) view.findViewById(R.id.idExtra_ChildChair);
+        if (extraChildChair.isChecked()) {
+            commonExtras.add(new CommonExtra(2L, "Child Chair", 11.99));
+        }
+
+        CheckBox extraBoosterChair = (CheckBox) view.findViewById(R.id.idExtra_BoosterChair);
+        if (extraBoosterChair.isChecked()) {
+            commonExtras.add(new CommonExtra(3L, "Booster Chair", 9.99));
+        }
+
+        CheckBox extraSnowChains = (CheckBox) view.findViewById(R.id.idExtra_SnowChains);
+        if (extraSnowChains.isChecked()) {
+            commonExtras.add(new CommonExtra(4L, "Snow Chains", 18.33));
+        }
+
+        CheckBox extraSkyRack = (CheckBox) view.findViewById(R.id.idExtra_SkyRack);
+        if (extraSkyRack.isChecked()) {
+            commonExtras.add(new CommonExtra(5L, "Sky Rack", 18.33));
+        }
+
+        return commonExtras;
     }
 
 }

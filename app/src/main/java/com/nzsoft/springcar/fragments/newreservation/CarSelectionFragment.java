@@ -34,9 +34,6 @@ import retrofit2.Response;
 public class CarSelectionFragment extends Fragment {
 
     public static int selectedCar = -1;
-    private Button nextBtn;
-    private Button prevBtn;
-
 
     public CarSelectionFragment() {
         // Required empty public constructor
@@ -52,15 +49,10 @@ public class CarSelectionFragment extends Fragment {
 
         ((NewReservationActivity)getActivity()).getLoadingPanel().setVisibility(View.GONE);
 
-        nextBtn = (Button) view.findViewById(R.id.idNextButton_CarSelection);
-        prevBtn = (Button) view.findViewById(R.id.idBackButton_CarSelection);
-
         if (((NewReservationActivity)getActivity()).getReservation().getCar() == null){
-            nextBtn.getBackground().setColorFilter(nextBtn.getContext().getResources().getColor(R.color.colorPaleGray), PorterDuff.Mode.SRC);
-            nextBtn.setEnabled(false);
+            ((NewReservationActivity)getActivity()).deactivateContinueBtn();
         } else {
-            nextBtn.getBackground().setColorFilter(nextBtn.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC);
-            nextBtn.setEnabled(true);
+            ((NewReservationActivity)getActivity()).activateContinueBtn();
         }
 
         Reservation reservation = ((NewReservationActivity)getActivity()).getReservation();
@@ -101,8 +93,7 @@ public class CarSelectionFragment extends Fragment {
                         carListAdapter.notifyDataSetChanged();
                         ((NewReservationActivity) getActivity()).getReservation().setCar(cars.get(position));
 
-                        nextBtn.getBackground().setColorFilter(nextBtn.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC);
-                        nextBtn.setEnabled(true);
+                        ((NewReservationActivity)getActivity()).activateContinueBtn();
                     }
                 });
 
@@ -123,32 +114,7 @@ public class CarSelectionFragment extends Fragment {
                     Log.d("___", t.toString());
                 }
             }
-
         });
-
-
-
-        nextBtn.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                ((NewReservationActivity)getActivity()).setCurrentStep(NewReservationActivity.CurrentStep.EXTRAS);
-                ((NewReservationActivity) getActivity()).replaceFragments(ExtrasSelectionFragment.class, R.id.idContentFragment);
-            }
-        });
-
-
-        prevBtn.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                ((NewReservationActivity)getActivity()).getReservation().setCar(null);
-                selectedCar = -1;
-                ((NewReservationActivity)getActivity()).setCurrentStep(NewReservationActivity.CurrentStep.DATES);
-                ((NewReservationActivity) getActivity()).replaceFragments(DatesSelectionFragment.class, R.id.idContentFragment);
-            }
-        });
-
         return view;
     }
 

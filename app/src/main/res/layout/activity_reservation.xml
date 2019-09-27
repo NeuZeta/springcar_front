@@ -47,24 +47,33 @@
         android:layout_marginBottom="15dp"
         tools:layout="@layout/fragment_breadcrumb" />
 
-    <FrameLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/idContentFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            tools:layout_editor_absoluteY="48dp">
+            app:layout_constraintBottom_toTopOf="@+id/fragment3"
+            app:layout_constraintTop_toTopOf="parent">
 
         </android.support.constraint.ConstraintLayout>
+
+        <fragment
+            android:id="@+id/fragment3"
+            android:name="com.nzsoft.springcar.fragments.newreservation.NewReservationButtonsFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <RelativeLayout
             android:id="@+id/loadingPanel_Reservation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center" >
+            android:gravity="center"
+            tools:layout_editor_absoluteY="528dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -79,7 +88,7 @@
                 android:indeterminate="true" />
         </RelativeLayout>
 
-    </FrameLayout>
+    </android.support.constraint.ConstraintLayout>
 
 
 </LinearLayout>

@@ -18,31 +18,6 @@
 
         </ListView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/idBackButton_CarSelection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="20dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:textColor="@android:color/white"
-                android:text="Back" />
-
-            <Button
-                android:id="@+id/idNextButton_CarSelection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="20dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:textColor="@android:color/white"
-                android:text="Next" />
-        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

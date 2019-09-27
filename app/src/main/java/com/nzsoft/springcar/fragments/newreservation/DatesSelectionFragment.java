@@ -27,8 +27,6 @@ public class DatesSelectionFragment extends Fragment {
 
     private TextView pickupDateTextView;
     private TextView dropoffDateTextView;
-    private Button nextBtn;
-    private Button backBtn;
     private Calendar calendar;
     private DatePickerDialog datePickerDialog;
 
@@ -198,40 +196,6 @@ public class DatesSelectionFragment extends Fragment {
                 Date minDate = calendar.getTime();
                 datePickerDialog.getDatePicker().setMinDate(minDate.getTime());
                 datePickerDialog.show();
-            }
-        });
-
-
-        /*
-         *
-         *  BOTON SUBMIT
-         *
-         * */
-
-
-        nextBtn = (Button) view.findViewById(R.id.idNextButton_Dates);
-
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                ((NewReservationActivity)getActivity()).setCurrentStep(NewReservationActivity.CurrentStep.CAR);
-                ((NewReservationActivity) getActivity()).replaceFragments(CarSelectionFragment.class, R.id.idContentFragment);
-            }
-        });
-
-        backBtn = (Button) view.findViewById(R.id.idBackButton_Dates);
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Reseteamos las fechas
-                ((NewReservationActivity) getActivity()).getReservation().setPickUpDate(null);
-                ((NewReservationActivity) getActivity()).getReservation().setDropOffDate(null);
-
-                //Volvemos a la pantalla anterior
-                ((NewReservationActivity)getActivity()).setCurrentStep(NewReservationActivity.CurrentStep.LOCATION);
-                ((NewReservationActivity) getActivity()).replaceFragments(LocationSelectionFragment.class, R.id.idContentFragment);
             }
         });
 
