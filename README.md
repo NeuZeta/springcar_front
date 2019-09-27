@@ -61,6 +61,7 @@ New reservation
   <img src="doc/spc_car.PNG" width=30% hspace="10"> 
   <img src="doc/spc_extras.PNG" width=30% hspace="10">
   <img src="doc/spc_confirmation.PNG" width=30% hspace="10"> 
+  <img src="doc/spc_success.PNG" width=30% hspace="10"> 
 </p>
 
 
