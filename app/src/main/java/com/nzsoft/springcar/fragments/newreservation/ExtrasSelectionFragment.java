@@ -25,6 +25,15 @@ import java.util.List;
  */
 public class ExtrasSelectionFragment extends Fragment {
 
+    private RadioGroup insuranceType;
+    private CheckBox tireAndGlassCheckbox;
+    private CheckBox extraBabyChair;
+    private CheckBox extraChildChair;
+    private CheckBox extraBoosterChair;
+    private CheckBox extraSnowChains;
+    private CheckBox extraSkyRack;
+
+
     public ExtrasSelectionFragment() {
         // Required empty public constructor
     }
@@ -37,11 +46,20 @@ public class ExtrasSelectionFragment extends Fragment {
 
         ((NewReservationActivity)getActivity()).getLoadingPanel().setVisibility(View.GONE);
 
+        insuranceType = view.findViewById(R.id.idInsuranceType);
+        extraBabyChair = (CheckBox) view.findViewById(R.id.idExtra_BabyChair);
+        extraChildChair = (CheckBox) view.findViewById(R.id.idExtra_ChildChair);
+        extraBoosterChair = (CheckBox) view.findViewById(R.id.idExtra_BoosterChair);
+        extraSnowChains = (CheckBox) view.findViewById(R.id.idExtra_SnowChains);
+        extraSkyRack = (CheckBox) view.findViewById(R.id.idExtra_SkyRack);
+        tireAndGlassCheckbox = (CheckBox) view.findViewById(R.id.idTireAndGlass);
+
         //Setear los precios según la categoría del coche seleccionado:
 
         TextView topInsurancePriceText = view.findViewById(R.id.idTopInsurancePrice);
         TextView baseInsurancePriceText = view.findViewById(R.id.idBasicInsurancePrice);
         TextView tireAndGlassPriceText = view.findViewById(R.id.idTireAndGlassPrice);
+
 
         Category carCategory = ((NewReservationActivity) getActivity()).getReservation().getCar().getCategory();
 
@@ -49,78 +67,43 @@ public class ExtrasSelectionFragment extends Fragment {
         baseInsurancePriceText.setText(carCategory.getBaseInsurancePrice() + " €");
         tireAndGlassPriceText.setText(carCategory.getTireAndGlassProtectionPrice() + " €");
 
-        Button nextBtn = (Button) view.findViewById(R.id.idNextButton_Dates);
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                RadioGroup insuranceType = view.findViewById(R.id.idInsuranceType);
-
-                int insuranceTypeID = insuranceType.getCheckedRadioButtonId();
-
-                switch (insuranceTypeID){
-                    case (R.id.idBasicInsurance):
-                        ((NewReservationActivity) getActivity()).getReservation().setInsuranceType(Reservation.InsuranceType.BASE);
-                        break;
-                    case (R.id.idTopInsurance):
-                        ((NewReservationActivity) getActivity()).getReservation().setInsuranceType(Reservation.InsuranceType.TOP);
-                        break;
-                }
-
-                CheckBox tireAndGlassCheckbox = (CheckBox) view.findViewById(R.id.idTireAndGlass);
-                if (tireAndGlassCheckbox.isChecked()){
-                    ((NewReservationActivity) getActivity()).getReservation().setHasTireAndGlassProtection(true);
-                }
-
-                ((NewReservationActivity)getActivity()).getReservation().setCommonExtras(getExtrasSelected(view));
-                ((NewReservationActivity)getActivity()).setCurrentStep(NewReservationActivity.CurrentStep.CONFIRMATION);
-                ((NewReservationActivity)getActivity()).replaceFragments(ConfirmationFragment.class, R.id.idContentFragment);
-
-            }
-        });
-
-        Button backBtn = (Button) view.findViewById(R.id.idBackButton_Dates);
-        backBtn.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                ((NewReservationActivity)getActivity()).setCurrentStep(NewReservationActivity.CurrentStep.CAR);
-                ((NewReservationActivity) getActivity()).replaceFragments(CarSelectionFragment.class, R.id.idContentFragment);
-            }
-        });
-
         return view;
     }
 
-    public List<CommonExtra> getExtrasSelected (View view){
+    public List<CommonExtra> getExtrasSelected (){
+
         List<CommonExtra> commonExtras = new ArrayList<>();
 
-        CheckBox extraBabyChair = (CheckBox) view.findViewById(R.id.idExtra_BabyChair);
+        if (tireAndGlassCheckbox.isChecked()){
+            ((NewReservationActivity) getActivity()).getReservation().setHasTireAndGlassProtection(true);
+        }
+
         if (extraBabyChair.isChecked()) {
             commonExtras.add(new CommonExtra(1L, "Baby Chair", 11.99));
         }
 
-        CheckBox extraChildChair = (CheckBox) view.findViewById(R.id.idExtra_ChildChair);
         if (extraChildChair.isChecked()) {
             commonExtras.add(new CommonExtra(2L, "Child Chair", 11.99));
         }
 
-        CheckBox extraBoosterChair = (CheckBox) view.findViewById(R.id.idExtra_BoosterChair);
         if (extraBoosterChair.isChecked()) {
             commonExtras.add(new CommonExtra(3L, "Booster Chair", 9.99));
         }
 
-        CheckBox extraSnowChains = (CheckBox) view.findViewById(R.id.idExtra_SnowChains);
         if (extraSnowChains.isChecked()) {
             commonExtras.add(new CommonExtra(4L, "Snow Chains", 18.33));
         }
 
-        CheckBox extraSkyRack = (CheckBox) view.findViewById(R.id.idExtra_SkyRack);
         if (extraSkyRack.isChecked()) {
             commonExtras.add(new CommonExtra(5L, "Sky Rack", 18.33));
         }
 
         return commonExtras;
+    }
+
+    public int getInsuranceTypeId(){
+        int insuranceTypeID = insuranceType.getCheckedRadioButtonId();
+        return insuranceTypeID;
     }
 
 }

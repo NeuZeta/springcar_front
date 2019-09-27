@@ -53,9 +53,9 @@ public class ReservationViewFragment extends Fragment {
             reservationNumberText.setVisibility(View.GONE);
         } else {
             introText.setVisibility(View.GONE);
+            reservationNumberText.setText(reservation.getId().toString());
             reservationNumberText.setVisibility(View.VISIBLE);
         }
-
 
         selectedOffice = (TextView) view.findViewById(R.id.idOfficeSelected);
         selectedOffice.setText(reservation.getCar().getOffice().getName());

@@ -5,23 +5,37 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.nzsoft.springcar.R;
 import com.nzsoft.springcar.fragments.newreservation.BreadcrumbFragment;
 import com.nzsoft.springcar.fragments.newreservation.CarSelectionFragment;
+import com.nzsoft.springcar.fragments.newreservation.ConfirmationFragment;
 import com.nzsoft.springcar.fragments.newreservation.DatesSelectionFragment;
 import com.nzsoft.springcar.fragments.newreservation.ExtrasSelectionFragment;
 import com.nzsoft.springcar.fragments.newreservation.LocationSelectionFragment;
 import com.nzsoft.springcar.model.Client;
+import com.nzsoft.springcar.model.CommonExtra;
 import com.nzsoft.springcar.model.Office;
 import com.nzsoft.springcar.model.Reservation;
+import com.nzsoft.springcar.retrofit.RetrofitHelper;
 import com.nzsoft.springcar.utils.Utils;
+
+import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.util.Date;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class NewReservationActivity extends AppCompatActivity {
@@ -148,10 +162,13 @@ public class NewReservationActivity extends AppCompatActivity {
                                     replaceFragments(DatesSelectionFragment.class, R.id.idContentFragment);
                                     break;
 
-            case EXTRAS:
-                break;
-            case CONFIRMATION:
-                break;
+            case EXTRAS:            currentStep = CurrentStep.CAR;
+                                    replaceFragments(CarSelectionFragment.class, R.id.idContentFragment);
+                                    break;
+
+            case CONFIRMATION:      currentStep = CurrentStep.EXTRAS;
+                                    replaceFragments(ExtrasSelectionFragment.class, R.id.idContentFragment);
+                                    break;
         }
 
     }
@@ -170,10 +187,14 @@ public class NewReservationActivity extends AppCompatActivity {
                                     replaceFragments(ExtrasSelectionFragment.class, R.id.idContentFragment);
                                     break;
 
-            case EXTRAS:
-                break;
-            case CONFIRMATION:
-                break;
+            case EXTRAS:            setInsuranceType ();
+                                    setExtrasSelected ();
+                                    currentStep = CurrentStep.CONFIRMATION;
+                                    replaceFragments(ConfirmationFragment.class, R.id.idContentFragment);
+                                    break;
+
+            case CONFIRMATION:      createReservation();
+                                    break;
         }
     }
 
@@ -193,6 +214,69 @@ public class NewReservationActivity extends AppCompatActivity {
 
     // METODOS PRIVADOS
 
+    private void getFragmentInstance (){
+        ExtrasSelectionFragment fragm = (ExtrasSelectionFragment)getSupportFragmentManager().findFragmentById(R.id.idContentFragment);
 
+    }
+
+    private void setInsuranceType () {
+        ExtrasSelectionFragment fragm = (ExtrasSelectionFragment)getSupportFragmentManager().findFragmentById(R.id.idContentFragment);
+        int insuranceTypeID = fragm.getInsuranceTypeId();
+
+        switch (insuranceTypeID){
+            case (R.id.idBasicInsurance):   reservation.setInsuranceType(Reservation.InsuranceType.BASE);
+                                            break;
+
+            case (R.id.idTopInsurance):     reservation.setInsuranceType(Reservation.InsuranceType.TOP);
+                                            break;
+        }
+    }
+
+    private void setExtrasSelected () {
+        ExtrasSelectionFragment fragm = (ExtrasSelectionFragment)getSupportFragmentManager().findFragmentById(R.id.idContentFragment);
+        List<CommonExtra> extras = fragm.getExtrasSelected();
+        reservation.setCommonExtras(extras);
+    }
+
+    private void createReservation(){
+
+        reservation.setReservationDate(new Date());
+
+        Call<Reservation> call = RetrofitHelper.getApiRest().createReservation(reservation);
+
+        loadingPanel.setVisibility(View.VISIBLE);
+
+        call.enqueue(new Callback<Reservation>() {
+            @Override
+            public void onResponse(Call<Reservation> call, Response<Reservation> response) {
+                Log.d("***", "Response: " + response.toString());
+
+                CarSelectionFragment.selectedCar = -1;
+
+                loadingPanel.setVisibility(View.GONE);
+
+                Intent intentSuccess = new Intent(getApplicationContext(), SuccessActivity.class);
+                intentSuccess.putExtra("ReservationID", response.body().getId());
+                startActivity(intentSuccess);
+            }
+
+            @Override
+            public void onFailure(Call<Reservation> call, Throwable t) {
+                if (t instanceof SocketTimeoutException)
+                {
+                    call.clone().enqueue(this);
+                }
+                else if (t instanceof IOException)
+                {
+                    call.clone().enqueue(this);
+                }
+                else
+                {
+                    Log.d("___", t.toString());
+                }
+            }
+        });
+
+    }
 
 }
