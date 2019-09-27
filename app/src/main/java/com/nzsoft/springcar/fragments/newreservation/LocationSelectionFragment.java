@@ -231,7 +231,6 @@ public class LocationSelectionFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parentView) {
                 // your code here
             }
-
         });
 
         nextBtn = (Button) view.findViewById(R.id.idNextButton_Location);
