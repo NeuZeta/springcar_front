@@ -35,6 +35,38 @@ Every one of these blocks is composed the following way:
 * [Picasso](https://square.github.io/picasso/) - A powerful image downloading and caching library for Android
 * [Google Maps SDK](https://developers.google.com/maps/documentation/android-sdk/intro) - Add maps based on Google Maps data
 
+### Backend
+The backend is a Spring project.   
+To access the backend repository: https://github.com/NeuZeta/springcar_back  
+to access the swagger documentation: https://springcarback.herokuapp.com/swagger-ui.html  
+
+Endpoints:
+
+```sh
+  - GET /clients                    (to get a list of all clients)
+  - GET /clients/{id}               (to get a client by id)
+  - POST /clients                   (create a client)
+  - PUT /clients                    (to update a client)
+
+  - GET /offices                    (para obtener un listado de todas las oficinas)
+  - GET /offices/id                 (para obtener una oficina a partir de la id)
+  - POST /offices                   (para crear una oficina)
+	
+  - GET /reservations               (to get all reservations)
+  - GET /reservations/{id}          (to get a reservation by id)
+  - GET /reservations/client/{id}   (to get all reservations given a client id)
+  - GET /reservations/office/{id}   (to get all reservations of a given office)
+  - POST /reservations              (to create a reservation)
+  - DELETE /reservations/{id}       (to delete a reservation by id)
+
+  - GET /categories                 (to get all categories)
+  
+  - GET /cars                       (to get all cars)
+  - GET /cars/image/{carImage}      (to get an image as resource)
+  - GET /cars/available             (to get a list of the cars available given an office and between to dates)
+  
+  - GET /categories                 (to get all categories)
+```
 
 ### Project Goals
 - [x] To have a complete reservation flow
