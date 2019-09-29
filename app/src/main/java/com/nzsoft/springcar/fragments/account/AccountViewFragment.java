@@ -65,9 +65,6 @@ public class AccountViewFragment extends Fragment {
         TextView userName = (TextView) view.findViewById(R.id.idUserNameView);
         userName.setText(client.getUserName());
 
-        TextView password = (TextView) view.findViewById(R.id.idPasswordView);
-        password.setText(client.getPassword());
-
         return view;
     }
 
