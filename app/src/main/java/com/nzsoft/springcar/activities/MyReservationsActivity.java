@@ -2,6 +2,7 @@ package com.nzsoft.springcar.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import com.nzsoft.springcar.R;
 import com.nzsoft.springcar.fragments.myreservations.ReservationsListFragment;
 import com.nzsoft.springcar.model.Reservation;
 import com.nzsoft.springcar.retrofit.RetrofitHelper;
+import com.nzsoft.springcar.utils.Utils;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
@@ -33,10 +35,19 @@ public class MyReservationsActivity extends AppCompatActivity {
     private Button deleteBtn;
     private View loadingPanel;
 
+    private int PERMISSION_ALL = 1;
+    private String[] PERMISSIONS = {
+            android.Manifest.permission.INTERNET
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_reservations);
+
+        if(!Utils.hasPermissions(this, PERMISSIONS)){
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+        }
 
         //Añadir titulo y logo a la barra principal
         Toolbar myReservationToolbar = (Toolbar) findViewById(R.id.idReservationToolbar);

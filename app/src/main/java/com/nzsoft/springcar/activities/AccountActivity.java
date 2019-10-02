@@ -1,6 +1,7 @@
 package com.nzsoft.springcar.activities;
 
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,10 +32,20 @@ public class AccountActivity extends AppCompatActivity {
     private Client newClient;
     private View loadingPanel;
 
+    private int PERMISSION_ALL = 1;
+    private String[] PERMISSIONS = {
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.INTERNET
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+
+        if(!Utils.hasPermissions(this, PERMISSIONS)){
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+        }
 
         loadingPanel = findViewById(R.id.loadingPanel_Account);
         loadingPanel.setVisibility(View.GONE);
@@ -66,7 +77,6 @@ public class AccountActivity extends AppCompatActivity {
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.add(R.id.idAccountDestino, new AccountViewFragment());
                     fragmentTransaction.commit();
-
                 }
 
                 @Override
@@ -93,19 +103,7 @@ public class AccountActivity extends AppCompatActivity {
         backBtn = findViewById(R.id.idBackBtn_Account);
         actionBtn = findViewById(R.id.idActionBtn_Account);
 
-        switch (accountStatus){
-
-            case CREATE:        actionBtn.setVisibility(View.INVISIBLE);
-                                backBtn.setVisibility(View.INVISIBLE);
-                                break;
-
-            case VIEW:          actionBtn.setText("EDIT");
-                                actionBtn.setVisibility(View.VISIBLE);
-                                break;
-
-            case UPDATE:        actionBtn.setVisibility(View.INVISIBLE);
-                                break;
-        }
+        updateActivityButtons ();
 
     }
 
@@ -125,6 +123,7 @@ public class AccountActivity extends AppCompatActivity {
             case UPDATE:        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                                 fragmentTransaction.replace(R.id.idAccountDestino, new AccountViewFragment());
                                 accountStatus = AccountStatus.VIEW;
+                                updateActivityButtons ();
                                 fragmentTransaction.commit();
                                 break;
         }
@@ -132,32 +131,21 @@ public class AccountActivity extends AppCompatActivity {
 
     public void PerformAction (){
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
         switch (accountStatus) {
 
             case CREATE:        createClient ();
-                                fragmentTransaction.replace(R.id.idAccountDestino, new AccountViewFragment());
-                                accountStatus = AccountStatus.VIEW;
-                                fragmentTransaction.commit();
                                 break;
 
-            case VIEW:          fragmentTransaction.replace(R.id.idAccountDestino, new AccountEditFragment());
+            case VIEW:          FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                                fragmentTransaction.replace(R.id.idAccountDestino, new AccountEditFragment());
                                 accountStatus = AccountStatus.UPDATE;
+                                updateActivityButtons ();
                                 fragmentTransaction.commit();
                                 break;
 
             case UPDATE:
                 break;
         }
-    }
-
-    public AccountStatus getAccountStatus() {
-        return accountStatus;
-    }
-
-    public void setAccountStatus(AccountStatus accountStatus) {
-        this.accountStatus = accountStatus;
     }
 
     public void enableActionBtn(){
@@ -168,10 +156,6 @@ public class AccountActivity extends AppCompatActivity {
 
     public Client getClient() {
         return client;
-    }
-
-    public Client getNewClient() {
-        return newClient;
     }
 
     public void setNewClient(Client newClient) {
@@ -195,34 +179,51 @@ public class AccountActivity extends AppCompatActivity {
 
                     client = response.body();
                     Utils.savePreferences(getApplicationContext(), response.body().getId());
+
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.idAccountDestino, new AccountViewFragment());
+                    accountStatus = AccountStatus.VIEW;
+                    updateActivityButtons ();
+                    fragmentTransaction.commit();
+
                 }
 
                 @Override
                 public void onFailure(Call<Client> call, Throwable t) {
-                    Log.d("***", t.toString());
-
+                    if (t instanceof SocketTimeoutException)
+                    {
+                        call.clone().enqueue(this);
+                    }
+                    else if (t instanceof IOException)
+                    {
+                        call.clone().enqueue(this);
+                    }
+                    else
+                    {
+                        Log.d("___", t.toString());
+                    }
                 }
             });
         }
     }
 
-    private void updateClient (){
-        if (newClient != null) {
+    private void updateActivityButtons (){
+        switch (accountStatus){
 
-            Call<Client> call = RetrofitHelper.getApiRest().updateClient(newClient);
+            case CREATE:        actionBtn.setVisibility(View.INVISIBLE);
+                                backBtn.setVisibility(View.INVISIBLE);
+                                break;
 
-            call.enqueue(new Callback<Client>() {
-                @Override
-                public void onResponse(Call<Client> call, Response<Client> response) {
+            case VIEW:          actionBtn.setText(R.string.edit_btn);
+                                backBtn.setText(R.string.home_btn);
+                                backBtn.setVisibility(View.VISIBLE);
+                                actionBtn.setVisibility(View.VISIBLE);
+                                break;
 
-                }
-
-                @Override
-                public void onFailure(Call<Client> call, Throwable t) {
-
-                }
-            });
-
+            case UPDATE:        actionBtn.setVisibility(View.INVISIBLE);
+                                backBtn.setText(R.string.back_btn);
+                                backBtn.setVisibility(View.VISIBLE);
+                                break;
         }
     }
 
