@@ -172,6 +172,8 @@ public class AccountActivity extends AppCompatActivity {
 
             Call<Client> call = RetrofitHelper.getApiRest().createClient(newClient);
 
+            loadingPanel.setVisibility(View.VISIBLE);
+
             call.enqueue(new Callback<Client>() {
                 @Override
                 public void onResponse(Call<Client> call, Response<Client> response) {
@@ -185,7 +187,7 @@ public class AccountActivity extends AppCompatActivity {
                     accountStatus = AccountStatus.VIEW;
                     updateActivityButtons ();
                     fragmentTransaction.commit();
-
+                    loadingPanel.setVisibility(View.GONE);
                 }
 
                 @Override
